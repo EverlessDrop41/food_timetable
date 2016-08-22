@@ -6,7 +6,7 @@ To build the app you will need docker and docker-compose
 
 To create simply run `docker-compose build` and then run `docker-compose up -d`
 
-The app is now running on http://localhost:5000
+The app is now running on [http://localhost:5000](http://localhost:5000)
 
 The `-d` flag makes the container(s) run in the background
 
