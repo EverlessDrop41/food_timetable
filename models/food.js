@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: true
     },
     price: {
-      //Is in pence
+      //In pence
       type: DataTypes.INTEGER,
       defaultValue: 100
     }

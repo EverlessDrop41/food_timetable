@@ -1,11 +1,12 @@
 var db_host = process.env.DB_HOST || 'localhost';
 var db_port = process.env.DB_PORT || 3306;
+var db_name = process.env.DB_NAME || 'food_timetable';
 
 module.exports = {
   "development": {
     "username": "root",
     "password": "password",
-    "database": "food_timetable_dev",
+    "database": db_name + "_dev",
     "host": db_host,
     "port": db_port,
     "dialect": "mysql"
@@ -13,7 +14,7 @@ module.exports = {
   "test": {
     "username": "root",
     "password": "password",
-    "database": "food_timetable_test",
+    "database": db_name + "_test",
     "host": db_host,
     "port": db_port,
     "dialect": "mysql"
@@ -21,7 +22,7 @@ module.exports = {
   "production": {
     "username": "root",
     "password": "password",
-    "database": "food_timetable_prod",
+    "database": db_name + "_prod",
     "host": db_host,
     "port": db_port,
     "dialect": "mysql"
