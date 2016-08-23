@@ -8,10 +8,12 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.js')[env];
 var db        = {};
 
+var sequelize = null;
+
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs
@@ -29,6 +31,11 @@ Object.keys(db).forEach(function(modelName) {
     db[modelName].associate(db);
   }
 });
+
+var Course = db.Course;
+var Food = db.Food;
+
+Course.hasMany(Food, {as: "FoodItems"});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

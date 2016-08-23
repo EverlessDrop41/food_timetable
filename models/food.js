@@ -1,8 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Food = sequelize.define("Food", {
     name: {
-      type: DataTypes.STRING,
-      unique: true
+      type: DataTypes.STRING
     },
     price: {
       //In pence
@@ -12,4 +11,4 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   return Food;
-}
+};
