@@ -31,27 +31,32 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
 
   if (!is_prod) {
     models.Food.create({ name: "Pasta", price: 150 })
-      .then(function (a) {
-        console.log("Created food: " + a);
+      .then(function (pasta) {
+        console.log("Created food: " + pasta);
+        models.Course.create({
+          name: "Week 1",
+          Food: [
+            { name: "Pizza", price: 100 }
+          ]
+        }, {
+          include: [{
+            model: models.Food,
+            as: "Food"
+          }]
+        }).then(function(course) {
+          console.log("Created sample");
+          course.addFood(pasta).then(function () {
+//success!
+          });
+        }).catch(function (error) {
+          console.error(error);
+          //logSqlizeError(error);
+        });
       })
       .error(function (e) {
         logSqlizeError(e);
       });
-    models.Course.create({
-      name: "Week 1",
-      FoodItems: [
-        { name: "Pizza", price: 100 }
-      ]
-    }, {
-      include: [{
-        model: models.Food,
-        as: "FoodItems"
-      }]
-    }).then(function(a) {
-      console.log("Created sample");
-    }).catch(function (error) {
-      logSqlizeError(error);
-    });
+
   }
 
 }).catch(function (err) {
@@ -61,8 +66,7 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
 app.get('/', function (req, res) {
   models.Course.findAll({
     include: [{
-      model: models.Food,
-      as: "FoodItems"
+      model: models.Food
     }]
   }).then(function(courses) {
     res.send(courses);
