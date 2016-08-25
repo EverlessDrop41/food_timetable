@@ -63,6 +63,7 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
   console.log('Unable to connect to the database:', err);
 });
 
+app.use('/docs', express.static('apidoc'));
 app.use('/api', require("./routes"));
 
 var port = process.env.PORT || 3000;
