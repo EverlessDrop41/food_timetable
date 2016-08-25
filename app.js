@@ -63,18 +63,7 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
   console.log('Unable to connect to the database:', err);
 });
 
-app.get('/', function (req, res) {
-  models.Course.findAll({
-    include: [{
-      model: models.Food
-    }]
-  }).then(function(courses) {
-    res.send(courses);
-  }).catch(function (err) {
-    console.error(err);
-    res.send("Internal Server Error")
-  });
-});
+app.use('/api', require("./routes"));
 
 var port = process.env.PORT || 3000;
 

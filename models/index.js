@@ -35,8 +35,8 @@ Object.keys(db).forEach(function(modelName) {
 var Course = db.Course;
 var Food = db.Food;
 
-Food.belongsToMany(Course, { through: "FoodCourseAssoc"});
-Course.belongsToMany(Food, { through: "FoodCourseAssoc"});
+Food.belongsToMany(Course, { through: "FoodCourseAssoc" });
+Course.belongsToMany(Food, { through: "FoodCourseAssoc" });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
