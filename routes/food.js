@@ -63,6 +63,41 @@ router.get('/', function (req, res) {
 });
 
 /**
+ * @api {get} /api/food/ Get A Food Item by Id
+ * @apiName GetFoodById
+ * @apiDescription Find food by Id
+ * @apiGroup Food
+ *
+ * @apiError NotFound A 404 error when the id cannot be found
+ *
+ * @apiSuccess {Number} id A unique number to identify a food object
+ * @apiSuccess {String} name The name of the food
+ * @apiSuccess {Number} price The cost of the food in pence
+ *
+ * @apiSuccessExample Success
+ * {
+ *     "id": 1,
+ *     "name": "Pasta",
+ *     "price": 150,
+ *     "createdAt": "2016-08-25T04:19:27.000Z",
+ *     "updatedAt": "2016-08-25T04:19:27.000Z"
+ * }
+ *
+ * @apiErrorExample Not Found
+ * HTTP 404
+ * Not Found
+ */
+router.get('/:id', function (req, res) {
+  models.Food.findById(req.params.id).then(function (food) {
+    if (food) {
+      res.send(food);
+    } else {
+      res.status(404).send("Not Found")
+    }
+  });
+});
+
+/**
  *
  * @api {post} /api/food Create Food
  * @apiName CreateFood
