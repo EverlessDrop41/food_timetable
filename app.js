@@ -1,6 +1,8 @@
 var bodyParser = require('body-parser');
 var express = require('express');
+var morgan = require('morgan');
 var app = express();
+var fs = require("fs");
 
 models = require("./models");
 var is_prod = process.env.IS_PROD || false;
@@ -63,6 +65,12 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
 }).catch(function (err) {
   console.log('Unable to connect to the database:', err);
 });
+
+//Add Logging
+app.use(morgan('common', {
+  stream: fs.createWriteStream('./access.log', {flags: 'a'})
+}));
+app.use(morgan('dev'));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
