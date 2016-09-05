@@ -62,6 +62,49 @@ router.get('/', function (req, res) {
   });
 });
 
+/**
+ *
+ * @api {post} /api/food Create Food
+ * @apiName CreateFood
+ * @apiDescription Create a food item in the database
+ * @apiGroup Food
+ *
+ * @apiError InvalidBody The body is not constructed properly
+ * @apiError InvalidValues The body is in the right structure but the values are invalid
+ *
+ * @apiErrorExample Invalid Body
+ * HTTP 400 Bad Request
+ * Invalid Body
+ *
+ * @apiErrorExample Invalid Values
+ * HTTP 400 Bad Request
+ * Data is in the right structure, but the values are invalid
+ *
+ * @apiErrorExample Price Integer
+ * HTTP 400 Bad Request
+ * Price must be an integer
+ *
+ * @apiErrorExample Internal Error
+ * HTTP 500 Internal Server Error
+ * Internal Server Error
+ *
+ * @apiParam {String} name The name of the food
+ * @apiParam {Integer} price The price of the food in pence
+ *
+ * @apiSuccess {Number} id The id of the the food that was created
+ * @apiSuccess {String} name The name of the food
+ * @apiSuccess {Number} price The price of the food in pence
+ *
+ * @apiSuccessExample Success
+ *   {
+ *     "id": 3,
+ *     "name": "Pasta & cheese",
+ *     "price": 20,
+ *     "updatedAt": "2016-09-04T15:36:16.000Z",
+ *     "createdAt": "2016-09-04T15:36:16.000Z"
+ *   }
+ *
+ */
 router.post("/", function(req, res) {
   if (req.body && req.body.name && req.body.price) {
     try {
@@ -79,8 +122,8 @@ router.post("/", function(req, res) {
       });
     } catch (e) {
       if (e instanceof models.Sequelize.ValidationError) {
-        console.error("Invalid food creation");
-        res.status.send("Data is in the right structure, but the values are invalid");
+        console.error("Invalid values");
+        res.status(400).send("Data is in the right structure, but the values are invalid");
       }
       console.error(e);
       res.status(500);
