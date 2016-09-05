@@ -63,10 +63,12 @@ router.get('/', function (req, res) {
 });
 
 /**
- * @api {get} /api/food/ Get A Food Item by Id
+ * @api {get} /api/food/:id Get A Food Item by Id
  * @apiName GetFoodById
  * @apiDescription Find food by Id
  * @apiGroup Food
+ *
+ * @apiParam {Number} id The food's unique ID.
  *
  * @apiError NotFound A 404 error when the id cannot be found
  *
@@ -98,7 +100,6 @@ router.get('/:id', function (req, res) {
 });
 
 /**
- *
  * @api {post} /api/food Create Food
  * @apiName CreateFood
  * @apiDescription Create a food item in the database
@@ -168,6 +169,38 @@ router.post("/", function(req, res) {
     res.status(400).send("Invalid body");
   }
 
+});
+
+router.put('/:id', function (req, res) {
+  models.Food.findById(req.params.id).then(function (food) {
+    if (food) {
+      if (req.body) {
+        if (req.body.name) {
+          food.name = req.body.name;
+        }
+
+        if (req.body.price) {
+          req.body.price = parseInt(req.body.price);
+
+          if (isNaN(req.body.price)) {
+            res.status(400).send("Price must be an integer");
+          }
+
+          food.price = req.body.price;
+        }
+
+        food.save().then(function () {
+          res.send(food);
+        }).catch(function (e) {
+          res.status(500).send("Internal Server Error");
+        });
+      } else {
+        res.send(food);
+      }
+    } else {
+      res.status(404).send("Not Found")
+    }
+  });
 });
 
 module.exports = router;
