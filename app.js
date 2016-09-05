@@ -1,3 +1,4 @@
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
@@ -46,7 +47,7 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
         }).then(function(course) {
           console.log("Created sample");
           course.addFood(pasta).then(function () {
-//success!
+            //success!
           });
         }).catch(function (error) {
           console.error(error);
@@ -62,6 +63,12 @@ models.sequelize.sync({ force: !is_prod }).then(function(err) {
 }).catch(function (err) {
   console.log('Unable to connect to the database:', err);
 });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 app.use('/docs', express.static('apidoc'));
 app.use('/api', require("./routes"));

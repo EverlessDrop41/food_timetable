@@ -62,4 +62,34 @@ router.get('/', function (req, res) {
   });
 });
 
+router.post("/", function(req, res) {
+  if (req.body && req.body.name && req.body.price) {
+    try {
+      req.body.price = parseInt(req.body.price);
+
+      if (isNaN(req.body.price)) {
+        res.status(400).send("Price must be an integer");
+      }
+
+      models.Food.create({
+        name: req.body.name, price: req.body.price
+      }).then(function (food) {
+        console.log(food.id);
+        res.send(food);
+      });
+    } catch (e) {
+      if (e instanceof models.Sequelize.ValidationError) {
+        console.error("Invalid food creation");
+        res.status.send("Data is in the right structure, but the values are invalid");
+      }
+      console.error(e);
+      res.status(500);
+    }
+  } else {
+    console.error("Invalid body");
+    res.status(400).send("Invalid body");
+  }
+
+});
+
 module.exports = router;
