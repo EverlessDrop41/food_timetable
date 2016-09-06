@@ -240,4 +240,33 @@ router.put('/:id', function (req, res) {
   });
 });
 
+/**
+ * @api {delete} /api/food/:id Delete A Food Item
+ * @apiName DeleteFoodById
+ * @apiDescription Delete food by Id
+ * @apiGroup Food
+ *
+ * @apiParam {Number} id The food's unique ID.
+ *
+ * @apiError NotFound A 404 error when the id cannot be found
+ *
+ * @apiSuccessExample Success
+ * HTTP 204
+ *
+ * @apiErrorExample Not Found
+ * HTTP 404
+ * Not Found
+ */
+router.delete('/:id', function (req, res) {
+  models.Food.findById(req.params.id).then(function (food) {
+    if (food) {
+      food.destroy().then(function () {
+        res.sendStatus(204);
+      })
+    } else {
+      res.status(404).send("Not Found")
+    }
+  });
+});
+
 module.exports = router;
