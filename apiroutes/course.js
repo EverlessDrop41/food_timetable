@@ -52,4 +52,25 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/:id', function (req, res) {
+  models.Course.findById(
+    req.params.id, {
+    include: [{
+      model: models.Food
+    }]}
+  ).then(function (course) {
+    if (course != undefined || course != null) {
+      res.send(course);
+    } else {
+      res.sendStatus(404);
+    }
+  }).catch(function (err) {
+    console.error(err);
+    res.status(500);
+    res.send("Internal Server Error")
+  });
+});
+
+
+
 module.exports = router;
