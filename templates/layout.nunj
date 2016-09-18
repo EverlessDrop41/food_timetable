@@ -5,6 +5,14 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Food Timetable</title>
+
+        {# Font #}
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+        {# Vendor Style #}
+        <link rel="stylesheet" href="/static/vendor/css/normalize.css">
+        <link rel="stylesheet" href="/static/vendor/css/skeleton.css">
+        <link rel="icon" type="image/png" href="/static/vendor/images/favicon.png">
     </head>
     <body>
         <h1>Food Timetable</h1>

@@ -83,10 +83,12 @@ app.use(bodyParser.json());
 //Setup templating
 nunjucks.configure('templates', {
   autoescape: true,
+  noCache: true,
   express: app
 });
 
 //Include Routes
+app.use('/static', express.static('public'));
 app.use('/docs', express.static('apidoc'));
 app.use('/api', require("./apiroutes"));
 app.use('/', require("./routes"));
