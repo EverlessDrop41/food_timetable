@@ -14,6 +14,7 @@ services:
       DB_PASSWORD: password
       DB_PORT: 3306
       DB_HOST: db
+      APP_SECRET: "!super_secret_code!"
   db:
     image: mysql:5.7
     volumes:

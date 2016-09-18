@@ -5,7 +5,7 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.js')[env];
+var config    = require(__dirname + '/../config/config.js').database[env];
 var db        = {};
 
 var sequelize = null;
@@ -35,7 +35,7 @@ Object.keys(db).forEach(function(modelName) {
 var Course = db.Course;
 var Food = db.Food;
 
-Food.belongsToMany(Course, { through: "FoodCourseAssoc" });
+Food.belongsToMany(Course, { through: 'FoodCourseAssoc' });
 Course.belongsToMany(Food, { through: "FoodCourseAssoc" });
 
 db.sequelize = sequelize;
