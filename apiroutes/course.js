@@ -71,6 +71,33 @@ router.get('/:id', function (req, res) {
   });
 });
 
+router.put('/:id', function (req, res) {
+  models.Course.findById(
+    req.params.id, {
+      include: [{
+        model: models.Food
+      }]}
+  ).then(function (course) {
+    if (course != undefined || course != null) {
+      //TODO: Update the course
+      if (req.body && Array.isArray(req.body.food)) {
+        course.addFoods(req.body.food).then(function (stuff) {
+          res.send(stuff);
+        }).catch(function (error) {
+          console.error(error);
+        });
+      } else {
+        res.sendStatus(400);
+      }
+    } else {
+      res.sendStatus(404);
+    }
+  }).catch(function (err) {
+    console.error(err);
+    res.status(500);
+    res.send("Internal Server Error")
+  });
+});
 
 
 module.exports = router;
