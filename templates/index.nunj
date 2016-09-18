@@ -1,0 +1,4 @@
+{% extends "layout.nunj" %}
+{% block body %}
+    <h2>Index</h2>
+{% endblock %}

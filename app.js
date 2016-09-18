@@ -3,6 +3,7 @@ var express = require('express');
 var morgan = require('morgan');
 var app = express();
 var fs = require("fs");
+var nunjucks = require("nunjucks");
 
 models = require("./models");
 var is_prod = process.env.IS_PROD || false;
@@ -27,6 +28,7 @@ function logSqlizeError(error) {
   console.error(equalStr);
 }
 
+//Sync the db and if in dev generate sample data
 models.sequelize.sync({ force: !is_prod }).then(function(err) {
   console.log('Connection has been established successfully.');
   //models.Food.sync({ force: !is_prod });
@@ -78,11 +80,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-app.use('/docs', express.static('apidoc'));
-app.use('/api', require("./routes"));
+//Setup templating
+nunjucks.configure('templates', {
+  autoescape: true,
+  express: app
+});
 
+//Include Routes
+app.use('/docs', express.static('apidoc'));
+app.use('/api', require("./apiroutes"));
+app.use('/', require("./routes"));
+
+//Get the desired port
 var port = process.env.PORT || 3000;
 
+//Run the server
 app.listen(port, function () {
-  console.log('Example app listening on port ' + port + '!');
+  console.log('Food Timetable app listening on port ' + port + '!');
 });
