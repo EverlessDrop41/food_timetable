@@ -1,4 +1,7 @@
 {% extends "layout.nunj" %}
 {% block body %}
     <h2>Indexed</h2>
+    <p>
+        <a href="/docs/" target="blank">click for api docs</a>
+    </p>
 {% endblock %}
