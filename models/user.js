@@ -14,9 +14,6 @@ module.exports = function(sequelize, DataTypes) {
     is_admin: { //Admins can create + manage users
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    },
-    authKey: {
-      type: DataTypes.STRING
     }
   });
 

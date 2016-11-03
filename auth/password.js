@@ -1,6 +1,7 @@
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config').app;
+var models = require("../models");
 
 module.exports = {
   hashPass: function  (password, callback) {
@@ -15,11 +16,17 @@ module.exports = {
   },
   genKey: function (user) {
     return jwt.sign({
-      key: user.authKey,
-      name: user.name
+      id: user.id
     }, config.secret);
   },
   verifyToken: function (token, callback) {
     jwt.verify(token, config.secret, callback);
+  },
+  login: function (name, password, callback) {
+    models.User.findOne({
+      where: {
+        name: name
+      }
+    }).then(callback);
   }
 };
