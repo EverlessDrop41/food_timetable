@@ -20,7 +20,7 @@ function logSqlizeError(error) {
   console.error(equalStr);
 }
 
-module.exports = function (is_production) {
+module.exports = function (is_production, callback) {
 	console.log("Initializing Database");
 	//Sync the db and if in dev generate sample data
 	models.sequelize.sync({ force: !is_production }).then(function(err) {
@@ -46,6 +46,7 @@ module.exports = function (is_production) {
 	          console.log("Created sample");
 	          course.addFood(pasta).then(function () {
 	            //success!
+	            callback(true);
 	          });
 	        }).catch(function (error) {
 	          console.error(error);
@@ -59,9 +60,11 @@ module.exports = function (is_production) {
 
 	}).catch(function (err) {
 	  console.log('Unable to connect to the database:', err);
+	  callback(false);
 	});
 
 	if (is_production) {
 		//Make an admin user and log it
+		callback(true);
 	}
 }

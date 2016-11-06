@@ -8,8 +8,6 @@ var nunjucks = require("nunjucks");
 models = require("./models");
 var is_prod = process.env.IS_PROD || false;
 
-require("./init_db")(is_prod);
-
 //Add Logging
 app.use(morgan('common', {
   stream: fs.createWriteStream('./access.log', {flags: 'a'})
@@ -38,7 +36,14 @@ app.use('/', require("./routes"));
 //Get the desired port
 var port = process.env.PORT || 3000;
 
-//Run the server
+var init_db = require("./init_db");
+init_db(is_prod, function (successful) {
+	app.listen(port, function () {
+		console.log('Food Timetable app listening on port ' + port + '!');
+	});
+});
+
+/*//Run the server
 app.listen(port, function () {
   console.log('Food Timetable app listening on port ' + port + '!');
-});
+});*/
