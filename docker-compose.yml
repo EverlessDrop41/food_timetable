@@ -6,6 +6,7 @@ services:
       - "5000:5000"
     volumes:
       - .:/code
+      - ./node_modules:/code/node_modules
     links:
       - db
     environment:
