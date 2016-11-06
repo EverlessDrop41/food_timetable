@@ -4,7 +4,7 @@ var config = require('../config/config').app;
 var models = require("../models");
 
 module.exports = {
-  hashPass: function  (password, callback) {
+  hash: function  (password, callback) {
     bcrypt.hash(password, config.salt_rounds, callback);
   },
   isMatch: function (password, hash, callback) {
