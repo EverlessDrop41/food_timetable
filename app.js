@@ -38,9 +38,14 @@ var port = process.env.PORT || 3000;
 
 var init_db = require("./init_db");
 init_db(is_prod, function (successful) {
-	app.listen(port, function () {
-		console.log('Food Timetable app listening on port ' + port + '!');
-	});
+	if (successful) {
+		app.listen(port, function () {
+			console.log('Food Timetable app listening on port ' + port + '!');
+		});	
+	} else {
+		console.error("Failed to connect to database, not launching server");
+	}
+	
 });
 
 /*//Run the server

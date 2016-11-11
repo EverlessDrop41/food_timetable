@@ -55,6 +55,7 @@ module.exports = function (is_production, callback) {
 	      })
 	      .error(function (e) {
 	        logSqlizeError(e);
+	        callback(false);
 	      });
 	  }
 
