@@ -7,9 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       //In pence
       type: DataTypes.STRING(60),
-      validate: {
-        notNull: true
-      }
+      allowNull: { args: false, msg: 'Passsword is required.' }
     },
     is_admin: { //Admins can create + manage users
       type: DataTypes.BOOLEAN,

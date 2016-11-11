@@ -28,5 +28,25 @@ module.exports = {
         name: name
       }
     }).then(callback);
+  },
+  register: function (username, password, is_admin, callback) {
+    if (this.isValid(password)) {
+      this.hash(password, function (err, hash) {
+        if (err) {
+          callback(false, null, err);
+        }
+        else {
+          models.User.create({
+            name: username,
+            password: hash,
+            is_admin: is_admin
+          }).then(function (user) {
+            callback(true, user, null);
+          }); 
+        }
+      }); 
+    } else {
+      callback(false, null, { message: "Invalid Password" });
+    }
   }
 };

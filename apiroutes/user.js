@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var passwords = require('../auth').password; 
+var auth = require('../auth'); 
 
 models = require("../models");
 
@@ -19,30 +19,50 @@ router.post('/register', function (req, res) {
 	var uname = req.body.username;
 	var pword = req.body.password;
 
-	if (passwords.isValid(pword)) {
+	auth.password.register(uname, pword, false, function (success, user, error) {
+		if (success) {
+			res.send({success: true, user: user});
+		} else {
+			res.send({success: false, error: error});
+		}
+	});
+
+	/*if (auth.password.isValid(pword)) {
 		//TODO: register user
-		passwords.hash(pword, function (err, hash) {
+		auth.password.hash(pword, function (err, hash) {
 			if (err) {
 				res.send({ error: err });
 			}
 			else {
-				res.send({ username: uname, hash: hash });
+				models.User.create({
+					name: uname,
+					password: hash
+				}).then(function (user) {
+					console.log("User added");
+					res.send({ 
+						success: true, 
+						user: {
+							name: user.name,
+							is_admin: user.is_admin
+						} 
+					});
+				}); 
 			}
 		});
 		
 	}
 	else {
 		res.send("Invalid Password");
-	}
+	}*/
 });
 
 router.post('/login', function (req, res) {
 	var uname = req.body.username;
 	var pword = req.body.password;
 
-	if (passwords.isValid(pword)) {
+	if (auth.password.isValid(pword)) {
 		//TODO: register user
-		passwords.isMatch(pword, passwordHashed, function (err, match) {
+		auth.password.isMatch(pword, passwordHashed, function (err, match) {
 			if (err) {
 				res.send({ error: err });
 			}

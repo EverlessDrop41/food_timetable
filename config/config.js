@@ -4,6 +4,7 @@ var db_name = process.env.DB_NAME || 'food_timetable';
 var app_secret = process.env.APP_SECRET || 'super_secret_code' ;
 var port = process.env.PORT || 3000;
 var salt_rounds = process.env.SALT_ROUNDS || 10;
+var admin_pass = process.env.ADMIN_PASS || "secure_password";
 
 module.exports = {
   "database": {
@@ -35,6 +36,7 @@ module.exports = {
   "app": {
     "secret": app_secret,
     "port": port,
-    "salt_rounds": salt_rounds
+    "salt_rounds": salt_rounds,
+    "admin_pass": admin_pass
   }
 };
