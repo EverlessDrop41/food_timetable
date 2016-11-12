@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth'); 
+var b_auth = require('basic-auth')
 
 models = require("../models");
 
@@ -16,66 +17,46 @@ router.get('/', function (req, res) {
 });
 
 router.post('/register', function (req, res) {
+
+	var r_user = b_auth(req);
+
 	var uname = req.body.username;
 	var pword = req.body.password;
 
-	auth.password.register(uname, pword, false, function (success, user, error) {
-		if (success) {
-			res.send({success: true, user: user});
-		} else {
-			res.send({success: false, error: error});
-		}
-	});
 
-	/*if (auth.password.isValid(pword)) {
-		//TODO: register user
-		auth.password.hash(pword, function (err, hash) {
-			if (err) {
-				res.send({ error: err });
-			}
-			else {
-				models.User.create({
-					name: uname,
-					password: hash
-				}).then(function (user) {
-					console.log("User added");
-					res.send({ 
-						success: true, 
-						user: {
-							name: user.name,
-							is_admin: user.is_admin
-						} 
-					});
-				}); 
+	if (auth.password.isValid(pword)) {
+		auth.password.register(uname, pword, false, function (success, user, error) {
+			if (success) {
+				res.send({success: true, user: user});
+			} else {
+				res.send({success: false, error: error});
 			}
 		});
-		
+	} else {
+		res.send({success: false, error: { message: "Invalid Password" }});
 	}
-	else {
-		res.send("Invalid Password");
-	}*/
 });
+
+const LOGIN_ERROR_MSG = "User not found or password is inccorect";
 
 router.post('/login', function (req, res) {
 	var uname = req.body.username;
 	var pword = req.body.password;
 
-	if (auth.password.isValid(pword)) {
-		//TODO: register user
-		auth.password.isMatch(pword, passwordHashed, function (err, match) {
-			if (err) {
-				res.send({ error: err });
-			}
-			else {
-				res.send({ username: uname, match: match });
-			}
-			
-		});
-		
-	}
-	else {
-		res.send("Invalid Password");
-	}
+	auth.password.findUser(uname, function (user) {
+		if (user) {
+			//Compare passwords
+			auth.password.isMatch(pword, user.password, function (err, match) {
+				if (!err && match) {
+					res.send({ username: user.name, is_admin: user.is_admin });
+				} else {
+					res.send({ success: false, message: LOGIN_ERROR_MSG, error: err || undefined });
+				}
+			});
+		} else {
+			res.send({ success: false, message: LOGIN_ERROR_MSG });
+		}
+	});
 });
 
 module.exports = router;

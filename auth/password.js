@@ -22,7 +22,7 @@ module.exports = {
   verifyToken: function (token, callback) {
     jwt.verify(token, config.secret, callback);
   },
-  login: function (name, password, callback) {
+  findUser: function (name, callback) {
     models.User.findOne({
       where: {
         name: name
@@ -42,6 +42,8 @@ module.exports = {
             is_admin: is_admin
           }).then(function (user) {
             callback(true, user, null);
+          }).catch(function (error) {
+            callback(false, null, error);
           }); 
         }
       }); 
