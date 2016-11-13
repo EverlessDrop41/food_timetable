@@ -30,7 +30,7 @@ module.exports = function (is_production, callback) {
 	  //models.Food.sync({ force: !is_prod });
 	  //models.Course.sync({ force: !is_prod });
 
-	 	auth.password.register("admin", config.admin_pass, true, function (success, user, error) {
+	 	auth.user.register("admin", config.admin_pass, true, function (success, user, error) {
 			if (success) {
 				console.log("Created admin user");
 			} else {

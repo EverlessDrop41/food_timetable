@@ -50,8 +50,7 @@ models = require("../models");
  *    }
  */
 router.get('/', function (req, res) {
-  models.Food.findAll()
-    .then(function(food) {
+  models.Food.findAll().then(function(food) {
     res.send({food: food});
   }).catch(function (err) {
     console.error(err);

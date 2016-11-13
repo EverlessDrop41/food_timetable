@@ -25,7 +25,7 @@ router.post('/register', function (req, res) {
 
 
 	if (auth.password.isValid(pword)) {
-		auth.password.register(uname, pword, false, function (success, user, error) {
+		auth.user.register(uname, pword, false, function (success, user, error) {
 			if (success) {
 				res.send({success: true, user: user});
 			} else {
@@ -43,7 +43,7 @@ router.post('/login', function (req, res) {
 	var uname = req.body.username;
 	var pword = req.body.password;
 
-	auth.password.findUser(uname, function (user) {
+	auth.user.findUser(uname, function (user) {
 		if (user) {
 			//Compare passwords
 			auth.password.isMatch(pword, user.password, function (err, match) {
