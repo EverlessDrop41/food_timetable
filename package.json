@@ -5,7 +5,7 @@
   "main": "app.js",
   "repository": "https://github.com/EverlessDrop41/food_timetable_node",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "gen_doc": "apidoc -i routes/ -o apidoc/"
   },
   "author": "",
@@ -20,5 +20,11 @@
     "mysql": "^2.11.1",
     "nunjucks": "^2.5.2",
     "sequelize": "^3.24.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.1.2",
+    "nwjs-test-runner": "^1.6.0"
   }
 }

@@ -34,7 +34,7 @@ app.use('/api', require("./apiroutes"));
 app.use('/', require("./routes"));
 
 //Get the desired port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 5000;
 
 var init_db = require("./init_db");
 init_db(is_prod, function (successful) {
@@ -45,10 +45,6 @@ init_db(is_prod, function (successful) {
 	} else {
 		console.error("Failed to connect to database, not launching server");
 	}
-	
 });
 
-/*//Run the server
-app.listen(port, function () {
-  console.log('Food Timetable app listening on port ' + port + '!');
-});*/
+module.exports = app;
