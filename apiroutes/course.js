@@ -52,6 +52,16 @@ router.get('/', function (req, res) {
   });
 });
 
+/**
+ * @api {get} /api/food/:id Get A Course by Id
+ * @apiName GetCourseById
+ * @apiDescription Find Course by Id
+ * @apiGroup Course
+ *
+ * @apiParam {Number} id The Course's unique ID.
+ *
+ * @apiError NotFound A 404 error when the id cannot be found
+ */
 router.get('/:id', function (req, res) {
   models.Course.findById(
     req.params.id, {
@@ -71,6 +81,18 @@ router.get('/:id', function (req, res) {
   });
 });
 
+/**
+ * @api {put} /api/food/:id Update a course
+ * @apiName UpdateCourse
+ * @apiDescription Update a course
+ * @apiGroup Course
+ *
+ * @apiParam {Number} id The Course's unique ID.
+ * @apiParam {Array} food The id's of the food
+ *
+ *
+ * @apiError NotFound A 404 error when the id cannot be found
+ */
 router.put('/:id', function (req, res) {
   models.Course.findById(
     req.params.id, {

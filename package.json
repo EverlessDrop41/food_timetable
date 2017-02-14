@@ -6,7 +6,7 @@
   "repository": "https://github.com/EverlessDrop41/food_timetable_node",
   "scripts": {
     "test": "mocha",
-    "gen_doc": "apidoc -i routes/ -o apidoc/"
+    "gen_doc": "apidoc -i apiroutes/ -o apidoc/"
   },
   "author": "",
   "license": "ISC",
