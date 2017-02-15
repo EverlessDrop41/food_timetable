@@ -52,6 +52,26 @@ router.get('/', function (req, res) {
   });
 });
 
+router.post('/', function (req, res) {
+
+  models.Course.create({
+    name: req.body.name
+  }, {
+    include: [{
+      model: models.Food,
+      as: "Food"
+    }]
+  }).then(function(course) {
+    console.log("Created course");
+    course.addFood(req.body.food).then(function () {
+      res.send(course);
+    });
+  }).catch(function (error) {
+    console.error(error);
+    res.status(501).send(error);
+  });
+});
+
 /**
  * @api {get} /api/food/:id Get A Course by Id
  * @apiName GetCourseById
@@ -121,5 +141,16 @@ router.put('/:id', function (req, res) {
   });
 });
 
+router.delete("/:id", function (req, res) {
+  models.Course.findById(req.params.id).then(function (course) {
+    if (course) {
+      course.destroy().then(function() {
+        res.sendStatus(204);
+      });
+    } else {
+      res.status(404).send("Not found");
+    }
+  });
+});
 
 module.exports = router;
