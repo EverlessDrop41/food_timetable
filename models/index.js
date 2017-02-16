@@ -34,9 +34,16 @@ Object.keys(db).forEach(function(modelName) {
 
 var Course = db.Course;
 var Food = db.Food;
+var Week = db.Week
 
 Food.belongsToMany(Course, { through: 'FoodCourseAssoc' });
 Course.belongsToMany(Food, { through: "FoodCourseAssoc" });
+
+Week.belongsTo(Course, { as: "Monday" });
+Week.belongsTo(Course, { as: "Tuesday" });
+Week.belongsTo(Course, { as: "Wednesday" });
+Week.belongsTo(Course, { as: "Thursday" });
+Week.belongsTo(Course, { as: "Friday" });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

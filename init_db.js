@@ -39,10 +39,12 @@ module.exports = function (is_production, callback) {
 		});
 
 		if (!is_production) {
+			//Make Food
 	    	models.Food.create({ name: "Pasta", price: 150 }).then(function (pasta) {
 		        console.log("Created food: " + pasta);
+		        //Make The Course
 		        models.Course.create({
-		          name: "Week 1",
+		          name: "Monday 1",
 		          Food: [
 		            { name: "Pizza", price: 100 }
 		          ]
@@ -54,10 +56,28 @@ module.exports = function (is_production, callback) {
 		        }).then(function(course) {
 		          console.log("Created sample");
 		          course.addFood(pasta).then(function () {
-		            //success!
-		            callback(true);
+		          	//Make the Week
+		            models.Week.create({
+		            	name: "Week",
+		            	MondayId: 1,
+		            	TuesdayId: 1,
+		            	WednesdayId: 1,
+		            	ThursdayId: 1,
+		            	FirdayId: 1
+		            }).then(function(week) {
+		            	callback(true);
+		            }).catch(function (err) {
+		            	//Week create error
+		            	console.error(err);
+		            	callback(false);
+		            });
+		          }).catch(function(e) { 
+		          	//Pasta add error
+		          	console.error(e);
+		          	callback(false); 
 		          });
 		        }).catch(function (error) {
+		        	//Course create error
 		          console.error(error);
 		          //logSqlizeError(error);
 		        });
