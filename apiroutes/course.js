@@ -4,7 +4,7 @@ var router = express.Router();
 models = require("../models");
 
 /**
- * @api {get} /api/course/ Get All Courses
+ * @api {get} /api/course Get All Courses
  * @apiName GetCourses
  * @apiGroup Course
  *
@@ -52,6 +52,14 @@ router.get('/', function (req, res) {
   });
 });
 
+/**
+ * @api {post} /api/course Create a Course
+ * @apiName CreateCourse
+ * @apiDescription Create a course
+ * @apiGroup Course
+ *
+ * @apiParam {Number[]} food An array of the ids of the food in the course
+ */
 router.post('/', function (req, res) {
 
   models.Course.create({
@@ -65,6 +73,8 @@ router.post('/', function (req, res) {
     console.log("Created course");
     course.addFood(req.body.food).then(function () {
       res.send(course);
+    }).catch(function() {
+      res.send("Error adding food");
     });
   }).catch(function (error) {
     console.error(error);
@@ -73,7 +83,7 @@ router.post('/', function (req, res) {
 });
 
 /**
- * @api {get} /api/food/:id Get A Course by Id
+ * @api {get} /api/course/:id Get A Course by Id
  * @apiName GetCourseById
  * @apiDescription Find Course by Id
  * @apiGroup Course
@@ -102,7 +112,7 @@ router.get('/:id', function (req, res) {
 });
 
 /**
- * @api {put} /api/food/:id Update a course
+ * @api {put} /api/course/:id Update a course
  * @apiName UpdateCourse
  * @apiDescription Update a course
  * @apiGroup Course
@@ -141,6 +151,14 @@ router.put('/:id', function (req, res) {
   });
 });
 
+/**
+ * @api {delete} /api/course/:id Delete A Course
+ * @apiName DeleteCourse
+ * @apiDescription Delete a course
+ * @apiGroup Course
+ *
+ * @apiParam {Number} id The id of the course to be deleted
+ */
 router.delete("/:id", function (req, res) {
   models.Course.findById(req.params.id).then(function (course) {
     if (course) {
