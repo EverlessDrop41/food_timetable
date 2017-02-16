@@ -78,7 +78,7 @@ router.post('/', function (req, res) {
     });
   }).catch(function (error) {
     console.error(error);
-    res.status(501).send(error);
+    res.status(500).send(error);
   });
 });
 
@@ -146,8 +146,7 @@ router.put('/:id', function (req, res) {
     }
   }).catch(function (err) {
     console.error(err);
-    res.status(500);
-    res.send("Internal Server Error")
+    res.status(500).send("Internal Server Error")
   });
 });
 
