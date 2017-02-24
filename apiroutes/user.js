@@ -6,11 +6,23 @@ models = require("../models");
 
 var passwordHashed = "$2a$10$xZBU0ONsinYUW1mSH5G2Bu5nk0lJQ3k8pwO6Mrczf4CZVrcTxgfvC";
 
+/*
+  Auth Testing methods
+  The nest 2 methods are used to test out the auth middleware
+*/
+
 router.get('/secret', auth.middleware.is_admin, function (req, res) {
   res.send({
     admin: req.is_admin,
     credentials: req.credentials,
     auth_err: req.auth_err
+  });
+});
+
+router.get('/supersecret', auth.middleware.require_admin, function (req, res) {
+  res.send({
+    admin: req.is_admin,
+    credentials: req.credentials
   });
 });
 
