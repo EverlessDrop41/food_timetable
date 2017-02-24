@@ -140,7 +140,7 @@ router.get('/:id', function (req, res) {
  *   }
  *
  */
-router.post("/", function(req, res) {
+router.post("/", auth.middleware.require_admin, function(req, res) {
   if (req.body && req.body.name && req.body.price) {
     try {
       req.body.price = parseInt(req.body.price);
@@ -207,7 +207,7 @@ router.post("/", function(req, res) {
  * HTTP 400
  * Price must be an integer
  */
-router.put('/:id', function (req, res) {
+router.put('/:id', auth.middleware.require_admin, function (req, res) {
   models.Food.findById(req.params.id).then(function (food) {
     if (food) {
       if (req.body) {
@@ -256,7 +256,7 @@ router.put('/:id', function (req, res) {
  * HTTP 404
  * Not Found
  */
-router.delete('/:id', function (req, res) {
+router.delete('/:id', auth.middleware.require_admin, function (req, res) {
   models.Food.findById(req.params.id).then(function (food) {
     if (food) {
       food.destroy().then(function () {

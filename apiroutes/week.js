@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('../auth');
 
 models = require("../models");
 
@@ -60,7 +61,7 @@ router.get('/:id', function (req, res) {
 	});
 });
 
-router.post('/', function (req, res) {
+router.post('/', auth.middleware.require_admin, function (req, res) {
 	if (!req.body.name) {
 		res.send("Name is required");
 		return;
@@ -80,7 +81,7 @@ router.post('/', function (req, res) {
 	});
 });
 
-router.put("/:id", function (req, res) {
+router.put("/:id", auth.middleware.require_admin, function (req, res) {
 	models.Week.findById(req.params.id).then(function (Week) {
     if (Week) {
 
@@ -109,7 +110,7 @@ router.put("/:id", function (req, res) {
   });
 })
 
-router.delete("/:id", function (req, res) {
+router.delete("/:id", auth.middleware.require_admin, function (req, res) {
 	models.Week.findById(req.params.id).then(function (Week) {
     if (Week) {
       Week.destroy().then(function() {

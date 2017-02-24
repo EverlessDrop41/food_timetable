@@ -53,36 +53,6 @@ router.get('/', function (req, res) {
 });
 
 /**
- * @api {post} /api/course Create a Course
- * @apiName CreateCourse
- * @apiDescription Create a course
- * @apiGroup Course
- *
- * @apiParam {Number[]} food An array of the ids of the food in the course
- */
-router.post('/', function (req, res) {
-
-  models.Course.create({
-    name: req.body.name
-  }, {
-    include: [{
-      model: models.Food,
-      as: "Food"
-    }]
-  }).then(function(course) {
-    console.log("Created course");
-    course.addFood(req.body.food).then(function () {
-      res.send(course);
-    }).catch(function() {
-      res.send("Error adding food");
-    });
-  }).catch(function (error) {
-    console.error(error);
-    res.status(500).send(error);
-  });
-});
-
-/**
  * @api {get} /api/course/:id Get A Course by Id
  * @apiName GetCourseById
  * @apiDescription Find Course by Id
@@ -112,6 +82,36 @@ router.get('/:id', function (req, res) {
 });
 
 /**
+ * @api {post} /api/course Create a Course
+ * @apiName CreateCourse
+ * @apiDescription Create a course
+ * @apiGroup Course
+ *
+ * @apiParam {Number[]} food An array of the ids of the food in the course
+ */
+router.post('/', auth.middleware.require_admin, function (req, res) {
+
+  models.Course.create({
+    name: req.body.name
+  }, {
+    include: [{
+      model: models.Food,
+      as: "Food"
+    }]
+  }).then(function(course) {
+    console.log("Created course");
+    course.addFood(req.body.food).then(function () {
+      res.send(course);
+    }).catch(function() {
+      res.send("Error adding food");
+    });
+  }).catch(function (error) {
+    console.error(error);
+    res.status(500).send(error);
+  });
+});
+
+/**
  * @api {put} /api/course/:id Update a course
  * @apiName UpdateCourse
  * @apiDescription Update a course
@@ -123,7 +123,7 @@ router.get('/:id', function (req, res) {
  *
  * @apiError NotFound A 404 error when the id cannot be found
  */
-router.put('/:id', function (req, res) {
+router.put('/:id', auth.middleware.require_admin, function (req, res) {
   models.Course.findById(
     req.params.id, {
       include: [{
@@ -158,7 +158,7 @@ router.put('/:id', function (req, res) {
  *
  * @apiParam {Number} id The id of the course to be deleted
  */
-router.delete("/:id", function (req, res) {
+router.delete("/:id", auth.middleware.require_admin, function (req, res) {
   models.Course.findById(req.params.id).then(function (course) {
     if (course) {
       course.destroy().then(function() {

@@ -22,7 +22,7 @@ router.get('/supersecret', auth.middleware.require_admin, function (req, res) {
   });
 });
 
-router.get('/', function (req, res) {
+router.get('/', auth.middleware.require_admin, function (req, res) {
   models.User.findAll().then(function(users) {
     res.send({ users: users });
   }).catch(function (err) {
@@ -31,7 +31,7 @@ router.get('/', function (req, res) {
   });
 });
 
-router.post('/register', function (req, res) {
+router.post('/register', auth.middleware.require_admin, function (req, res) {
 
 	var r_user = b_auth(req);
 
