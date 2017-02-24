@@ -1,11 +1,17 @@
+var b_auth = require('basic-auth');
+var u_auth = require('./user');
+
 module.exports = {
-  redirection_url: "/",
   is_admin: function (req, res, next) {
     //TODO: Write proper security
-    if (true) {
+
+    var credentials = b_auth(req);
+
+    u_auth.isAdmin(credentials.name, credentials.pass, function (result, err) {
+      req.credentials = credentials;
+      req.is_admin = result;
+      req.auth_err = err;
       next();
-    } else {
-      res.redirect(self.redirection_url);
-    }
+    });
   }
 }

@@ -1,11 +1,18 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../auth'); 
-var b_auth = require('basic-auth')
+var auth = require('../auth');
 
 models = require("../models");
 
 var passwordHashed = "$2a$10$xZBU0ONsinYUW1mSH5G2Bu5nk0lJQ3k8pwO6Mrczf4CZVrcTxgfvC";
+
+router.get('/secret', auth.middleware.is_admin, function (req, res) {
+  res.send({
+    admin: req.is_admin,
+    credentials: req.credentials,
+    auth_err: req.auth_err
+  });
+});
 
 router.get('/', function (req, res) {
   models.User.findAll().then(function(users) {
