@@ -1,16 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../auth');
-
-models = require("../models");
-
-var passwordHashed = "$2a$10$xZBU0ONsinYUW1mSH5G2Bu5nk0lJQ3k8pwO6Mrczf4CZVrcTxgfvC";
+var models = require("../models");
 
 /*
   Auth Testing methods
   The nest 2 methods are used to test out the auth middleware
 */
-
 router.get('/secret', auth.middleware.is_admin, function (req, res) {
   res.send({
     admin: req.is_admin,
