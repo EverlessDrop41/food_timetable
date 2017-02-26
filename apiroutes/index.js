@@ -19,7 +19,6 @@ models = require("../models");
 router.use(  '/food', require('./food')   );
 router.use('/course', require('./course') );
 router.use(  '/week', require('./week')   );
-
 router.use(  '/user', require('./user')   );
 
 module.exports = router;
