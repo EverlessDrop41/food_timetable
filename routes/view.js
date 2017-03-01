@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 router.get("/", function (req, res) {
-  res.render("index.nunj");
+  res.render("overview");
 });
 
-router.use("/public", require("./view"));
+router.get("/food", function (req, res) {
+  res.render("food.nunj");
+});
 
 module.exports = router;

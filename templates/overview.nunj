@@ -1,0 +1,13 @@
+{% extends "layout.nunj" %}
+{% block body %}
+    <h2>Food Timetable Overview</h2>
+    <div class="week_container">
+      <table>
+        <tbody>
+          <tr>
+            <td>Mon 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
