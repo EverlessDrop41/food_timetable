@@ -3,7 +3,6 @@ var express = require('express');
 var morgan = require('morgan');
 var app = express();
 var fs = require("fs");
-var nunjucks = require("nunjucks");
 
 models = require("./models");
 var is_prod = process.env.IS_PROD || false;
@@ -20,19 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-//Setup templating
-app.set('view engine', 'nunjucks');
-nunjucks.configure('templates', {
-  autoescape: true,
-  noCache: true,
-  express: app
-});
-
 //Include Routes
-app.use('/static', express.static('public'));
 app.use('/docs', express.static('apidoc'));
 app.use('/api', require("./apiroutes"));
-app.use('/', require("./routes"));
+
+app.get('/', function (req, res) {
+	res.send('for api docs visit <a href="/docs">here</a>')
+})
 
 //Get the desired port
 var port = process.env.PORT || 5000;
