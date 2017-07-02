@@ -20,7 +20,7 @@ module.exports = function () {
         'week': Week
       },
       data: {
-        title: "FOOD"
+        title: "Food Menu"
       }
     });
   });

@@ -14,4 +14,4 @@ RUN mkdir -p /code && cp -a /tmp/node_modules /code
 WORKDIR /code
 ADD . /code
 
-CMD ["nodemon", "-L", "/code/app.js"]
+CMD ["nodemon", "-L", "/code/app.js", "--config", "/code/nodemon.json"]
