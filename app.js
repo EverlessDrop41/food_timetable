@@ -35,7 +35,7 @@ app.use('/api', require("./apiroutes"));
 app.use('/public', require("./public"))
 
 app.get('/', function (req, res) {
-	res.send('for api docs visit <a href="/docs">here</a>')
+	res.send('for api docs visit <a href="/docs">here</a> <br> for frontend visit <a href="/public">here</a>')
 })
 
 //Get the desired port
