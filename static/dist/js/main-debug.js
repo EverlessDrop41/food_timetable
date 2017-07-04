@@ -23344,8 +23344,9 @@ null, not in expected range: Other
 5: Drink
 */
 module.exports = {
-	props: ["weekId"],
+	props: ["week-id"],
   data: function () {
+    //TODO: load week data via network
     return { week: {
       id: 1,
       name: "Week",
@@ -23541,7 +23542,7 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\" v-if=\"week\">\n\t\t<!-- <tr>\n \t\t<th>Day</th> <th>Main</th> <th>Hot Ready to Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th>\n \t</tr> -->\n\n   <tbody><tr>\n     <th>Day</th> <th>Food</th> <th></th>\n   </tr>\n\n \t<tr v-if=\"week.Monday\">\n     <td>Monday</td> \n     <td><span v-for=\"f in week.Monday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Tuesday\">\n     <td>Tuesday</td> \n     <td><span v-for=\"f in week.Tuesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Wednesday\">\n     <td>Wednesday</td> \n     <td><span v-for=\"f in week.Wednesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Thursday\">\n     <td>Thursday</td> \n     <td><span v-for=\"f in week.Thursday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Friday\">\n     <td>Friday</td> \n     <td><span v-for=\"f in week.Friday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n </tbody></table>\n <div v-else=\"\">\n   Week not found\n </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\" v-if=\"week\">\n\t\t<!-- <tr>\n \t\t<th>Day</th> <th>Main</th> <th>Hot Ready to Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th>\n \t</tr> -->\n\n   <tbody><tr>\n     <th>Day</th> <th>Food</th> <th></th>\n   </tr>\n\n \t<tr v-if=\"week.Monday\">\n     <td>Monday</td> \n     <td><span v-for=\"f in week.Monday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a href=\"/public/course/{{week.MondayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Tuesday\">\n     <td>Tuesday</td> \n     <td><span v-for=\"f in week.Tuesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a href=\"/public/course/{{week.TuesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Wednesday\">\n     <td>Wednesday</td> \n     <td><span v-for=\"f in week.Wednesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a href=\"/public/course/{{week.WednesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Thursday\">\n     <td>Thursday</td> \n     <td><span v-for=\"f in week.Thursday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a href=\"/public/course/{{week.ThursdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Friday\">\n     <td>Friday</td> \n     <td><span v-for=\"f in week.Friday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a href=\"/public/course/{{week.FridayId}}\">view in detail</a></td>\n   </tr>\n </tbody></table>\n <div v-else=\"\">\n   Week not found\n </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

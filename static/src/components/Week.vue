@@ -19,31 +19,31 @@
   	<tr v-if="week.Monday">
       <td>Monday</td> 
       <td><span v-for="f in week.Monday.Food">{{ f.name }}: {{f.price}}<br></span></td> 
-      <td><a>view in detail</a></td>
+      <td><a href="/public/course/{{week.MondayId}}">view in detail</a></td>
     </tr>
 
     <tr v-if="week.Tuesday">
       <td>Tuesday</td> 
       <td><span v-for="f in week.Tuesday.Food">{{ f.name }}: {{f.price}}<br></span></td> 
-      <td><a>view in detail</a></td>
+      <td><a href="/public/course/{{week.TuesdayId}}">view in detail</a></td>
     </tr>
 
     <tr v-if="week.Wednesday">
       <td>Wednesday</td> 
       <td><span v-for="f in week.Wednesday.Food">{{ f.name }}: {{f.price}}<br></span></td> 
-      <td><a>view in detail</a></td>
+      <td><a href="/public/course/{{week.WednesdayId}}">view in detail</a></td>
     </tr>
 
     <tr v-if="week.Thursday">
       <td>Thursday</td> 
       <td><span v-for="f in week.Thursday.Food">{{ f.name }}: {{f.price}}<br></span></td> 
-      <td><a>view in detail</a></td>
+      <td><a href="/public/course/{{week.ThursdayId}}">view in detail</a></td>
     </tr>
 
     <tr v-if="week.Friday">
       <td>Friday</td> 
       <td><span v-for="f in week.Friday.Food">{{ f.name }}: {{f.price}}<br></span></td> 
-      <td><a>view in detail</a></td>
+      <td><a href="/public/course/{{week.FridayId}}">view in detail</a></td>
     </tr>
   </table>
   <div v-else>
@@ -61,8 +61,9 @@ null, not in expected range: Other
 5: Drink
 */
 module.exports = {
-	props: ["weekId"],
+	props: ["week-id"],
   data: function () {
+    //TODO: load week data via network
     return { week: {
       id: 1,
       name: "Week",

@@ -1,5 +1,5 @@
 {% extends "layout.nunj" %}
 
 {% block body %}
-<week></week>
+<week week-id="1"></week>
 {% endblock %}
