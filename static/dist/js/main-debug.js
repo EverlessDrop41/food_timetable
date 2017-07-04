@@ -23318,12 +23318,230 @@ var __vueify_style__ = __vueify_insert__.insert("\n.red {\n  color: #F00;\n}\n")
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+null, not in expected range: Other
+0: Main
+2: Hot Ready To Go
+3: Pasta Bar
+4: Dessert
+5: Drink
+*/
 module.exports = {
-	props: ["weekId"]
+	props: ["weekId"],
+  data: function () {
+    return { week: {
+      id: 1,
+      name: "Week",
+      createdAt: "2017-07-03T22:58:05.000Z",
+      updatedAt: "2017-07-03T22:58:05.000Z",
+      MondayId: 1,
+      TuesdayId: 1,
+      WednesdayId: 1,
+      ThursdayId: 1,
+      FridayId: null,
+      Monday: {
+        id: 1,
+        name: "Monday 1",
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        Food: [
+        {
+          id: 1,
+          name: "Pasta",
+          description: null,
+          price: 150,
+          category: null,
+          vegetarian: false,
+          vegan: false,
+          dairyFree: false,
+          glutenFree: false,
+          createdAt: "2017-07-03T22:58:05.000Z",
+          updatedAt: "2017-07-03T22:58:05.000Z",
+          FoodCourseAssoc: {
+            createdAt: "2017-07-03T22:58:05.000Z",
+            updatedAt: "2017-07-03T22:58:05.000Z",
+            FoodId: 1,
+            CourseId: 1
+          }
+        }, {
+          id: 2,
+          name: "Pizza",
+          description: null,
+          price: 100,
+          category: null,
+          vegetarian: false,
+          vegan: false,
+          dairyFree: false,
+          glutenFree: false,
+          createdAt: "2017-07-03T22:58:05.000Z",
+          updatedAt: "2017-07-03T22:58:05.000Z",
+          FoodCourseAssoc: {
+            createdAt: "2017-07-03T22:58:05.000Z",
+            updatedAt: "2017-07-03T22:58:05.000Z",
+            FoodId: 2,
+            CourseId: 1
+          }
+        }]
+      },
+      Tuesday: {
+        id: 1,
+        name: "Monday 1",
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        Food: [
+          {
+            id: 1,
+            name: "Pasta",
+            description: null,
+            price: 150,
+            category: null,
+            vegetarian: false,
+            vegan: false,
+            dairyFree: false,
+            glutenFree: false,
+            createdAt: "2017-07-03T22:58:05.000Z",
+            updatedAt: "2017-07-03T22:58:05.000Z",
+            FoodCourseAssoc: {
+              createdAt: "2017-07-03T22:58:05.000Z",
+              updatedAt: "2017-07-03T22:58:05.000Z",
+              FoodId: 1,
+              CourseId: 1
+            }
+          },{
+            id: 2,
+            name: "Pizza",
+            description: null,
+            price: 100,
+            category: null,
+            vegetarian: false,
+            vegan: false,
+            dairyFree: false,
+            glutenFree: false,
+            createdAt: "2017-07-03T22:58:05.000Z",
+            updatedAt: "2017-07-03T22:58:05.000Z",
+            FoodCourseAssoc: {
+              createdAt: "2017-07-03T22:58:05.000Z",
+              updatedAt: "2017-07-03T22:58:05.000Z",
+              FoodId: 2,
+              CourseId: 1
+          }
+        } ]
+      },
+      Wednesday: {
+        id: 1,
+        name: "Monday 1",
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        Food: [
+        {
+        id: 1,
+        name: "Pasta",
+        description: null,
+        price: 150,
+        category: null,
+        vegetarian: false,
+        vegan: false,
+        dairyFree: false,
+        glutenFree: false,
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodCourseAssoc: {
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodId: 1,
+        CourseId: 1
+        }
+        },
+        {
+        id: 2,
+        name: "Pizza",
+        description: null,
+        price: 100,
+        category: null,
+        vegetarian: false,
+        vegan: false,
+        dairyFree: false,
+        glutenFree: false,
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodCourseAssoc: {
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodId: 2,
+        CourseId: 1
+        }
+        }
+        ]
+      },
+      Thursday: {
+        id: 1,
+        name: "Monday 1",
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        Food: [
+        {
+        id: 1,
+        name: "Pasta",
+        description: null,
+        price: 150,
+        category: null,
+        vegetarian: false,
+        vegan: false,
+        dairyFree: false,
+        glutenFree: false,
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodCourseAssoc: {
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodId: 1,
+        CourseId: 1
+        }
+        },
+        {
+        id: 2,
+        name: "Pizza",
+        description: null,
+        price: 100,
+        category: null,
+        vegetarian: false,
+        vegan: false,
+        dairyFree: false,
+        glutenFree: false,
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodCourseAssoc: {
+        createdAt: "2017-07-03T22:58:05.000Z",
+        updatedAt: "2017-07-03T22:58:05.000Z",
+        FoodId: 2,
+        CourseId: 1
+        }
+        }
+        ]
+      },
+      Friday: null} }
+  }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\">\n\t\t<tbody><tr>\n \t\t<th>Day</th> <th>Food</th> <th></th>\n \t</tr>\n\n \t<tr>\n \t\t<td>Monday</td> <td>Pasta: £2.00 <br>Pizza: £2.25 <br>Curry: £3.00</td> <td><a>view in detail</a></td>\n \t</tr>\n\n \t<tr>\n \t\t<td>Tuesday</td> <td>Pasta: £2.00 <br>Pizza: £2.25 <br>Curry: £3.00</td> <td><a>view in detail</a></td>\n \t</tr>\n\n \t<tr>\n \t\t<td>Wednesday</td> <td>Pasta: £2.00 <br>Pizza: £2.25 <br>Curry: £3.00</td> <td><a>view in detail</a></td>\n \t</tr>\n\n \t<tr>\n \t\t<td>Thursday</td> <td>Pasta: £2.00 <br>Pizza: £2.25 <br>Curry: £3.00</td> <td><a>view in detail</a></td>\n \t</tr>\n\n \t<tr>\n \t\t<td>Friday</td> <td>Pasta: £2.00 <br>Pizza: £2.25 <br>Curry: £3.00</td> <td><a>view in detail</a></td>\n \t</tr>\n </tbody></table>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\" v-if=\"week\">\n\t\t<!-- <tr>\n \t\t<th>Day</th> <th>Main</th> <th>Hot Ready to Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th>\n \t</tr> -->\n\n   <tbody><tr>\n     <th>Day</th> <th>Food</th> <th></th>\n   </tr>\n\n \t<tr v-if=\"week.Monday\">\n     <td>Monday</td> \n     <td><span v-for=\"f in week.Monday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Tuesday\">\n     <td>Tuesday</td> \n     <td><span v-for=\"f in week.Tuesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Wednesday\">\n     <td>Wednesday</td> \n     <td><span v-for=\"f in week.Wednesday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Thursday\">\n     <td>Thursday</td> \n     <td><span v-for=\"f in week.Thursday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Friday\">\n     <td>Friday</td> \n     <td><span v-for=\"f in week.Friday.Food\">{{ f.name }}: {{f.price}}<br></span></td> \n     <td><a>view in detail</a></td>\n   </tr>\n </tbody></table>\n <div v-else=\"\">\n   Week not found\n </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
