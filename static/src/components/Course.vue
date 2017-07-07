@@ -15,37 +15,18 @@
 module.exports = {
 	props: ["courseId"],
   data: function () {
-    return {
-      course: {
-				"id": 1,
-				"name": "Monday 1",
-				"createdAt": "2017-07-07T12:08:07.000Z",
-				"updatedAt": "2017-07-07T12:08:07.000Z",
-				"Food": [
-					{
-						"id": 1,
-						"name": "Pasta",
-						"description": null,
-						"price": 150,
-						"category": null,
-						"vegetarian": false,
-						"vegan": false,
-						"dairyFree": false,
-						"glutenFree": false
-					},
-					{
-						"id": 2,
-						"name": "Pizza",
-						"description": null,
-						"price": 100,
-						"category": null,
-						"vegetarian": false,
-						"vegan": false,
-						"dairyFree": false,
-						"glutenFree": false
-					}
-				]
-			}}
+
+  	//Get the data from the api
+    this.$http.get('/api/course/' + this.courseId).then(function (response){
+      console.log(response.body);
+      vueInstance = this;
+      //use timeout to simulate network delay - REMOVE IN PROD
+      setTimeout(function() {vueInstance.course = response.body;}, 1);
+    }, function (response) {
+      console.error("Error retreiving the course");
+    });
+
+    return { course: null }
   }
 }
 </script>
