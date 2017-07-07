@@ -1,8 +1,12 @@
 module.exports = function () {
   //Import libaries
-  var Vue = require("Vue");
   var jq = require("jquery");
+  var Vue = require("Vue");
+  var VueResource = require('vue-resource');
 
+  //configure vue extensions
+  Vue.use(VueResource);
+  
   //configure jQuery
   window.$ = jq;
   window.jQuery = jq;
