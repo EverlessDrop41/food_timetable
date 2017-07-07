@@ -4,7 +4,7 @@
 
 		<ul>
 			<li v-for="f in course.Food">
-				<a href="/public/food/{{f.id}}">{{f.name}}</a> : {{ f.price }}
+				<a href="/public/food/{{f.id}}">{{f.name}}</a> : {{ monify(f.price) }}
 			</li>
 		</ul>
 	</span>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+utils = require('../utils');
+
 module.exports = {
 	props: ["courseId"],
   data: function () {
@@ -27,6 +29,9 @@ module.exports = {
     });
 
     return { course: null }
+  },
+  methods: {
+    monify: utils.poundStr
   }
 }
 </script>

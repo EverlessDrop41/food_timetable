@@ -6,7 +6,10 @@ router.get('/', function (req, res) {
 })
 
 router.get('/course/:id', function (req, res) {
-	res.render("course.nunj", {courseId:req.params.id});
+	res.render("course.nunj", {courseId: req.params.id});
 });
 
+router.get('/food/:id', function (req, res) {
+	res.render("food.nunj", {foodId: req.params.id});
+});
 module.exports = router;

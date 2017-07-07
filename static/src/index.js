@@ -13,8 +13,9 @@ module.exports = function () {
 
   //Import Components
   var App = require("./components/App.vue");
-  var Week = require("./components/Week.vue")
-  var Course = require("./components/Course.vue")
+  var Week = require("./components/Week.vue");
+  var Course = require("./components/Course.vue");
+  var Food = require("./components/Food.vue");
 
   $(document).ready(function () {
     console.log("READY");
@@ -23,7 +24,8 @@ module.exports = function () {
       components: {
         "app": App,
         "week": Week,
-        "course": Course
+        "course": Course,
+        "Food": Food
       },
       data: {
         title: "Food Menu"
