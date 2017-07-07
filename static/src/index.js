@@ -6,7 +6,7 @@ module.exports = function () {
 
   //configure vue extensions
   Vue.use(VueResource);
-  
+
   //configure jQuery
   window.$ = jq;
   window.jQuery = jq;
@@ -14,6 +14,7 @@ module.exports = function () {
   //Import Components
   var App = require("./components/App.vue");
   var Week = require("./components/Week.vue")
+  var Course = require("./components/Course.vue")
 
   $(document).ready(function () {
     console.log("READY");
@@ -21,7 +22,8 @@ module.exports = function () {
       el: 'body',
       components: {
         "app": App,
-        'week': Week
+        "week": Week,
+        "course": Course
       },
       data: {
         title: "Food Menu"

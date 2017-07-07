@@ -1,10 +1,3 @@
-// app.vue
-<style>
-  .red {
-    color: #F00;
-  }
-</style>
-
 <template>
   <h1>Week: {{weekId}}</h1>
   <table class="table table-bordered" v-if="week">
@@ -63,7 +56,9 @@ null, not in expected range: Other
 module.exports = {
 	props: ["weekId"],
   data: function () {
-    //TODO: load week data via network
+    //TODO: Add loading indicators
+
+    //Get the data from the api
     this.$http.get('/api/week/' + this.weekId).then(function (response){
       console.log(response.body);
       vueInstance = this;
@@ -72,6 +67,7 @@ module.exports = {
     }, function (response) {
       console.error("Error retreiving the week");
     });
+
     return { week: null }
   }
 }
