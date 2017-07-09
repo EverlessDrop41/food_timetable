@@ -1,5 +1,6 @@
 {% extends "layout.nunj" %}
 
 {% block body %}
+<courselist></courselist>
 <course course-id="{{ courseId }}"></course>
 {% endblock %}

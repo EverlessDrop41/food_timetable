@@ -58,7 +58,7 @@ module.exports = function (is_production, callback) {
 		          course.addFood(pasta).then(function () {
 		          	//Make the Week
 		            models.Week.create({
-		            	name: "Week",
+		            	name: "Week 1",
 		            	MondayId: 1,
 		            	TuesdayId: 1,
 		            	WednesdayId: 1,

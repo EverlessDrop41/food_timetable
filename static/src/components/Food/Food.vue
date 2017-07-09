@@ -22,7 +22,7 @@
 </template>
 
 <script>
-utils = require('../utils');
+utils = require('../../utils');
 
 module.exports = {
 	props: ["foodId"],
@@ -30,7 +30,6 @@ module.exports = {
 
   	//Get the data from the api
     this.$http.get('/api/food/' + this.foodId).then(function (response){
-      console.log(response.body);
       vueInstance = this;
       //use timeout to simulate network delay - REMOVE IN PROD
       setTimeout(function() {vueInstance.food = response.body;}, 1);

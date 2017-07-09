@@ -39,13 +39,18 @@
       <td><a href="/public/course/{{week.FridayId}}">view in detail</a></td>
     </tr>
   </table>
-  <div v-else>
-    Week not found
-  </div>
+  <span v-else>
+    <div v-if="loading">
+      Loading...
+    </div>
+    <div v-else>
+      Week Not Found
+    </div>
+  </span>
 </template>
 
 <script>
-utils = require('../utils');
+utils = require('../../utils');
 /*
 null, not in expected range: Other
 0: Main
@@ -60,16 +65,18 @@ module.exports = {
     //TODO: Add loading indicators
 
     //Get the data from the api
-    this.$http.get('/api/week/' + this.weekId).then(function (response){
-      console.log(response.body);
-      vueInstance = this;
+    this.$http.get('/api/week/' + this.weekId).then(function (response) {
       //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.week = response.body;}, 1);
+      //vueInstance = this;
+      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
+      this.week = response.body; 
+      this.loading = false;
     }, function (response) {
       console.error("Error retreiving the week");
+      this.loading = false;
     });
 
-    return { week: null }
+    return { week: null, loading: true }
   },
   methods: {
     monify: utils.poundStr

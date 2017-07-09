@@ -21,6 +21,11 @@ router.get('/', function (req, res) {
 	res.render("landing.nunj", req.session.templateData);
 })
 
+router.get('/week/:id', function (req, res) {
+	req.session.templateData.weekId = req.params.id;
+	res.render("week.nunj", req.session.templateData);
+});
+
 router.get('/course/:id', function (req, res) {
 	req.session.templateData.courseId = req.params.id;
 	res.render("course.nunj", req.session.templateData);

@@ -1,0 +1,6 @@
+{% extends "layout.nunj" %}
+
+{% block body %}
+<weeklist active-id="{{ weekId }}"></weeklist>
+<week week-id="{{ weekId }}"></week>
+{% endblock %}

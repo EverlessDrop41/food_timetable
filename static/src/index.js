@@ -13,19 +13,24 @@ module.exports = function () {
 
   //Import Components
   var App = require("./components/App.vue");
-  var Week = require("./components/Week.vue");
-  var Course = require("./components/Course.vue");
-  var Food = require("./components/Food.vue");
+  var Week = require("./components/Week/Week.vue");
+  var WeekList = require("./components/Week/WeekList.vue");
+  var Course = require("./components/Course/Course.vue");
+  var CourseList = require("./components/Course/CourseList.vue");
+  var Food = require("./components/Food/Food.vue");
+  var FoodList = require("./components/Food/FoodList.vue");
 
   $(document).ready(function () {
-    console.log("READY");
     new Vue({
       el: 'body',
       components: {
         "app": App,
         "week": Week,
+        "weeklist": WeekList,
         "course": Course,
-        "Food": Food
+        "courselist": CourseList,
+        "food": Food,
+        "foodlist": FoodList
       },
       data: {
         title: "Food Menu"

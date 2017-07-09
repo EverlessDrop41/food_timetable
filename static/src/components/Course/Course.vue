@@ -12,7 +12,7 @@
 </template>
 
 <script>
-utils = require('../utils');
+utils = require('../../utils');
 
 module.exports = {
 	props: ["courseId"],
@@ -20,7 +20,6 @@ module.exports = {
 
   	//Get the data from the api
     this.$http.get('/api/course/' + this.courseId).then(function (response){
-      console.log(response.body);
       vueInstance = this;
       //use timeout to simulate network delay - REMOVE IN PROD
       setTimeout(function() {vueInstance.course = response.body;}, 1);

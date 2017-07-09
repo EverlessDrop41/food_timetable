@@ -3,7 +3,7 @@ var src = require("./src");
 src();
 require('bootstrap');
 
-},{"./src":27,"bootstrap":3}],2:[function(require,module,exports){
+},{"./src":30,"bootstrap":3}],2:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -24865,7 +24865,7 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
-utils = require('../utils');
+utils = require('../../utils');
 
 module.exports = {
 	props: ["courseId"],
@@ -24873,7 +24873,6 @@ module.exports = {
 
   	//Get the data from the api
     this.$http.get('/api/course/' + this.courseId).then(function (response){
-      console.log(response.body);
       vueInstance = this;
       //use timeout to simulate network delay - REMOVE IN PROD
       setTimeout(function() {vueInstance.course = response.body;}, 1);
@@ -24895,12 +24894,67 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-702fba14", module.exports)
+    hotAPI.createRecord("_v-6770e074", module.exports)
   } else {
-    hotAPI.update("_v-702fba14", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-6770e074", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../utils":28,"vue":21,"vue-hot-reload-api":19}],25:[function(require,module,exports){
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],25:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+utils = require('../../utils');
+module.exports = {
+  props: ["activeId"],
+  data: function () {
+    this.$http.get('/api/course/').then(function (response) {
+      console.log(response.body.courses);
+      this.courses = response.body.courses; 
+      this.loading = false;
+    }, function (response) {
+      console.error("Error retreiving the list of courses");
+      this.loading = false;
+    });
+
+    return { courses: null, loading: true }
+  },
+  methods: {
+    monify: utils.poundStr
+  }
+}
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Course List</h1>\n<div v-if=\"courses\">\n  <ul class=\"list-group\">\n    <a v-for=\"course in courses\" href=\"/public/course/{{course.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == course.id }\">\n      {{course.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No courses were found\n  </div>\n</span>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-95fe42f8", module.exports)
+  } else {
+    hotAPI.update("_v-95fe42f8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
 
 
 
@@ -24925,7 +24979,7 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
-utils = require('../utils');
+utils = require('../../utils');
 
 module.exports = {
 	props: ["foodId"],
@@ -24933,7 +24987,6 @@ module.exports = {
 
   	//Get the data from the api
     this.$http.get('/api/food/' + this.foodId).then(function (response){
-      console.log(response.body);
       vueInstance = this;
       //use timeout to simulate network delay - REMOVE IN PROD
       setTimeout(function() {vueInstance.food = response.body;}, 1);
@@ -24955,12 +25008,66 @@ if (module.hot) {(function () {  module.hot.accept()
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-04eed117", module.exports)
+    hotAPI.createRecord("_v-c18b83b4", module.exports)
   } else {
-    hotAPI.update("_v-04eed117", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-c18b83b4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../utils":28,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+utils = require('../../utils');
+module.exports = {
+  props: ["activeId"],
+  data: function () {
+    this.$http.get('/api/food/').then(function (response) {
+      this.food = response.body.food; 
+      this.loading = false;
+    }, function (response) {
+      console.error("Error retreiving the list of food");
+      this.loading = false;
+    });
+
+    return { food: null, loading: true }
+  },
+  methods: {
+    monify: utils.poundStr
+  }
+}
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food\" href=\"/public/food/{{food.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-58355ce4", module.exports)
+  } else {
+    hotAPI.update("_v-58355ce4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
 
 
 
@@ -25008,7 +25115,12 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
-utils = require('../utils');
+
+
+
+
+
+utils = require('../../utils');
 /*
 null, not in expected range: Other
 0: Main
@@ -25023,16 +25135,18 @@ module.exports = {
     //TODO: Add loading indicators
 
     //Get the data from the api
-    this.$http.get('/api/week/' + this.weekId).then(function (response){
-      console.log(response.body);
-      vueInstance = this;
+    this.$http.get('/api/week/' + this.weekId).then(function (response) {
       //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.week = response.body;}, 1);
+      //vueInstance = this;
+      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
+      this.week = response.body; 
+      this.loading = false;
     }, function (response) {
       console.error("Error retreiving the week");
+      this.loading = false;
     });
 
-    return { week: null }
+    return { week: null, loading: true }
   },
   methods: {
     monify: utils.poundStr
@@ -25040,18 +25154,79 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\" v-if=\"week\">\n\t\t<!-- <tr>\n \t\t<th>Day</th> <th>Main</th> <th>Hot Ready to Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th>\n \t</tr> -->\n\n   <tbody><tr>\n     <th>Day</th> <th>Food</th> <th></th>\n   </tr>\n\n \t<tr v-if=\"week.Monday\">\n     <td>Monday</td> \n     <td><span v-for=\"f in week.Monday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.MondayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Tuesday\">\n     <td>Tuesday</td> \n     <td><span v-for=\"f in week.Tuesday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.TuesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Wednesday\">\n     <td>Wednesday</td> \n     <td><span v-for=\"f in week.Wednesday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.WednesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Thursday\">\n     <td>Thursday</td> \n     <td><span v-for=\"f in week.Thursday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.ThursdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Friday\">\n     <td>Friday</td> \n     <td><span v-for=\"f in week.Friday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.FridayId}}\">view in detail</a></td>\n   </tr>\n </tbody></table>\n <div v-else=\"\">\n   Week not found\n </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n <h1>Week: {{weekId}}</h1>\n <table class=\"table table-bordered\" v-if=\"week\">\n\t\t<!-- <tr>\n \t\t<th>Day</th> <th>Main</th> <th>Hot Ready to Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th>\n \t</tr> -->\n\n   <tbody><tr>\n     <th>Day</th> <th>Food</th> <th></th>\n   </tr>\n\n \t<tr v-if=\"week.Monday\">\n     <td>Monday</td> \n     <td><span v-for=\"f in week.Monday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.MondayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Tuesday\">\n     <td>Tuesday</td> \n     <td><span v-for=\"f in week.Tuesday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.TuesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Wednesday\">\n     <td>Wednesday</td> \n     <td><span v-for=\"f in week.Wednesday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.WednesdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Thursday\">\n     <td>Thursday</td> \n     <td><span v-for=\"f in week.Thursday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.ThursdayId}}\">view in detail</a></td>\n   </tr>\n\n   <tr v-if=\"week.Friday\">\n     <td>Friday</td> \n     <td><span v-for=\"f in week.Friday.Food\">{{ f.name }}: {{ monify(f.price) }}<br></span></td> \n     <td><a href=\"/public/course/{{week.FridayId}}\">view in detail</a></td>\n   </tr>\n </tbody></table>\n <span v-else=\"\">\n   <div v-if=\"loading\">\n     Loading...\n   </div>\n   <div v-else=\"\">\n     Week Not Found\n   </div>\n </span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-6d92aca6", module.exports)
+    hotAPI.createRecord("_v-6b4fa834", module.exports)
   } else {
-    hotAPI.update("_v-6d92aca6", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-6b4fa834", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../utils":28,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+utils = require('../../utils');
+module.exports = {
+  props: ['activeId'],
+  data: function () {
+    //TODO: Add loading indicators
+
+    //Get the data from the api
+    this.$http.get('/api/week/').then(function (response) {
+      //use timeout to simulate network delay - REMOVE IN PROD
+      //vueInstance = this;
+      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
+      console.log(response.body.weeks);
+      this.weeks = response.body.weeks; 
+      this.loading = false;
+    }, function (response) {
+      console.error("Error retreiving the list of weeks");
+      this.loading = false;
+    });
+
+    return { weeks: null, loading: true }
+  },
+  methods: {
+    monify: utils.poundStr
+  }
+}
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Week List</h1>\n<div v-if=\"weeks\">\n  <ul class=\"list-group\">\n    <a v-for=\"week in weeks\" href=\"/public/week/{{week.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == week.id }\">\n      {{week.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No weeks were found\n  </div>\n</span>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-79b32ab8", module.exports)
+  } else {
+    hotAPI.update("_v-79b32ab8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],30:[function(require,module,exports){
 module.exports = function () {
   //Import libaries
   var jq = require("jquery");
@@ -25067,19 +25242,24 @@ module.exports = function () {
 
   //Import Components
   var App = require("./components/App.vue");
-  var Week = require("./components/Week.vue");
-  var Course = require("./components/Course.vue");
-  var Food = require("./components/Food.vue");
+  var Week = require("./components/Week/Week.vue");
+  var WeekList = require("./components/Week/WeekList.vue");
+  var Course = require("./components/Course/Course.vue");
+  var CourseList = require("./components/Course/CourseList.vue");
+  var Food = require("./components/Food/Food.vue");
+  var FoodList = require("./components/Food/FoodList.vue");
 
   $(document).ready(function () {
-    console.log("READY");
     new Vue({
       el: 'body',
       components: {
         "app": App,
         "week": Week,
+        "weeklist": WeekList,
         "course": Course,
-        "Food": Food
+        "courselist": CourseList,
+        "food": Food,
+        "foodlist": FoodList
       },
       data: {
         title: "Food Menu"
@@ -25088,7 +25268,7 @@ module.exports = function () {
   });
 }
 
-},{"./components/App.vue":23,"./components/Course.vue":24,"./components/Food.vue":25,"./components/Week.vue":26,"Vue":2,"jquery":18,"vue-resource":20}],28:[function(require,module,exports){
+},{"./components/App.vue":23,"./components/Course/Course.vue":24,"./components/Course/CourseList.vue":25,"./components/Food/Food.vue":26,"./components/Food/FoodList.vue":27,"./components/Week/Week.vue":28,"./components/Week/WeekList.vue":29,"Vue":2,"jquery":18,"vue-resource":20}],31:[function(require,module,exports){
 module.exports = {
   poundStr: function(amt) {
     var pounds = Math.floor(amt / 100);
