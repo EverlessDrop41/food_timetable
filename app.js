@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var app = express();
 var fs = require("fs");
 var nunjucks = require("nunjucks");
+var cookieSession = require("cookie-session");
 
 models = require("./models");
 var is_prod = process.env.IS_PROD || false;
@@ -19,6 +20,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+//Setup cookie session
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
 //Setup templating
 app.set('view engine', 'nunjucks');

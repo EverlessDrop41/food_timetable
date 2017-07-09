@@ -29,16 +29,23 @@ module.exports = {
 	        name: username
 	      }
 	    }).then(function (user) {
-	    	password.isMatch(pword, user.password, function (err, match) {
-					if (!err && match) {
-						callback(user.is_admin, null);
-					} else {
-						callback(false, {
-							message: "Password does not match or there was an error",
-							error: err || null
-						});
-					}
+	    	if (!user) { 
+	    		callback(false, {
+					message: "User doesn't exist",
+					error: null
 				});
+				return;
+	    	}
+	    	password.isMatch(pword, user.password, function (err, match) {
+				if (!err && match) {
+					callback(user.is_admin, null);
+				} else {
+					callback(false, {
+						message: "Password does not match or there was an error",
+						error: err || null
+					});
+				}
+			});
 	    });
 	},
 	register: function (username, pword, is_admin, callback) {
