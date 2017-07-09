@@ -6,9 +6,9 @@ var auth = require('../auth');
 //Types can be success, info, warning, danger
 router.all('*', auth.middleware.is_admin, function (req, res, next) {
 
-	if (req.session.D_N_R_TD) {
+	if (req.session.DNRTD) {
 		req.session.templateData.is_admin = req.is_admin;
-		req.session.D_N_R_TD = false;
+		req.session.DNRTD = false;
 	} else {
 		req.session.templateData = {is_admin: req.is_admin, messages: []};
 	}
@@ -38,7 +38,7 @@ router.get('/login', function (req, res) {
 router.post('/login', function (req, res) {
 	if (req.is_admin) {
 		req.session.templateData.messages.push({ type: 'info', message: 'You were already logged in'});
-		req.session.D_N_R_TD;
+		req.session.DNRTD;
 		res.redirect('/public');
 	} else if (req.body.username && req.body.password) {
 		auth.user.isAdmin(req.body.username, req.body.password, function (is_admin, error) {
@@ -46,7 +46,7 @@ router.post('/login', function (req, res) {
 			if (is_admin) {
 				req.session.user = "Basic " + new Buffer(req.body.username + ":" + req.body.password).toString("base64");
 				req.session.templateData.messages.push({type: 'success', message: 'Successfully logged in!'});
-				req.session.D_N_R_TD = true;
+				req.session.DNRTD = true;
 				res.redirect('/public');
 			} else {
 				req.session.templateData.messages.push({type: 'danger', message: 'Username or password incorrect'});
@@ -62,7 +62,7 @@ router.post('/login', function (req, res) {
 router.get('/logout', function (req, res) {
 	req.session.templateData.messages.push({type: 'success', message: 'Successfully logged out!'});
 	req.session.user = null;
-	req.session.D_N_R_TD = true;
+	req.session.DNRTD = true;
 	res.redirect('/public')
 })
 module.exports = router;
