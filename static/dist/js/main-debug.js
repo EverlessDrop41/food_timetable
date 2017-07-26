@@ -3,7 +3,7 @@ var src = require("./src");
 src();
 require('bootstrap');
 
-},{"./src":30,"bootstrap":3}],2:[function(require,module,exports){
+},{"./src":31,"bootstrap":3}],2:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -24929,7 +24929,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-12ba5e57", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],25:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],25:[function(require,module,exports){
 
 
 
@@ -25004,7 +25004,106 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5d5006d6", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+null, not in expected range, -1: Other
+0: Main
+1: Hot Ready To Go
+2: Pasta Bar
+3: Dessert
+4: Drink
+*/
+utils = require('../../utils');
+module.exports = {
+  data: function () {
+    return { name: "", cost: 0, description: "", category: 0, vegetarian: false, vegan: false, dairyFree: false, glutenFree: false };
+  },
+  methods: {
+    monify: utils.poundStr
+  }
+}
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>Food Creator</h1>\n  <div class=\"form-group\">\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCostInput\">Cost (in pence)</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n</span>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-e971cb5a", module.exports)
+  } else {
+    hotAPI.update("_v-e971cb5a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
 
 
 
@@ -25085,7 +25184,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-31c415f7", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
 
 
 
@@ -25158,7 +25257,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5f7ce435", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
 
 
 
@@ -25289,7 +25388,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5ce203b7", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],30:[function(require,module,exports){
 
 
 
@@ -25376,7 +25475,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6b241c16", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":31,"vue":21,"vue-hot-reload-api":19}],30:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],31:[function(require,module,exports){
 module.exports = function () {
   //Import libaries
   var jq = require("jquery");
@@ -25398,6 +25497,7 @@ module.exports = function () {
   var CourseList = require("./components/Course/CourseList.vue");
   var Food = require("./components/Food/Food.vue");
   var FoodList = require("./components/Food/FoodList.vue");
+  var FoodCreate = require("./components/Food/CreateFood.vue");
 
   $(document).ready(function () {
     new Vue({
@@ -25409,7 +25509,8 @@ module.exports = function () {
         "course": Course,
         "courselist": CourseList,
         "food": Food,
-        "foodlist": FoodList
+        "foodlist": FoodList,
+        "createfood": FoodCreate
       },
       data: {
         title: "Food Menu"
@@ -25418,7 +25519,7 @@ module.exports = function () {
   });
 }
 
-},{"./components/App.vue":23,"./components/Course/Course.vue":24,"./components/Course/CourseList.vue":25,"./components/Food/Food.vue":26,"./components/Food/FoodList.vue":27,"./components/Week/Week.vue":28,"./components/Week/WeekList.vue":29,"Vue":2,"jquery":17,"vue-resource":20}],31:[function(require,module,exports){
+},{"./components/App.vue":23,"./components/Course/Course.vue":24,"./components/Course/CourseList.vue":25,"./components/Food/CreateFood.vue":26,"./components/Food/Food.vue":27,"./components/Food/FoodList.vue":28,"./components/Week/Week.vue":29,"./components/Week/WeekList.vue":30,"Vue":2,"jquery":17,"vue-resource":20}],32:[function(require,module,exports){
 module.exports = {
   poundStr: function(amt) {
     var pounds = Math.floor(amt / 100);
