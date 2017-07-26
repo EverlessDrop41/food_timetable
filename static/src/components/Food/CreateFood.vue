@@ -1,15 +1,18 @@
 <template>
   <span>
     <h1>Food Creator</h1>
-    <div class="form-group">
+    <div class="form-group" v-bind:class="{ 'has-error':nameError }">
+      <div class="alert alert-danger" v-if="nameError">{{ nameErrorMsg }}</div>
       <label for="foodNameInput">Name</label>
       <input type="text" class="form-control" id="foodNameInput" maxlength="255" placeholder="e.g. Pasta" require v-model="name">
     </div>
-    <div class="form-group">
+    <div class="form-group" v-bind:class="{ 'has-error':descriptionError }">
+      <div class="alert alert-danger" v-if="descriptionError">{{ descriptionErrorMsg }}</div>
       <label for="foodDescriptionInput">Description</label>
       <textarea class="form-control" id="foodDescriptionInput" maxlength="255" placeholder="Description (optional)" v-model="description"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group" v-bind:class="{ 'has-error':costError }">
+      <div class="alert alert-danger" v-if="costError">{{ costErrorMsg }}</div>
       <label for="foodCostInput">Cost</label>
       <div class="input-group">
         <span class="input-group-addon">{{ monify(cost) }}</span>
@@ -44,7 +47,7 @@
         <input type="checkbox" v-model="glutenFree"> Gluten Free
       </label>
     </div>
-    <button v-on="submit()" class="btn btn-default">Submit</button>
+    <button v-on:click="submit()" class="btn btn-default">Submit</button>
   </span>
 </template>
 
@@ -61,47 +64,51 @@ utils = require('../../utils');
 module.exports = {
   data: function () {
     return { name: "", cost: 0, description: "", category: 0, 
-    vegetarian: false, vegan: false, dairyFree: false, glutenFree: false.
-    nameError: false, descriptionError: true, costError: true };
+    vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
+    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", costError: false, costErrorMsg: "" };
   },
   methods: {
     monify: utils.poundStr,
-    submit: function() {
-      validate(function () {
-        console.log("submit");
-      });
-    },
     validate: function (successCallback) {
       var invalidForm = false;
 
-      if (name.length > 0 && name.length <= 255) {
-        nameError = false;
+      if (this.name.length > 0 && this.name.length <= 255) {
+        this.nameError = false;
       } else {
-        invalidForm = true;
-        nameError = true;
-      }
-
-      if (description.length <= 255) {
-        descriptionError = false;
-      } else {
-        descriptionError = true;
+        this.nameError = true;
+        this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
         invalidForm = true;
       }
 
-      if (cost >= 0) {
-        cost = parseInt(cost);
-        costError = false
+      if (this.description.length <= 255) {
+        this.descriptionError = false;
       } else {
-        costError = true;
+        this.descriptionError = true;
+        this.descriptionErrorMsg = "Description is too long, must be under 255 characters";
         invalidForm = true;
       }
 
-      category = parseInt(category);
-      if ([0, 1, 2, 3, 4].indexOf(category) === -1) {
-        category = -1;
+      if (this.cost >= 0) {
+        this.cost = parseInt(this.cost);
+        if (isNaN(this.cost)) { this.cost=0; }
+        this.costError = false
+      } else {
+        this.costError = true;
+        this.costErrorMsg = "Can't have a negative cost";
+        invalidForm = true;
+      }
+
+      this.category = parseInt(this.category);
+      if ([0, 1, 2, 3, 4].indexOf(this.category) === -1) {
+        this.category = -1;
       }
 
       if (!invalidForm) { successCallback(); }
+    },
+    submit: function() {
+      this.validate(function () {
+        console.log("submit");
+      });
     }
   }
 }

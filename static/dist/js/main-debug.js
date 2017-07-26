@@ -25005,6 +25005,186 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+null, not in expected range, -1: Other
+0: Main
+1: Hot Ready To Go
+2: Pasta Bar
+3: Dessert
+4: Drink
+*/
+utils = require('../../utils');
+module.exports = {
+  data: function () {
+    return { name: "", cost: 0, description: "", category: 0, 
+    vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
+    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", costError: false, costErrorMsg: "" };
+  },
+  methods: {
+    monify: utils.poundStr,
+    validate: function (successCallback) {
+      var invalidForm = false;
+
+      if (this.name.length > 0 && this.name.length <= 255) {
+        this.nameError = false;
+      } else {
+        this.nameError = true;
+        this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
+        invalidForm = true;
+      }
+
+      if (this.description.length <= 255) {
+        this.descriptionError = false;
+      } else {
+        this.descriptionError = true;
+        this.descriptionErrorMsg = "Description is too long, must be under 255 characters";
+        invalidForm = true;
+      }
+
+      if (this.cost >= 0) {
+        this.cost = parseInt(this.cost);
+        if (isNaN(this.cost)) { this.cost=0; }
+        this.costError = false
+      } else {
+        this.costError = true;
+        this.costErrorMsg = "Can't have a negative cost";
+        invalidForm = true;
+      }
+
+      this.category = parseInt(this.category);
+      if ([0, 1, 2, 3, 4].indexOf(this.category) === -1) {
+        this.category = -1;
+      }
+
+      if (!invalidForm) { successCallback(); }
+    },
+    submit: function() {
+      this.validate(function () {
+        console.log("submit");
+      });
+    }
+  }
+}
+
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>Food Creator</h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"submit()\" class=\"btn btn-default\">Submit</button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -25015,7 +25195,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-e971cb5a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
 
 
 
