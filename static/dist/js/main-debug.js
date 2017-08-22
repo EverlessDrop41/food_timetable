@@ -25367,6 +25367,15 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
+
+
+
+
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
@@ -25391,12 +25400,16 @@ module.exports = {
         console.error("Error retreiving the list of food");
         this.loading = false;
       });
+    },
+    deleteFood: function(id, e) {
+      if (e) {e.preventDefault();}
+      alert("Delete " + id);
     }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food\" href=\"/public/food/{{food.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food\" href=\"/public/food/{{food.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n      <span class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteFood(food.id, $event)\">\n          Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

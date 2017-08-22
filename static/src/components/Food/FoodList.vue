@@ -3,9 +3,14 @@
   <div v-if="food">
     <ul class="list-group" >
       <a v-for="food in food" 
-      href="/public/food/{{food.id}}" class="list-group-item" 
+      href="/public/food/{{food.id}}" class="list-group-item clearfix" 
       v-bind:class="{ active: activeId == food.id }">
         {{food.name}}
+        <span class="pull-right">
+          <span class="btn btn-xs btn-danger" v-on:click="deleteFood(food.id, $event)">
+            Delete
+          </span>
+        </span>
       </a>
     </ul>
   </div>
@@ -44,6 +49,10 @@ module.exports = {
         console.error("Error retreiving the list of food");
         this.loading = false;
       });
+    },
+    deleteFood: function(id, e) {
+      if (e) {e.preventDefault();}
+      alert("Delete " + id);
     }
   }
 }
