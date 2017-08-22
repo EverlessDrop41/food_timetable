@@ -61,6 +61,7 @@ null, not in expected range, -1: Other
 4: Drink
 */
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   data: function () {
     return { name: "", cost: 0, description: "", category: 0, 
@@ -120,7 +121,8 @@ module.exports = {
         }
         console.log(body);
         v.$http.post('/api/food/', body).then(function (response){
-          console.log(response.body)
+          console.log(response.body);
+          EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error creating new food");
         });

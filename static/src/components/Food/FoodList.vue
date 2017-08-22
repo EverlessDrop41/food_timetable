@@ -21,21 +21,30 @@
 
 <script>
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   props: ["activeId"],
   data: function () {
-    this.$http.get('/api/food/').then(function (response) {
-      this.food = response.body.food; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the list of food");
-      this.loading = false;
+    v = this;
+    v.updateFood();
+
+    EventBus.$on("UpdateFood", function () {
+      v.updateFood();
     });
 
     return { food: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    updateFood: function () {
+      this.$http.get('/api/food/').then(function (response) {
+        this.food = response.body.food; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the list of food");
+        this.loading = false;
+      });
+    }
   }
 }
 </script>

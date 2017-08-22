@@ -3,7 +3,7 @@ var src = require("./src");
 src();
 require('bootstrap');
 
-},{"./src":31,"bootstrap":3}],2:[function(require,module,exports){
+},{"./src":32,"bootstrap":3}],2:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -24812,6 +24812,10 @@ exports.insert = function (css) {
 }
 
 },{}],23:[function(require,module,exports){
+var Vue = require("Vue");
+const EventBus = new Vue();
+module.exports = EventBus;
+},{"Vue":2}],24:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n.red {\n  color: #F00;\n}\n")
 
@@ -24858,7 +24862,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-191f3a9c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":21,"vue-hot-reload-api":19,"vueify/lib/insert-css":22}],24:[function(require,module,exports){
+},{"vue":21,"vue-hot-reload-api":19,"vueify/lib/insert-css":22}],25:[function(require,module,exports){
 
 
 
@@ -24929,7 +24933,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-12ba5e57", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],25:[function(require,module,exports){
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
 
 
 
@@ -25004,7 +25008,9 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5d5006d6", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+
+
 
 
 
@@ -25146,6 +25152,7 @@ null, not in expected range, -1: Other
 4: Drink
 */
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   data: function () {
     return { name: "", cost: 0, description: "", category: 0, 
@@ -25205,7 +25212,8 @@ module.exports = {
         }
         console.log(body);
         v.$http.post('/api/food/', body).then(function (response){
-          console.log(response.body)
+          console.log(response.body);
+          EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error creating new food");
         });
@@ -25227,7 +25235,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-e971cb5a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],27:[function(require,module,exports){
+},{"../../EventBus":23,"../../utils":33,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
 
 
 
@@ -25308,7 +25316,16 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-31c415f7", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
 
 
 
@@ -25351,21 +25368,30 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   props: ["activeId"],
   data: function () {
-    this.$http.get('/api/food/').then(function (response) {
-      this.food = response.body.food; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the list of food");
-      this.loading = false;
+    v = this;
+    v.updateFood();
+
+    EventBus.$on("UpdateFood", function () {
+      v.updateFood();
     });
 
     return { food: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    updateFood: function () {
+      this.$http.get('/api/food/').then(function (response) {
+        this.food = response.body.food; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the list of food");
+        this.loading = false;
+      });
+    }
   }
 }
 
@@ -25381,7 +25407,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5f7ce435", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
+},{"../../EventBus":23,"../../utils":33,"vue":21,"vue-hot-reload-api":19}],30:[function(require,module,exports){
 
 
 
@@ -25512,7 +25538,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-5ce203b7", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],30:[function(require,module,exports){
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],31:[function(require,module,exports){
 
 
 
@@ -25599,7 +25625,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6b241c16", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":32,"vue":21,"vue-hot-reload-api":19}],31:[function(require,module,exports){
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],32:[function(require,module,exports){
 module.exports = function () {
   //Import libaries
   var jq = require("jquery");
@@ -25643,7 +25669,7 @@ module.exports = function () {
   });
 }
 
-},{"./components/App.vue":23,"./components/Course/Course.vue":24,"./components/Course/CourseList.vue":25,"./components/Food/CreateFood.vue":26,"./components/Food/Food.vue":27,"./components/Food/FoodList.vue":28,"./components/Week/Week.vue":29,"./components/Week/WeekList.vue":30,"Vue":2,"jquery":17,"vue-resource":20}],32:[function(require,module,exports){
+},{"./components/App.vue":24,"./components/Course/Course.vue":25,"./components/Course/CourseList.vue":26,"./components/Food/CreateFood.vue":27,"./components/Food/Food.vue":28,"./components/Food/FoodList.vue":29,"./components/Week/Week.vue":30,"./components/Week/WeekList.vue":31,"Vue":2,"jquery":17,"vue-resource":20}],33:[function(require,module,exports){
 module.exports = {
   poundStr: function(amt) {
     var pounds = Math.floor(amt / 100);
