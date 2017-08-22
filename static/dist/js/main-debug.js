@@ -25376,6 +25376,13 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
+
+
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
@@ -25403,7 +25410,14 @@ module.exports = {
     },
     deleteFood: function(id, e) {
       if (e) {e.preventDefault();}
-      alert("Delete " + id);
+      this.loading = true;
+      this.$http.delete('/api/food/' + id).then(function (response) {
+        this.loading = false;
+        EventBus.$emit("UpdateFood");
+      }, function (response) {
+        console.error("Error deleting food");
+        this.loading = false;
+      });
     }
   }
 }
