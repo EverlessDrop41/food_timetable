@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}Food Timetable{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/app.css" charset="utf-8">
+    <script> var AUTH_STRING = "{{ auth_string }}"; var IS_ADMIN = {{ is_admin }};</script>
     <script src="/static/js/main-debug.js"></script>
   </head>
   <body>

@@ -20,7 +20,8 @@ router.get('/secret', auth.middleware.is_admin, function (req, res) {
   res.send({
     admin: req.is_admin,
     credentials: req.credentials,
-    auth_err: req.auth_err
+		auth_err: req.auth_err,
+		auth_string: req.auth_string
   });
 });
 
@@ -35,7 +36,8 @@ router.get('/secret', auth.middleware.is_admin, function (req, res) {
 router.get('/supersecret', auth.middleware.require_admin, function (req, res) {
   res.send({
     admin: req.is_admin,
-    credentials: req.credentials
+		credentials: req.credentials,
+		auth_string: req.auth_string
   });
 });
 

@@ -7,9 +7,10 @@ router.all('*', auth.middleware.is_admin, function (req, res, next) {
 
 	if (req.session.DNRTD) {
 		req.session.templateData.is_admin = req.is_admin;
+		req.session.templateData.auth_string = "APPLE";
 		req.session.DNRTD = false;
 	} else {
-		req.session.templateData = {is_admin: req.is_admin, messages: []};
+		req.session.templateData = {is_admin: req.is_admin, auth_string: req.auth_string, messages: []};
 	}	
 	next();
 });

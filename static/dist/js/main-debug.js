@@ -25121,6 +25121,22 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 null, not in expected range, -1: Other
 0: Main
@@ -25175,8 +25191,24 @@ module.exports = {
       if (!invalidForm) { successCallback(); }
     },
     submit: function() {
+      const v = this;
       this.validate(function () {
-        console.log("submit");
+        const body = {
+          name: v.name,
+          price: v.cost,
+          description: v.description,
+          category: v.category,
+          vegetarian: v.vegetarian,
+          vegan: v.vegan,
+          dairyFree: v.dairyFree,
+          glutenFree: v.glutenFree
+        }
+        console.log(body);
+        v.$http.post('/api/food/', body).then(function (response){
+          console.log(response.body)
+        }, function (response) {
+          console.error("Error creating new food");
+        });
       });
     }
   }
