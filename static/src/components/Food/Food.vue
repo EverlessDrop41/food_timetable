@@ -9,13 +9,13 @@
       <dd><span v-if="food.vegetarian">Yes</span><span v-else>No</span></dd>
 
       <dt>Vegan</dt>
-      <dd><span v-if="food.vegetarian">Yes</span><span v-else>No</span></dd>
+      <dd><span v-if="food.vegan">Yes</span><span v-else>No</span></dd>
 
       <dt>Dairy Free</dt>
-      <dd><span v-if="food.vegetarian">Yes</span><span v-else>No</span></dd>
+      <dd><span v-if="food.dairyFree">Yes</span><span v-else>No</span></dd>
 
       <dt>Gluten Free</dt>
-      <dd><span v-if="food.vegetarian">Yes</span><span v-else>No</span></dd>
+      <dd><span v-if="food.glutenFree">Yes</span><span v-else>No</span></dd>
     </dl>
 	</span>
 	<div v-else>food not found </div>

@@ -151,7 +151,14 @@ router.post("/", auth.middleware.require_admin, function(req, res) {
       }
 
       models.Food.create({
-        name: req.body.name, price: req.body.price
+        name: req.body.name, 
+        price: req.body.price,
+        description: req.body.description,
+        category: req.body.category,
+        vegetarian: req.body.vegetarian,
+        vegan: req.body.vegan,
+        dairyFree: req.body.dairyFree,
+        glutenFree: req.body.glutenFree
       }).then(function (food) {
         console.log(food.id);
         res.send(food);
