@@ -25076,6 +25076,14 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
+
+
+
 /*
 null, not in expected range, -1: Other
 0: Main
@@ -25089,9 +25097,25 @@ EventBus = require('../../EventBus');
 module.exports = {
   props: ['update'],
   data: function () {
-    return { name: "", cost: 0, description: "", category: 0, 
+
+    if (this.update != null && this.update != '') {
+      this.$http.get('/api/food/' + this.update).then(function (response){
+        this.name = response.body.name;
+        this.description = response.body.description;
+        this.price = response.body.price;
+        this.category = response.body.category;
+        this.vegetarian = response.body.vegetarian;
+        this.vegan = response.body.vegan;
+        this.dairyFree = response.body.dairyFree;
+        this.glutenFree = response.body.glutenFree;
+      }, function (response) {
+        console.error("Error retreiving the food");
+      });
+    }
+
+    return { name: "", price: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
-    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", costError: false, costErrorMsg: "" };
+    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", priceError: false, priceErrorMsg: "" };
   },
   methods: {
     monify: utils.poundStr,
@@ -25114,13 +25138,13 @@ module.exports = {
         invalidForm = true;
       }
 
-      if (this.cost >= 0) {
-        this.cost = parseInt(this.cost);
-        if (isNaN(this.cost)) { this.cost=0; }
-        this.costError = false
+      if (this.price >= 0) {
+        this.price = parseInt(this.price);
+        if (isNaN(this.price)) { this.price=0; }
+        this.priceError = false
       } else {
-        this.costError = true;
-        this.costErrorMsg = "Can't have a negative cost";
+        this.priceError = true;
+        this.priceErrorMsg = "Can't have a negative price";
         invalidForm = true;
       }
 
@@ -25136,7 +25160,7 @@ module.exports = {
       this.validate(function () {
         const body = {
           name: v.name,
-          price: v.cost,
+          price: v.price,
           description: v.description,
           category: v.category,
           vegetarian: v.vegetarian,
@@ -25154,10 +25178,33 @@ module.exports = {
         });
       });
     },
+    submitUpdate: function () {
+      const v = this;
+      this.validate(function () {
+        const body = {
+          name: v.name,
+          price: v.price,
+          description: v.description,
+          category: v.category,
+          vegetarian: v.vegetarian,
+          vegan: v.vegan,
+          dairyFree: v.dairyFree,
+          glutenFree: v.glutenFree
+        }
+        console.log(body);
+        v.$http.put('/api/food/' + v.update, body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateFood');
+        }, function (response) {
+          console.error("Error updating food");
+        });
+      });
+    },
     clearData: function () {
       console.log("clear data");
       this.name = null;
-      this.cost = null;
+      this.price = null;
       this.description = null;
       this.category = 0;
       this.vegetarian = false;
@@ -25170,7 +25217,7 @@ module.exports = {
 
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Food \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"create()\" class=\"btn btn-default\">Create</button>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Food \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':priceError }\">\n    <div class=\"alert alert-danger\" v-if=\"priceError\">{{ priceErrorMsg }}</div>\n    <label for=\"foodpriceInput\">price</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(price) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodpriceInput\" min=\"0\" v-model=\"price\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

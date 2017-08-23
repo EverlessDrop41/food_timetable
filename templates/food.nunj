@@ -3,4 +3,5 @@
 {% block body %}
 <foodlist active-id="{{foodId}}"></foodlist>
 <food food-id="{{ foodId }}"></food>
+<foodform update="{{ foodId }}"></foodform>
 {% endblock %}

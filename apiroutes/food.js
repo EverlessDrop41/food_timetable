@@ -223,6 +223,10 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           food.name = req.body.name;
         }
 
+        if (req.body.description) {
+          food.description = req.body.description;
+        }
+
         if (req.body.price) {
           req.body.price = parseInt(req.body.price);
 
@@ -231,6 +235,26 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           }
 
           food.price = req.body.price;
+        }
+
+        if (req.body.category) {
+          food.category = req.body.category;
+        }
+
+        if (req.body.vegetarian) {
+          food.vegetarian = req.body.vegetarian;
+        }
+
+        if (req.body.vegan) {
+          food.vegan = req.body.vegan;
+        }
+
+        if (req.body.dairyFree) {
+          food.dairyFree = req.body.dairyFree;
+        }
+
+        if (req.body.glutenFree) {
+          food.glutenFree = req.body.glutenFree;
         }
 
         food.save().then(function () {

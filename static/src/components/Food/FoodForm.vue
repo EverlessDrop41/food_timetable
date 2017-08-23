@@ -15,12 +15,12 @@
       <label for="foodDescriptionInput">Description</label>
       <textarea class="form-control" id="foodDescriptionInput" maxlength="255" placeholder="Description (optional)" v-model="description"></textarea>
     </div>
-    <div class="form-group" v-bind:class="{ 'has-error':costError }">
-      <div class="alert alert-danger" v-if="costError">{{ costErrorMsg }}</div>
-      <label for="foodCostInput">Cost</label>
+    <div class="form-group" v-bind:class="{ 'has-error':priceError }">
+      <div class="alert alert-danger" v-if="priceError">{{ priceErrorMsg }}</div>
+      <label for="foodpriceInput">price</label>
       <div class="input-group">
-        <span class="input-group-addon">{{ monify(cost) }}</span>
-        <input type="number" class="form-control" id="foodCostInput" min="0" v-model="cost"></input>
+        <span class="input-group-addon">{{ monify(price) }}</span>
+        <input type="number" class="form-control" id="foodpriceInput" min="0" v-model="price"></input>
       </div>
     </div>
     <div class="form-group">
@@ -51,7 +51,15 @@
         <input type="checkbox" v-model="glutenFree"> Gluten Free
       </label>
     </div>
-    <button v-on:click="create()" class="btn btn-default">Create</button>
+
+    <button v-if="update == null || update == ''" 
+      v-on:click="create()" class="btn btn-default">
+      Create
+    </button>
+
+    <button v-else v-on:click="submitUpdate()" class="btn btn-default">
+      Update
+    </button>
   </span>
 </template>
 
@@ -69,9 +77,25 @@ EventBus = require('../../EventBus');
 module.exports = {
   props: ['update'],
   data: function () {
-    return { name: "", cost: 0, description: "", category: 0, 
+
+    if (this.update != null && this.update != '') {
+      this.$http.get('/api/food/' + this.update).then(function (response){
+        this.name = response.body.name;
+        this.description = response.body.description;
+        this.price = response.body.price;
+        this.category = response.body.category;
+        this.vegetarian = response.body.vegetarian;
+        this.vegan = response.body.vegan;
+        this.dairyFree = response.body.dairyFree;
+        this.glutenFree = response.body.glutenFree;
+      }, function (response) {
+        console.error("Error retreiving the food");
+      });
+    }
+
+    return { name: "", price: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
-    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", costError: false, costErrorMsg: "" };
+    nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", priceError: false, priceErrorMsg: "" };
   },
   methods: {
     monify: utils.poundStr,
@@ -94,13 +118,13 @@ module.exports = {
         invalidForm = true;
       }
 
-      if (this.cost >= 0) {
-        this.cost = parseInt(this.cost);
-        if (isNaN(this.cost)) { this.cost=0; }
-        this.costError = false
+      if (this.price >= 0) {
+        this.price = parseInt(this.price);
+        if (isNaN(this.price)) { this.price=0; }
+        this.priceError = false
       } else {
-        this.costError = true;
-        this.costErrorMsg = "Can't have a negative cost";
+        this.priceError = true;
+        this.priceErrorMsg = "Can't have a negative price";
         invalidForm = true;
       }
 
@@ -116,7 +140,7 @@ module.exports = {
       this.validate(function () {
         const body = {
           name: v.name,
-          price: v.cost,
+          price: v.price,
           description: v.description,
           category: v.category,
           vegetarian: v.vegetarian,
@@ -134,10 +158,33 @@ module.exports = {
         });
       });
     },
+    submitUpdate: function () {
+      const v = this;
+      this.validate(function () {
+        const body = {
+          name: v.name,
+          price: v.price,
+          description: v.description,
+          category: v.category,
+          vegetarian: v.vegetarian,
+          vegan: v.vegan,
+          dairyFree: v.dairyFree,
+          glutenFree: v.glutenFree
+        }
+        console.log(body);
+        v.$http.put('/api/food/' + v.update, body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateFood');
+        }, function (response) {
+          console.error("Error updating food");
+        });
+      });
+    },
     clearData: function () {
       console.log("clear data");
       this.name = null;
-      this.cost = null;
+      this.price = null;
       this.description = null;
       this.category = 0;
       this.vegetarian = false;
