@@ -47,7 +47,7 @@
         <input type="checkbox" v-model="glutenFree"> Gluten Free
       </label>
     </div>
-    <button v-on:click="submit()" class="btn btn-default">Submit</button>
+    <button v-on:click="create()" class="btn btn-default">Create</button>
   </span>
 </template>
 
@@ -106,7 +106,7 @@ module.exports = {
 
       if (!invalidForm) { successCallback(); }
     },
-    submit: function() {
+    create: function() {
       const v = this;
       this.validate(function () {
         const body = {
@@ -122,11 +122,23 @@ module.exports = {
         console.log(body);
         v.$http.post('/api/food/', body).then(function (response){
           console.log(response.body);
+          v.clearData();
           EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error creating new food");
         });
       });
+    },
+    clearData: function () {
+      console.log("clear data");
+      this.name = null;
+      this.cost = null;
+      this.description = null;
+      this.category = 0;
+      this.vegetarian = false;
+      this.vegan = false;
+      this.dairyFree = false;
+      this.glutenFree = false;
     }
   }
 }

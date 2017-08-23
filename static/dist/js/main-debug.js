@@ -25067,7 +25067,7 @@ module.exports = {
 
       if (!invalidForm) { successCallback(); }
     },
-    submit: function() {
+    create: function() {
       const v = this;
       this.validate(function () {
         const body = {
@@ -25083,18 +25083,30 @@ module.exports = {
         console.log(body);
         v.$http.post('/api/food/', body).then(function (response){
           console.log(response.body);
+          v.clearData();
           EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error creating new food");
         });
       });
+    },
+    clearData: function () {
+      console.log("clear data");
+      this.name = null;
+      this.cost = null;
+      this.description = null;
+      this.category = 0;
+      this.vegetarian = false;
+      this.vegan = false;
+      this.dairyFree = false;
+      this.glutenFree = false;
     }
   }
 }
 
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>Food Creator</h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"submit()\" class=\"btn btn-default\">Submit</button>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>Food Creator</h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"create()\" class=\"btn btn-default\">Create</button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
