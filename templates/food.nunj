@@ -2,5 +2,5 @@
 
 {% block body %}
 <foodlist active-id="{{foodId}}"></foodlist>
-<food food-id="{{ foodId }}"></course>
+<food food-id="{{ foodId }}"></food>
 {% endblock %}
