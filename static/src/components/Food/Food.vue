@@ -23,24 +23,31 @@
 
 <script>
 utils = require('../../utils');
+EventBus= require('../../EventBus');
 
 module.exports = {
 	props: ["foodId"],
   data: function () {
+    vu = this;
+    vu.updateData();
 
-  	//Get the data from the api
-    this.$http.get('/api/food/' + this.foodId).then(function (response){
-      vueInstance = this;
-      //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.food = response.body;}, 1);
-    }, function (response) {
-      console.error("Error retreiving the food");
+    EventBus.$on("UpdateFood", function () {
+      console.log("Food updating event");
+      vu.updateData();
     });
 
     return { food: null }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    updateData: function () {
+      vu = this;
+      this.$http.get('/api/food/' + this.foodId).then(function (response){
+        vu.food = response.body;
+      }, function (response) {
+        console.error("Error retreiving the food");
+      });
+    }
   }
 }
 </script>

@@ -110,7 +110,7 @@ module.exports = {
         invalidForm = true;
       }
 
-      if (this.description.length <= 255) {
+      if (this.description == null || this.description.length <= 255 ) {
         this.descriptionError = false;
       } else {
         this.descriptionError = true;
@@ -174,7 +174,6 @@ module.exports = {
         console.log(body);
         v.$http.put('/api/food/' + v.update, body).then(function (response){
           console.log(response.body);
-          v.clearData();
           EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error updating food");

@@ -24984,24 +24984,31 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 utils = require('../../utils');
+EventBus= require('../../EventBus');
 
 module.exports = {
 	props: ["foodId"],
   data: function () {
+    vu = this;
+    vu.updateData();
 
-  	//Get the data from the api
-    this.$http.get('/api/food/' + this.foodId).then(function (response){
-      vueInstance = this;
-      //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.food = response.body;}, 1);
-    }, function (response) {
-      console.error("Error retreiving the food");
+    EventBus.$on("UpdateFood", function () {
+      console.log("Food updating event");
+      vu.updateData();
     });
 
     return { food: null }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    updateData: function () {
+      vu = this;
+      this.$http.get('/api/food/' + this.foodId).then(function (response){
+        vu.food = response.body;
+      }, function (response) {
+        console.error("Error retreiving the food");
+      });
+    }
   }
 }
 
@@ -25017,7 +25024,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-c18b83b4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
+},{"../../EventBus":23,"../../utils":33,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
 
 
 
@@ -25130,7 +25137,7 @@ module.exports = {
         invalidForm = true;
       }
 
-      if (this.description.length <= 255) {
+      if (this.description == null || this.description.length <= 255 ) {
         this.descriptionError = false;
       } else {
         this.descriptionError = true;
@@ -25194,7 +25201,6 @@ module.exports = {
         console.log(body);
         v.$http.put('/api/food/' + v.update, body).then(function (response){
           console.log(response.body);
-          v.clearData();
           EventBus.$emit('UpdateFood');
         }, function (response) {
           console.error("Error updating food");

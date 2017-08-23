@@ -241,19 +241,19 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           food.category = req.body.category;
         }
 
-        if (req.body.vegetarian) {
+        if (req.body.vegetarian != undefined) {
           food.vegetarian = req.body.vegetarian;
         }
 
-        if (req.body.vegan) {
+        if (req.body.vegan != undefined) {
           food.vegan = req.body.vegan;
         }
 
-        if (req.body.dairyFree) {
+        if (req.body.dairyFree != undefined) {
           food.dairyFree = req.body.dairyFree;
         }
 
-        if (req.body.glutenFree) {
+        if (req.body.glutenFree != undefined) {
           food.glutenFree = req.body.glutenFree;
         }
 
