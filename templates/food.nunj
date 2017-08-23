@@ -1,7 +1,11 @@
 {% extends "layout.nunj" %}
 
 {% block body %}
-<foodlist active-id="{{foodId}}"></foodlist>
-<food food-id="{{ foodId }}"></food>
-<foodform update="{{ foodId }}"></foodform>
+<div class="row">
+    <foodlist active-id="{{foodId}}"></foodlist>
+</div>
+<div class="row">
+    <div class="col-md-3"><food food-id="{{ foodId }}"></food></div>
+    <div class="col-md-9"><foodform update="{{ foodId }}"></foodform></div>
+</div>
 {% endblock %}
