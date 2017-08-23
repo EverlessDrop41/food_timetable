@@ -5,7 +5,7 @@
     <foodlist active-id="{{foodId}}"></foodlist>
 </div>
 <div class="row">
-    <div class="col-md-3"><food food-id="{{ foodId }}"></food></div>
-    <div class="col-md-9"><foodform update="{{ foodId }}"></foodform></div>
+    <div class="col-md-4"><food food-id="{{ foodId }}"></food></div>
+    <div class="col-md-8"><foodform update="{{ foodId }}"></foodform></div>
 </div>
 {% endblock %}

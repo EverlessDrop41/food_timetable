@@ -24983,6 +24983,8 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
 utils = require('../../utils');
 EventBus= require('../../EventBus');
 
@@ -25009,12 +25011,36 @@ module.exports = {
         vu.food = null;
         console.error("Error retreiving the food");
       });
+    },
+    categorize: function (category) {
+      /*
+      0: Main
+      1: Hot Ready To Go
+      2: Pasta Bar
+      3: Dessert
+      4: Drink
+      */
+
+      switch (category) {
+        case 0: 
+          return "Main";
+        case 1:
+          return "Hot Ready To Go";
+        case 2:
+          return "Pasta Bar";
+        case 3:
+          return "Dessert";
+        case 4:
+          return "Drink";
+        default:
+          return "Other"
+      }
     }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} <span class=\"label label-default\" v-if=\"food.category\">{{food.category}}</span></h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} \n      <span class=\"label label-info\" v-if=\"food.category\">{{categorize(food.category)}}</span>\n    </h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
