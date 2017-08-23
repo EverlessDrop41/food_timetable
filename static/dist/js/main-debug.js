@@ -25006,6 +25006,7 @@ module.exports = {
       this.$http.get('/api/food/' + this.foodId).then(function (response){
         vu.food = response.body;
       }, function (response) {
+        vu.food = null;
         console.error("Error retreiving the food");
       });
     }
