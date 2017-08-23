@@ -1,6 +1,10 @@
 <template>
   <span>
-    <h1>Food Creator</h1>
+    <h1>
+      Food 
+      <span v-if="update == null || update == ''">Create</span> 
+      <span v-else>Update</span>
+    </h1>
     <div class="form-group" v-bind:class="{ 'has-error':nameError }">
       <div class="alert alert-danger" v-if="nameError">{{ nameErrorMsg }}</div>
       <label for="foodNameInput">Name</label>
@@ -63,6 +67,7 @@ null, not in expected range, -1: Other
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
+  props: ['update'],
   data: function () {
     return { name: "", cost: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,

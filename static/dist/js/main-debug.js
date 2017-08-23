@@ -24983,6 +24983,69 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+utils = require('../../utils');
+
+module.exports = {
+	props: ["foodId"],
+  data: function () {
+
+  	//Get the data from the api
+    this.$http.get('/api/food/' + this.foodId).then(function (response){
+      vueInstance = this;
+      //use timeout to simulate network delay - REMOVE IN PROD
+      setTimeout(function() {vueInstance.food = response.body;}, 1);
+    }, function (response) {
+      console.error("Error retreiving the food");
+    });
+
+    return { food: null }
+  },
+  methods: {
+    monify: utils.poundStr
+  }
+}
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} <span class=\"label label-default\" v-if=\"food.category\">{{food.category}}</span></h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-c18b83b4", module.exports)
+  } else {
+    hotAPI.update("_v-c18b83b4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -25024,6 +25087,7 @@ null, not in expected range, -1: Other
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
+  props: ['update'],
   data: function () {
     return { name: "", cost: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
@@ -25106,77 +25170,18 @@ module.exports = {
 
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>Food Creator</h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"create()\" class=\"btn btn-default\">Create</button>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Food \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':descriptionError }\">\n    <div class=\"alert alert-danger\" v-if=\"descriptionError\">{{ descriptionErrorMsg }}</div>\n    <label for=\"foodDescriptionInput\">Description</label>\n    <textarea class=\"form-control\" id=\"foodDescriptionInput\" maxlength=\"255\" placeholder=\"Description (optional)\" v-model=\"description\"></textarea>\n  </div>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':costError }\">\n    <div class=\"alert alert-danger\" v-if=\"costError\">{{ costErrorMsg }}</div>\n    <label for=\"foodCostInput\">Cost</label>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">{{ monify(cost) }}</span>\n      <input type=\"number\" class=\"form-control\" id=\"foodCostInput\" min=\"0\" v-model=\"cost\">\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"foodCategoryInput\">Category</label>\n    <select class=\"form-control\" id=\"foodCategoryInput\" v-model=\"category\">\n      <option value=\"0\">Main</option>\n      <option value=\"1\">Hot ready to go</option>\n      <option value=\"2\">Pasta Bar</option>\n      <option value=\"3\">Dessert</option>\n      <option value=\"4\">Drink</option>\n      <option value=\"-1\">Other</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"vegetarian\"> Vegetarian\n    </label>\n\n    <label class=\"checkbox-inline\" v-if=\"vegetarian || vegan\">\n      <input type=\"checkbox\" v-model=\"vegan\"> Vegan\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"dairyFree\"> Dairy Free\n    </label>\n\n    <label class=\"checkbox-inline\">\n      <input type=\"checkbox\" v-model=\"glutenFree\"> Gluten Free\n    </label>\n  </div>\n  <button v-on:click=\"create()\" class=\"btn btn-default\">Create</button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-37c42342", module.exports)
+    hotAPI.createRecord("_v-243c360a", module.exports)
   } else {
-    hotAPI.update("_v-37c42342", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-243c360a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":23,"../../utils":33,"vue":21,"vue-hot-reload-api":19}],28:[function(require,module,exports){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-utils = require('../../utils');
-
-module.exports = {
-	props: ["foodId"],
-  data: function () {
-
-  	//Get the data from the api
-    this.$http.get('/api/food/' + this.foodId).then(function (response){
-      vueInstance = this;
-      //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.food = response.body;}, 1);
-    }, function (response) {
-      console.error("Error retreiving the food");
-    });
-
-    return { food: null }
-  },
-  methods: {
-    monify: utils.poundStr
-  }
-}
-
-if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} <span class=\"label label-default\" v-if=\"food.category\">{{food.category}}</span></h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
-if (module.hot) {(function () {  module.hot.accept()
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), true)
-  if (!hotAPI.compatible) return
-  if (!module.hot.data) {
-    hotAPI.createRecord("_v-c18b83b4", module.exports)
-  } else {
-    hotAPI.update("_v-c18b83b4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
-  }
-})()}
-},{"../../utils":33,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
+},{"../../EventBus":23,"../../utils":33,"vue":21,"vue-hot-reload-api":19}],29:[function(require,module,exports){
 
 
 
@@ -25436,7 +25441,7 @@ module.exports = function () {
   var CourseList = require("./components/Course/CourseList.vue");
   var Food = require("./components/Food/Food.vue");
   var FoodList = require("./components/Food/FoodList.vue");
-  var FoodCreate = require("./components/Food/CreateFood.vue");
+  var FoodForm = require("./components/Food/FoodForm.vue");
 
   $(document).ready(function () {
     new Vue({
@@ -25449,7 +25454,7 @@ module.exports = function () {
         "courselist": CourseList,
         "food": Food,
         "foodlist": FoodList,
-        "createfood": FoodCreate
+        "foodform": FoodForm
       },
       data: {
         title: "Food Menu"
@@ -25458,7 +25463,7 @@ module.exports = function () {
   });
 }
 
-},{"./components/App.vue":24,"./components/Course/Course.vue":25,"./components/Course/CourseList.vue":26,"./components/Food/CreateFood.vue":27,"./components/Food/Food.vue":28,"./components/Food/FoodList.vue":29,"./components/Week/Week.vue":30,"./components/Week/WeekList.vue":31,"Vue":2,"jquery":18,"vue-resource":20}],33:[function(require,module,exports){
+},{"./components/App.vue":24,"./components/Course/Course.vue":25,"./components/Course/CourseList.vue":26,"./components/Food/Food.vue":27,"./components/Food/FoodForm.vue":28,"./components/Food/FoodList.vue":29,"./components/Week/Week.vue":30,"./components/Week/WeekList.vue":31,"Vue":2,"jquery":18,"vue-resource":20}],33:[function(require,module,exports){
 module.exports = {
   poundStr: function(amt) {
     var pounds = Math.floor(amt / 100);

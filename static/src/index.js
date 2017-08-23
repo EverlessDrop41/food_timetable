@@ -19,7 +19,7 @@ module.exports = function () {
   var CourseList = require("./components/Course/CourseList.vue");
   var Food = require("./components/Food/Food.vue");
   var FoodList = require("./components/Food/FoodList.vue");
-  var FoodCreate = require("./components/Food/CreateFood.vue");
+  var FoodForm = require("./components/Food/FoodForm.vue");
 
   $(document).ready(function () {
     new Vue({
@@ -32,7 +32,7 @@ module.exports = function () {
         "courselist": CourseList,
         "food": Food,
         "foodlist": FoodList,
-        "createfood": FoodCreate
+        "foodform": FoodForm
       },
       data: {
         title: "Food Menu"
