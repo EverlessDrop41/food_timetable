@@ -12,6 +12,7 @@
 	<div class="col-md-4"><foodlist></foodlist></div>
 </div>
 <div class="row">
-	<div class="col-md-12"><foodform></foodform></div>
+	<div class="col-md-6"><courseform></courseform></div>
+	<div class="col-md-6"><foodform></foodform></div>
 </div>
 {% endblock %}
