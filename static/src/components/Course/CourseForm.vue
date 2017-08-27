@@ -7,11 +7,11 @@
     </h1>
     <div class="form-group" v-bind:class="{ 'has-error':nameError }">
       <div class="alert alert-danger" v-if="nameError">{{ nameErrorMsg }}</div>
-      <label for="foodNameInput">Name</label>
-      <input type="text" class="form-control" id="foodNameInput" maxlength="255" placeholder="e.g. Pasta" require v-model="name">
+      <label for="courseNameInput">Name</label>
+      <input type="text" class="form-control" id="courseNameInput" maxlength="255" placeholder="e.g. Monday 1" require v-model="name">
     </div>
     <div class="form-group">
-      <label for="courseFoodInput">Category</label>
+      <label for="courseFoodInput">Food</label>
       <select multiple class="form-control" id="courseFoodInput" v-model="foodSelection">
         <option v-for="food in availableFood" value="{{food.id}}">{{food.name}}</option>
       </select>
@@ -34,13 +34,17 @@ EventBus = require('../../EventBus');
 module.exports = {
   props: ['update'],
   data: function () {
+    const v =this;
+    this.getAvailableFood();
 
-
+    EventBus.$on("UpdateFood", function () {
+      v.getAvailableFood();
+    });
 
     return { 
-        name: "", nameError: false, nameErrorMsg: "",
-        foodSelection: [], foodSelectionError: false, foodSelectionErrorMsg: "",
-        availableFood: [{ id: 1, name: "Pasta"}, { id: 2, name: "Pizza"}]
+      name: "", nameError: false, nameErrorMsg: "",
+      foodSelection: [], foodSelectionError: false, foodSelectionErrorMsg: "",
+      availableFood: []
     };
   },
   methods: {
@@ -65,6 +69,16 @@ module.exports = {
     submitUpdate: function () {
       const v = this;
       console.log("Not yet implemented");
+    },
+    getAvailableFood: function () {
+      const v = this;
+      this.$http.get('/api/food/').then(function (response){
+        if (response.body) {
+          v.availableFood = response.body.food;
+        }
+      }, function (response) {
+        console.error("Error retreiving the available food");
+      });
     },
     clearData: function () {
       console.log("clear data");

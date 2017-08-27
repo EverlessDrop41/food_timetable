@@ -1,7 +1,7 @@
 <template>
 	<span v-if="food">
 		<h1>{{food.name}} 
-      <span class="label label-info" v-if="food.category">{{categorize(food.category)}}</span>
+      <span class="label label-info" v-if="food.category != null">{{categorize(food.category)}}</span>
     </h1>
     <p>{{food.description}}</p>
     <p>Cost: {{monify(food.price)}}</p>

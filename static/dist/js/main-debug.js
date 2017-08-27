@@ -24940,13 +24940,17 @@ EventBus = require('../../EventBus');
 module.exports = {
   props: ['update'],
   data: function () {
+    const v =this;
+    this.getAvailableFood();
 
-
+    EventBus.$on("UpdateFood", function () {
+      v.getAvailableFood();
+    });
 
     return { 
-        name: "", nameError: false, nameErrorMsg: "",
-        foodSelection: [], foodSelectionError: false, foodSelectionErrorMsg: "",
-        availableFood: [{ id: 1, name: "Pasta"}, { id: 2, name: "Pizza"}]
+      name: "", nameError: false, nameErrorMsg: "",
+      foodSelection: [], foodSelectionError: false, foodSelectionErrorMsg: "",
+      availableFood: []
     };
   },
   methods: {
@@ -24972,6 +24976,16 @@ module.exports = {
       const v = this;
       console.log("Not yet implemented");
     },
+    getAvailableFood: function () {
+      const v = this;
+      this.$http.get('/api/food/').then(function (response){
+        if (response.body) {
+          v.availableFood = response.body.food;
+        }
+      }, function (response) {
+        console.error("Error retreiving the available food");
+      });
+    },
     clearData: function () {
       console.log("clear data");
       this.name = null;
@@ -24983,7 +24997,7 @@ module.exports = {
 
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Course \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"foodNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"foodNameInput\" maxlength=\"255\" placeholder=\"e.g. Pasta\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"courseFoodInput\">Category</label>\n    <select multiple=\"\" class=\"form-control\" id=\"courseFoodInput\" v-model=\"foodSelection\">\n      <option v-for=\"food in availableFood\" value=\"{{food.id}}\">{{food.name}}</option>\n    </select>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Course \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"courseNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"courseNameInput\" maxlength=\"255\" placeholder=\"e.g. Monday 1\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"courseFoodInput\">Food</label>\n    <select multiple=\"\" class=\"form-control\" id=\"courseFoodInput\" v-model=\"foodSelection\">\n      <option v-for=\"food in availableFood\" value=\"{{food.id}}\">{{food.name}}</option>\n    </select>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -25131,7 +25145,7 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} \n      <span class=\"label label-info\" v-if=\"food.category\">{{categorize(food.category)}}</span>\n    </h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"food\">\n\t\t<h1>{{food.name}} \n      <span class=\"label label-info\" v-if=\"food.category != null\">{{categorize(food.category)}}</span>\n    </h1>\n    <p>{{food.description}}</p>\n    <p>Cost: {{monify(food.price)}}</p>\n    \n    <dl>\n      <dt>Vegetarian</dt>\n      <dd><span v-if=\"food.vegetarian\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Vegan</dt>\n      <dd><span v-if=\"food.vegan\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Dairy Free</dt>\n      <dd><span v-if=\"food.dairyFree\">Yes</span><span v-else=\"\">No</span></dd>\n\n      <dt>Gluten Free</dt>\n      <dd><span v-if=\"food.glutenFree\">Yes</span><span v-else=\"\">No</span></dd>\n    </dl>\n\t</span>\n\t<div v-else=\"\">food not found </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

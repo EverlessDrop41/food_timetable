@@ -237,7 +237,7 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           food.price = req.body.price;
         }
 
-        if (req.body.category) {
+        if (req.body.category != null) {
           food.category = req.body.category;
         }
 
