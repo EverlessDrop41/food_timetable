@@ -134,8 +134,15 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
     if (course != undefined || course != null) {
       //TODO: Update the course
       if (req.body && Array.isArray(req.body.food)) {
-        course.addFoods(req.body.food).then(function (stuff) {
-          res.send(stuff);
+        course.setFood(req.body.food).then(function (stuff) {
+          if (req.body.name) {
+            course.name = req.body.name;
+          }
+          course.save().then(function () {
+            res.send(course);
+          }).catch(function (e) {
+            res.status(500).send("Internal Server Error");
+          });
         }).catch(function (error) {
           console.error(error);
         });

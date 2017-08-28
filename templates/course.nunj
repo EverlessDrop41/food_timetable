@@ -1,6 +1,11 @@
 {% extends "layout.nunj" %}
 
 {% block body %}
-<courselist></courselist>
-<course course-id="{{ courseId }}"></course>
+<div class="row">
+    <courselist active-id="{{courseId}}"></courselist>
+</div>
+<div class="row">
+    <div class="col-md-4"><course course-id="{{ courseId }}"></course></div>
+    <div class="col-md-8"><courseform update="{{ courseId }}"></courseform></div>
+</div>
 {% endblock %}

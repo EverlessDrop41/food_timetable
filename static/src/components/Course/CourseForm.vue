@@ -35,7 +35,22 @@ module.exports = {
   props: ['update'],
   data: function () {
     const v =this;
+
     this.getAvailableFood();
+
+    if (this.update != null && this.update != '') {
+      this.$http.get('/api/course/' + this.update).then(function (response){
+        this.name = response.body.name;
+        this.foodSelection = [];
+        
+        for (var i = 0; i < response.body.Food.length; i++) {
+          const f = response.body.Food[i];
+          this.foodSelection.push(f.id);
+        }
+      }, function (response) {
+        console.error("Error retreiving the food");
+      });
+    }
 
     EventBus.$on("UpdateFood", function () {
       v.getAvailableFood();
@@ -59,7 +74,7 @@ module.exports = {
         this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
         invalidForm = true;
       }
-      
+
       if (!invalidForm) { successCallback(); }
     },
     create: function() {
@@ -80,7 +95,18 @@ module.exports = {
     },
     submitUpdate: function () {
       const v = this;
-      console.log("Not yet implemented");
+      v.validate(function () {
+        var body = {
+          name: v.name,
+          food: v.foodSelection
+        };
+        v.$http.put('/api/course/' + v.update, body).then(function (response){
+          console.log(response.body);
+          EventBus.$emit('UpdateCourse');
+        }, function (response) {
+          console.error("Error updating course");
+        });
+      });
     },
     getAvailableFood: function () {
       const v = this;
@@ -95,7 +121,7 @@ module.exports = {
     clearData: function () {
       console.log("clear data");
       this.name = null;
-      this.foodSelection = null;
+      this.foodSelection = [];
     }
   }
 }
