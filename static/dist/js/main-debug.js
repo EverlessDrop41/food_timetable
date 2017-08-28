@@ -27693,34 +27693,54 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   props: ['activeId'],
   data: function () {
-    //TODO: Add loading indicators
+    const v = this;
+    
+    v.getWeek();
 
-    //Get the data from the api
-    this.$http.get('/api/week/').then(function (response) {
-      //use timeout to simulate network delay - REMOVE IN PROD
-      //vueInstance = this;
-      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
-      console.log(response.body.weeks);
-      this.weeks = response.body.weeks; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the list of weeks");
-      this.loading = false;
+    EventBus.$on("UpdateWeek", function () {
+      v.getWeek();
     });
 
     return { weeks: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getWeek: function () {
+      this.$http.get('/api/week/').then(function (response) {
+        console.log(response.body.weeks);
+        this.weeks = response.body.weeks; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the list of weeks");
+        this.loading = false;
+      });
+    },
+    deleteWeek: function (id, e) {
+      alert(e);
+      if (e) {e.preventDefault();}
+      this.$http.delete('/api/week/' + id).then(function (response) {
+        this.loading = false;
+        EventBus.$emit("UpdateWeek");
+      }, function (response) {
+        console.error("Error deleting course");
+        this.loading = false;
+      });
+    }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Week List</h1>\n<div v-if=\"weeks\">\n  <ul class=\"list-group\">\n    <a v-for=\"week in weeks\" href=\"/public/week/{{week.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == week.id }\">\n      {{week.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No weeks were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Week List</h1>\n<div v-if=\"weeks\">\n  <ul class=\"list-group\">\n    <a v-for=\"week in weeks\" href=\"/public/week/{{week.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == week.id }\">\n      {{week.name}}\n      <span class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteWeek(week.id, $event)\">\n          Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No weeks were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -27731,7 +27751,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-79b32ab8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":36,"vue":22,"vue-hot-reload-api":20}],35:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],35:[function(require,module,exports){
 module.exports = function () {
   //Import libaries
   var jQuery = require("jquery");

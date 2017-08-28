@@ -6,6 +6,11 @@
       href="/public/week/{{week.id}}" class="list-group-item" 
       v-bind:class="{ active: activeId == week.id }">
         {{week.name}}
+        <span class="pull-right">
+          <span class="btn btn-xs btn-danger" v-on:click="deleteWeek(week.id, $event)">
+            Delete
+          </span>
+        </span>
       </a>
     </ul>
   </div>
@@ -21,28 +26,43 @@
 
 <script>
 utils = require('../../utils');
+EventBus = require('../../EventBus');
 module.exports = {
   props: ['activeId'],
   data: function () {
-    //TODO: Add loading indicators
+    const v = this;
+    
+    v.getWeek();
 
-    //Get the data from the api
-    this.$http.get('/api/week/').then(function (response) {
-      //use timeout to simulate network delay - REMOVE IN PROD
-      //vueInstance = this;
-      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
-      console.log(response.body.weeks);
-      this.weeks = response.body.weeks; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the list of weeks");
-      this.loading = false;
+    EventBus.$on("UpdateWeek", function () {
+      v.getWeek();
     });
 
     return { weeks: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getWeek: function () {
+      this.$http.get('/api/week/').then(function (response) {
+        console.log(response.body.weeks);
+        this.weeks = response.body.weeks; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the list of weeks");
+        this.loading = false;
+      });
+    },
+    deleteWeek: function (id, e) {
+      alert(e);
+      if (e) {e.preventDefault();}
+      this.$http.delete('/api/week/' + id).then(function (response) {
+        this.loading = false;
+        EventBus.$emit("UpdateWeek");
+      }, function (response) {
+        console.error("Error deleting course");
+        this.loading = false;
+      });
+    }
   }
 }
 </script>
