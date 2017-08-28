@@ -81,7 +81,11 @@ module.exports = {
 
     return { 
       name: "", nameError: false, nameErrorMsg: "",
-      monday: [], mondayError: false, mondayErrorMsg: "",
+      monday: null, mondayError: false, mondayErrorMsg: "",
+      tuesday: null, tuesdayError: false, tuesdayErrorMsg: "",
+      wednesday: null, wednesdayError: false, wednesdayErrorMsg: "",
+      thursday: null, thursdayError: false, thursdayErrorMsg: "",
+      friday: null, fridayError: false, fridayErrorMsg: "",
       availableCourses: []
     };
   },
@@ -101,20 +105,24 @@ module.exports = {
       if (!invalidForm) { successCallback(); }
     },
     create: function() {
-      // const v = this;
-      // v.validate(function () {
-      //   var body = {
-      //     name: v.name,
-      //     food: v.mondaySelection
-      //   };
-      //   v.$http.post('/api/week/', body).then(function (response){
-      //     console.log(response.body);
-      //     v.clearData();
-      //     EventBus.$emit('UpdateWeek');
-      //   }, function (response) {
-      //     console.error("Error creating new week");
-      //   });
-      // });
+      const v = this;
+      v.validate(function () {
+        var body = {
+          name: v.name,
+          MondayId: v.monday,
+          TuesdayId: v.tuesday,
+          WednesdayId: v.wednesday,
+          ThursdayId: v.thursday,
+          FridayId: v.friday
+        };
+        v.$http.post('/api/week/', body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateWeek');
+        }, function (response) {
+          console.error("Error creating new week");
+        });
+      });
     },
     submitUpdate: function () {
       // const v = this;
