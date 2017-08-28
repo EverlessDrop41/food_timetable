@@ -59,9 +59,7 @@ module.exports = {
         this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
         invalidForm = true;
       }
-
-
-
+      
       if (!invalidForm) { successCallback(); }
     },
     create: function() {

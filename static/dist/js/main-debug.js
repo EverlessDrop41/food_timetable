@@ -24965,9 +24965,7 @@ module.exports = {
         this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
         invalidForm = true;
       }
-
-
-
+      
       if (!invalidForm) { successCallback(); }
     },
     create: function() {
@@ -25044,28 +25042,53 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
+
+
 utils = require('../../utils');
 module.exports = {
   props: ["activeId"],
   data: function () {
-    this.$http.get('/api/course/').then(function (response) {
-      console.log(response.body.courses);
-      this.courses = response.body.courses; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the list of courses");
-      this.loading = false;
+    const v = this;
+    v.updateCourse();
+
+    EventBus.$on("UpdateCourse", function () {
+      v.updateCourse();
     });
 
     return { courses: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    updateCourse: function () {
+      this.loading = true;
+      this.$http.get('/api/course/').then(function (response) {
+        console.log(response.body.courses);
+        this.courses = response.body.courses; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the list of courses");
+        this.loading = false;
+      });
+    },
+    deleteCourse: function(id, e) {
+      if (e) {e.preventDefault();}
+      this.loading = true;
+      this.$http.delete('/api/course/' + id).then(function (response) {
+        this.loading = false;
+        EventBus.$emit("UpdateCourse");
+      }, function (response) {
+        console.error("Error deleting course");
+        this.loading = false;
+      });
+    }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Course List</h1>\n<div v-if=\"courses\">\n  <ul class=\"list-group\">\n    <a v-for=\"course in courses\" href=\"/public/course/{{course.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == course.id }\">\n      {{course.name}}\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No courses were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Course List</h1>\n<div v-if=\"courses\">\n  <ul class=\"list-group\">\n    <a v-for=\"course in courses\" href=\"/public/course/{{course.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == course.id }\">\n      {{course.name}}\n      <span class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteCourse(course.id, $event)\">\n          Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No courses were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
