@@ -13,35 +13,35 @@
     <div class="form-group">
       <label for="mondayCourseInput">Monday</label>
       <select class="form-control course-select" id="mondayCourseInput" v-model="monday">
-        <option value="null">None</option>
+        <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="tuesdayCourseInput">Tuesday</label>
       <select class="form-control course-select" id="tuesdayCourseInput" v-model="tuesday">
-        <option value="null">None</option>
+        <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="wednesdayCourseInput">Wednesday</label>
       <select class="form-control course-select" id="wednesdayCourseInput" v-model="wednesday">
-        <option value="null">None</option>
+        <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="thursdayCourseInput">Thursday</label>
       <select class="form-control course-select" id="thursdayCourseInput" v-model="thursday">
-        <option value="null">None</option>
+        <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="fridayCourseInput">Friday</label>
       <select class="form-control course-select" id="fridayCourseInput" v-model="friday">
-        <option value="null">None</option>
+        <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
@@ -130,19 +130,24 @@ module.exports = {
       });
     },
     submitUpdate: function () {
-      // const v = this;
-      // v.validate(function () {
-      //   var body = {
-      //     name: v.name,
-      //     food: v.mondaySelection
-      //   };
-      //   v.$http.put('/api/week/' + v.update, body).then(function (response){
-      //     console.log(response.body);
-      //     EventBus.$emit('UpdateWeek');
-      //   }, function (response) {
-      //     console.error("Error updating week");
-      //   });
-      // });
+      const v = this;
+      v.validate(function () {
+        var body = {
+          name: v.name,
+          MondayId: v.monday,
+          TuesdayId: v.tuesday,
+          WednesdayId: v.wednesday,
+          ThursdayId: v.thursday,
+          FridayId: v.friday
+        };
+        v.$http.put('/api/week/' + v.update, body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateWeek');
+        }, function (response) {
+          console.error("Error updating week");
+        });
+      });
     },
     getAvailableCourses: function () {
       const v = this;

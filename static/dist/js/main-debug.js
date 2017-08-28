@@ -27633,19 +27633,24 @@ module.exports = {
       });
     },
     submitUpdate: function () {
-      // const v = this;
-      // v.validate(function () {
-      //   var body = {
-      //     name: v.name,
-      //     food: v.mondaySelection
-      //   };
-      //   v.$http.put('/api/week/' + v.update, body).then(function (response){
-      //     console.log(response.body);
-      //     EventBus.$emit('UpdateWeek');
-      //   }, function (response) {
-      //     console.error("Error updating week");
-      //   });
-      // });
+      const v = this;
+      v.validate(function () {
+        var body = {
+          name: v.name,
+          MondayId: v.monday,
+          TuesdayId: v.tuesday,
+          WednesdayId: v.wednesday,
+          ThursdayId: v.thursday,
+          FridayId: v.friday
+        };
+        v.$http.put('/api/week/' + v.update, body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateWeek');
+        }, function (response) {
+          console.error("Error updating week");
+        });
+      });
     },
     getAvailableCourses: function () {
       const v = this;
@@ -27672,7 +27677,7 @@ module.exports = {
 
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Week \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"weekNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"weekNameInput\" maxlength=\"255\" placeholder=\"e.g. Week 1\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"mondayCourseInput\">Monday</label>\n    <select class=\"form-control course-select\" id=\"mondayCourseInput\" v-model=\"monday\">\n      <option value=\"null\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"tuesdayCourseInput\">Tuesday</label>\n    <select class=\"form-control course-select\" id=\"tuesdayCourseInput\" v-model=\"tuesday\">\n      <option value=\"null\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"wednesdayCourseInput\">Wednesday</label>\n    <select class=\"form-control course-select\" id=\"wednesdayCourseInput\" v-model=\"wednesday\">\n      <option value=\"null\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"thursdayCourseInput\">Thursday</label>\n    <select class=\"form-control course-select\" id=\"thursdayCourseInput\" v-model=\"thursday\">\n      <option value=\"null\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"fridayCourseInput\">Friday</label>\n    <select class=\"form-control course-select\" id=\"fridayCourseInput\" v-model=\"friday\">\n      <option value=\"null\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Week \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"weekNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"weekNameInput\" maxlength=\"255\" placeholder=\"e.g. Week 1\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"mondayCourseInput\">Monday</label>\n    <select class=\"form-control course-select\" id=\"mondayCourseInput\" v-model=\"monday\">\n      <option value=\"none\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"tuesdayCourseInput\">Tuesday</label>\n    <select class=\"form-control course-select\" id=\"tuesdayCourseInput\" v-model=\"tuesday\">\n      <option value=\"none\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"wednesdayCourseInput\">Wednesday</label>\n    <select class=\"form-control course-select\" id=\"wednesdayCourseInput\" v-model=\"wednesday\">\n      <option value=\"none\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"thursdayCourseInput\">Thursday</label>\n    <select class=\"form-control course-select\" id=\"thursdayCourseInput\" v-model=\"thursday\">\n      <option value=\"none\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"fridayCourseInput\">Friday</label>\n    <select class=\"form-control course-select\" id=\"fridayCourseInput\" v-model=\"friday\">\n      <option value=\"none\">None</option>\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

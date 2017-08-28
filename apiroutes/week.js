@@ -128,11 +128,13 @@ router.put("/:id", auth.middleware.require_admin, function (req, res) {
 	models.Week.findById(req.params.id).then(function (Week) {
     if (Week) {
 
-    	mon = req.body.MondayId == undefined ? Week.MondayId : req.body.MondayId;
-    	tue = req.body.TuesdayId == undefined ? Week.TuesdayId : req.body.TuesdayId;
-    	wed = req.body.WednesdayId == undefined ? Week.WednesdayId : req.body.WednesdayId;
-    	thu = req.body.ThursdayId == undefined ? Week.ThursdayId : req.body.ThursdayId;
-    	fri = req.body.FridayId == undefined ? Week.FridayId : req.body.FridayId;
+			const NONE_STR = "none";
+
+    	mon = req.body.MondayId == NONE_STR ? null : req.body.MondayId;
+    	tue = req.body.TuesdayId == NONE_STR ? null : req.body.TuesdayId;
+    	wed = req.body.WednesdayId == NONE_STR ? null : req.body.WednesdayId;
+    	thu = req.body.ThursdayId == NONE_STR ? null : req.body.ThursdayId;
+    	fri = req.body.FridayId == NONE_STR ? null : req.body.FridayId;
 
       Week.updateAttributes({
       	name: req.body.name || Week.name,

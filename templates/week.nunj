@@ -1,6 +1,11 @@
 {% extends "layout.nunj" %}
 
 {% block body %}
-<weeklist active-id="{{ weekId }}"></weeklist>
-<week week-id="{{ weekId }}"></week>
+<div class="row">
+    <weeklist active-id="{{weekId}}"></weeklist>
+</div>
+<div class="row">
+    <div class="col-md-4"><week week-id="{{ weekId }}"></week></div>
+    <div class="col-md-8"><weekform update="{{ weekId }}"></weekform></div>
+</div>
 {% endblock %}
