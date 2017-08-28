@@ -27739,7 +27739,6 @@ module.exports = {
       });
     },
     deleteWeek: function (id, e) {
-      alert(e);
       if (e) {e.preventDefault();}
       this.$http.delete('/api/week/' + id).then(function (response) {
         this.loading = false;
