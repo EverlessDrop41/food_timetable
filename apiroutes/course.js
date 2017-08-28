@@ -91,7 +91,7 @@ router.get('/:id', function (req, res) {
  * @apiParam {Number[]} food An array of the ids of the food in the course
  */
 router.post('/', auth.middleware.require_admin, function (req, res) {
-
+  console.log("\n\n" + req.body.name + "\n" + req.body.food + "\n\n");
   models.Course.create({
     name: req.body.name
   }, {
@@ -101,7 +101,7 @@ router.post('/', auth.middleware.require_admin, function (req, res) {
     }]
   }).then(function(course) {
     console.log("Created course");
-    course.addFood(req.body.food).then(function () {
+    course.setFood(req.body.food).then(function () {
       res.send(course);
     }).catch(function() {
       res.send("Error adding food");

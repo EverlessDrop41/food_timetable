@@ -24966,11 +24966,25 @@ module.exports = {
         invalidForm = true;
       }
 
+
+
       if (!invalidForm) { successCallback(); }
     },
     create: function() {
       const v = this;
-      console.log("Not yet implemented");
+      v.validate(function () {
+        var body = {
+          name: v.name,
+          food: v.foodSelection
+        };
+        v.$http.post('/api/course/', body).then(function (response){
+          console.log(response.body);
+          v.clearData();
+          EventBus.$emit('UpdateCourse');
+        }, function (response) {
+          console.error("Error creating new course");
+        });
+      });
     },
     submitUpdate: function () {
       const v = this;
@@ -24990,7 +25004,6 @@ module.exports = {
       console.log("clear data");
       this.name = null;
       this.foodSelection = null;
-      this.availableFood = null;
     }
   }
 }
