@@ -142,7 +142,6 @@ module.exports = {
         };
         v.$http.put('/api/week/' + v.update, body).then(function (response){
           console.log(response.body);
-          v.clearData();
           EventBus.$emit('UpdateWeek');
         }, function (response) {
           console.error("Error updating week");

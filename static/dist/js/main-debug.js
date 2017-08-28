@@ -27456,35 +27456,30 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 utils = require('../../utils');
-/*
-null, not in expected range: Other
-0: Main
-2: Hot Ready To Go
-3: Pasta Bar
-4: Dessert
-5: Drink
-*/
+EventBus = require('../../EventBus');
 module.exports = {
 	props: ["weekId"],
   data: function () {
-    //TODO: Add loading indicators
+    const v = this;
+    v.getWeek();
 
-    //Get the data from the api
-    this.$http.get('/api/week/' + this.weekId).then(function (response) {
-      //use timeout to simulate network delay - REMOVE IN PROD
-      //vueInstance = this;
-      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
-      this.week = response.body; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the week");
-      this.loading = false;
+    EventBus.$on("UpdateWeek", function () {
+      v.getWeek();
     });
 
     return { week: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getWeek: function () {
+      this.$http.get('/api/week/' + this.weekId).then(function (response) {
+        this.week = response.body; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the week");
+        this.loading = false;
+      });
+    }
   }
 }
 
@@ -27500,7 +27495,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6b4fa834", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":36,"vue":22,"vue-hot-reload-api":20}],33:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],33:[function(require,module,exports){
 
 
 
@@ -27645,7 +27640,6 @@ module.exports = {
         };
         v.$http.put('/api/week/' + v.update, body).then(function (response){
           console.log(response.body);
-          v.clearData();
           EventBus.$emit('UpdateWeek');
         }, function (response) {
           console.error("Error updating week");

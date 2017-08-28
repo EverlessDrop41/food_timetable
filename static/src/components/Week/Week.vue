@@ -51,35 +51,30 @@
 
 <script>
 utils = require('../../utils');
-/*
-null, not in expected range: Other
-0: Main
-2: Hot Ready To Go
-3: Pasta Bar
-4: Dessert
-5: Drink
-*/
+EventBus = require('../../EventBus');
 module.exports = {
 	props: ["weekId"],
   data: function () {
-    //TODO: Add loading indicators
+    const v = this;
+    v.getWeek();
 
-    //Get the data from the api
-    this.$http.get('/api/week/' + this.weekId).then(function (response) {
-      //use timeout to simulate network delay - REMOVE IN PROD
-      //vueInstance = this;
-      //setTimeout(function() {vueInstance.week = response.body; vueInstance.loading = false}, 1);
-      this.week = response.body; 
-      this.loading = false;
-    }, function (response) {
-      console.error("Error retreiving the week");
-      this.loading = false;
+    EventBus.$on("UpdateWeek", function () {
+      v.getWeek();
     });
 
     return { week: null, loading: true }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getWeek: function () {
+      this.$http.get('/api/week/' + this.weekId).then(function (response) {
+        this.week = response.body; 
+        this.loading = false;
+      }, function (response) {
+        console.error("Error retreiving the week");
+        this.loading = false;
+      });
+    }
   }
 }
 </script>
