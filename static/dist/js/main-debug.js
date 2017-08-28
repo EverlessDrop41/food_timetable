@@ -24870,24 +24870,30 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 utils = require('../../utils');
-
+EventBus = require('../../EventBus');
 module.exports = {
 	props: ["courseId"],
   data: function () {
-
-  	//Get the data from the api
-    this.$http.get('/api/course/' + this.courseId).then(function (response){
-      vueInstance = this;
-      //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.course = response.body;}, 1);
-    }, function (response) {
-      console.error("Error retreiving the course");
+    const v = this;
+    v.getCourse();
+    EventBus.$on("UpdateCourse", function () {
+      v.getCourse();
     });
 
     return { course: null }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getCourse: function () {
+      //Get the data from the api
+      this.$http.get('/api/course/' + this.courseId).then(function (response){
+        vueInstance = this;
+        //use timeout to simulate network delay - REMOVE IN PROD
+        setTimeout(function() {vueInstance.course = response.body;}, 1);
+      }, function (response) {
+        console.error("Error retreiving the course");
+      });
+    }
   }
 }
 
@@ -24903,7 +24909,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6770e074", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":34,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
+},{"../../EventBus":23,"../../utils":34,"vue":21,"vue-hot-reload-api":19}],26:[function(require,module,exports){
 
 
 

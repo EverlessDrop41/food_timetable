@@ -13,24 +13,30 @@
 
 <script>
 utils = require('../../utils');
-
+EventBus = require('../../EventBus');
 module.exports = {
 	props: ["courseId"],
   data: function () {
-
-  	//Get the data from the api
-    this.$http.get('/api/course/' + this.courseId).then(function (response){
-      vueInstance = this;
-      //use timeout to simulate network delay - REMOVE IN PROD
-      setTimeout(function() {vueInstance.course = response.body;}, 1);
-    }, function (response) {
-      console.error("Error retreiving the course");
+    const v = this;
+    v.getCourse();
+    EventBus.$on("UpdateCourse", function () {
+      v.getCourse();
     });
 
     return { course: null }
   },
   methods: {
-    monify: utils.poundStr
+    monify: utils.poundStr,
+    getCourse: function () {
+      //Get the data from the api
+      this.$http.get('/api/course/' + this.courseId).then(function (response){
+        vueInstance = this;
+        //use timeout to simulate network delay - REMOVE IN PROD
+        setTimeout(function() {vueInstance.course = response.body;}, 1);
+      }, function (response) {
+        console.error("Error retreiving the course");
+      });
+    }
   }
 }
 </script>
