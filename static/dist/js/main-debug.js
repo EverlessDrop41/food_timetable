@@ -26833,6 +26833,7 @@ module.exports = {
           const f = response.body.Food[i];
           this.foodSelection.push(f.id);
         }
+        v.updatePicker();
       }, function (response) {
         console.error("Error retreiving the course");
       });
@@ -26840,6 +26841,7 @@ module.exports = {
 
     EventBus.$on("UpdateFood", function () {
       v.getAvailableFood();
+      v.updatePicker();
     });
 
     return { 
@@ -26899,11 +26901,7 @@ module.exports = {
       this.$http.get('/api/food/').then(function (response){
         if (response.body) {
           v.availableFood = response.body.food;
-          setTimeout(function () {
-            //Use timeout to allow for vue to update html
-            $("#courseFoodInput").selectpicker('refresh');
-          }, 1);
-          
+          v.updatePicker();
         }
       }, function (response) {
         console.error("Error retreiving the available food");
@@ -26913,6 +26911,13 @@ module.exports = {
       console.log("clear data");
       this.name = null;
       this.foodSelection = [];
+      this.updatePicker();
+    },
+    updatePicker: function () {
+      setTimeout(function () {
+        //Use timeout to allow for vue to update html
+        $("#courseFoodInput").selectpicker('refresh');
+      }, 1);
     }
   }
 }
