@@ -113,6 +113,11 @@ module.exports = {
       this.$http.get('/api/food/').then(function (response){
         if (response.body) {
           v.availableFood = response.body.food;
+          setTimeout(function () {
+            //Use timeout to allow for vue to update html
+            $("#courseFoodInput").selectpicker('refresh');
+          }, 1);
+          
         }
       }, function (response) {
         console.error("Error retreiving the available food");

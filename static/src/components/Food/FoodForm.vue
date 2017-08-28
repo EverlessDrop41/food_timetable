@@ -93,6 +93,11 @@ module.exports = {
       });
     }
 
+    setTimeout(function () {
+      $("#foodCategoryInput").selectpicker();
+    }, 1);
+    
+
     return { name: "", price: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
     nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", priceError: false, priceErrorMsg: "" };

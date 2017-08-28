@@ -1,6 +1,6 @@
 module.exports = function () {
   //Import libaries
-  var jq = require("jquery");
+  var jQuery = require("jquery");
   var Vue = require("Vue");
   var VueResource = require('vue-resource');
 
@@ -8,8 +8,12 @@ module.exports = function () {
   Vue.use(VueResource);
 
   //configure jQuery
-  window.$ = jq;
-  window.jQuery = jq;
+  window.$ = jQuery;
+  window.jQuery = jQuery;
+
+  //Import jQuery plugins
+  var bootstrap = require("bootstrap");
+  var bootstrapSelect = require("bootstrap-select");
 
   //Import Components
   var App = require("./components/App.vue");
@@ -21,6 +25,8 @@ module.exports = function () {
   var Food = require("./components/Food/Food.vue");
   var FoodList = require("./components/Food/FoodList.vue");
   var FoodForm = require("./components/Food/FoodForm.vue");
+
+  var EventBus = require("./EventBus");
 
   $(document).ready(function () {
     new Vue({
