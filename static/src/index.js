@@ -19,6 +19,7 @@ module.exports = function () {
   var App = require("./components/App.vue");
   var Week = require("./components/Week/Week.vue");
   var WeekList = require("./components/Week/WeekList.vue");
+  var WeekForm = require("./components/Week/WeekForm.vue");
   var Course = require("./components/Course/Course.vue");
   var CourseList = require("./components/Course/CourseList.vue");
   var CourseForm = require("./components/Course/CourseForm.vue");
@@ -35,6 +36,7 @@ module.exports = function () {
         "app": App,
         "week": Week,
         "weeklist": WeekList,
+        "weekform": WeekForm,
         "course": Course,
         "courselist": CourseList,
         "courseform": CourseForm,

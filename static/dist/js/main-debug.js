@@ -3,7 +3,7 @@ var src = require("./src");
 src();
 require('bootstrap');
 
-},{"./src":34,"bootstrap":4}],2:[function(require,module,exports){
+},{"./src":35,"bootstrap":4}],2:[function(require,module,exports){
 (function (process){
 /*!
  * Vue.js v1.0.28
@@ -26783,7 +26783,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6770e074", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":35,"vue":22,"vue-hot-reload-api":20}],27:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],27:[function(require,module,exports){
 
 
 
@@ -26834,7 +26834,7 @@ module.exports = {
           this.foodSelection.push(f.id);
         }
       }, function (response) {
-        console.error("Error retreiving the food");
+        console.error("Error retreiving the course");
       });
     }
 
@@ -26930,7 +26930,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-fdf090ac", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":35,"vue":22,"vue-hot-reload-api":20}],28:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],28:[function(require,module,exports){
 
 
 
@@ -27010,7 +27010,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-95fe42f8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":35,"vue":22,"vue-hot-reload-api":20}],29:[function(require,module,exports){
+},{"../../utils":36,"vue":22,"vue-hot-reload-api":20}],29:[function(require,module,exports){
 
 
 
@@ -27103,7 +27103,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-c18b83b4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":35,"vue":22,"vue-hot-reload-api":20}],30:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],30:[function(require,module,exports){
 
 
 
@@ -27323,7 +27323,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-243c360a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":35,"vue":22,"vue-hot-reload-api":20}],31:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],31:[function(require,module,exports){
 
 
 
@@ -27402,7 +27402,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-58355ce4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":35,"vue":22,"vue-hot-reload-api":20}],32:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],32:[function(require,module,exports){
 
 
 
@@ -27500,7 +27500,177 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-6b4fa834", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":35,"vue":22,"vue-hot-reload-api":20}],33:[function(require,module,exports){
+},{"../../utils":36,"vue":22,"vue-hot-reload-api":20}],33:[function(require,module,exports){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+utils = require('../../utils');
+EventBus = require('../../EventBus');
+module.exports = {
+  props: ['update'],
+  data: function () {
+    const v =this;
+
+    this.getAvailableCourses();
+
+    if (this.update != null && this.update != '') {
+      this.$http.get('/api/week/' + this.update).then(function (response){
+        this.name = response.body.name;
+        this.monday = response.body.MondayId;
+        this.tuesday = response.body.TuesdayId;
+        this.wednesday = response.body.WednesdayId;
+        this.thursday = response.body.ThursdayId;
+        this.friday = response.body.FridayId;
+      }, function (response) {
+        console.error("Error retreiving the week");
+      });
+    }
+
+    EventBus.$on("UpdateCourses", function () {
+      v.getAvailableCourses();
+    });
+
+    return { 
+      name: "", nameError: false, nameErrorMsg: "",
+      monday: [], mondayError: false, mondayErrorMsg: "",
+      availableCourses: []
+    };
+  },
+  methods: {
+    monify: utils.poundStr,
+    validate: function (successCallback) {
+      var invalidForm = false;
+
+      if (this.name.length > 0 && this.name.length <= 255) {
+        this.nameError = false;
+      } else {
+        this.nameError = true;
+        this.nameErrorMsg = this.name.length == 0 ? "Name must have a vlaue" : "Name is too long";
+        invalidForm = true;
+      }
+
+      if (!invalidForm) { successCallback(); }
+    },
+    create: function() {
+      // const v = this;
+      // v.validate(function () {
+      //   var body = {
+      //     name: v.name,
+      //     food: v.mondaySelection
+      //   };
+      //   v.$http.post('/api/week/', body).then(function (response){
+      //     console.log(response.body);
+      //     v.clearData();
+      //     EventBus.$emit('UpdateWeek');
+      //   }, function (response) {
+      //     console.error("Error creating new week");
+      //   });
+      // });
+    },
+    submitUpdate: function () {
+      // const v = this;
+      // v.validate(function () {
+      //   var body = {
+      //     name: v.name,
+      //     food: v.mondaySelection
+      //   };
+      //   v.$http.put('/api/week/' + v.update, body).then(function (response){
+      //     console.log(response.body);
+      //     EventBus.$emit('UpdateWeek');
+      //   }, function (response) {
+      //     console.error("Error updating week");
+      //   });
+      // });
+    },
+    getAvailableCourses: function () {
+      const v = this;
+      this.$http.get('/api/course/').then(function (response){
+        if (response.body) {
+          v.availableCourses = response.body.courses;
+          setTimeout(function () {
+            //Use timeout to allow for vue to update html
+            $(".course-select").selectpicker('refresh');
+          }, 1);
+          
+        }
+      }, function (response) {
+        console.error("Error retreiving the available food");
+      });
+    },
+    clearData: function () {
+      console.log("clear data");
+      this.name = null;
+      this.monday = null;
+    }
+  }
+}
+
+
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span>\n  <h1>\n    Week \n    <span v-if=\"update == null || update == ''\">Create</span> \n    <span v-else=\"\">Update</span>\n  </h1>\n  <div class=\"form-group\" v-bind:class=\"{ 'has-error':nameError }\">\n    <div class=\"alert alert-danger\" v-if=\"nameError\">{{ nameErrorMsg }}</div>\n    <label for=\"weekNameInput\">Name</label>\n    <input type=\"text\" class=\"form-control\" id=\"weekNameInput\" maxlength=\"255\" placeholder=\"e.g. Week 1\" require=\"\" v-model=\"name\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"mondayCourseInput\">Monday</label>\n    <select class=\"form-control course-select\" id=\"mondayCourseInput\" v-model=\"monday\">\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"tuesdayCourseInput\">Tuesday</label>\n    <select class=\"form-control course-select\" id=\"tuesdayCourseInput\" v-model=\"tuesday\">\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"wednesdayCourseInput\">Wednesday</label>\n    <select class=\"form-control course-select\" id=\"wednesdayCourseInput\" v-model=\"wednesday\">\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"thursdayCourseInput\">Thursday</label>\n    <select class=\"form-control course-select\" id=\"thursdayCourseInput\" v-model=\"thursday\">\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label for=\"fridayCourseInput\">Friday</label>\n    <select class=\"form-control course-select\" id=\"fridayCourseInput\" v-model=\"friday\">\n      <option v-for=\"course in availableCourses\" value=\"{{course.id}}\">{{course.name}}</option>\n    </select>\n  </div>\n\n  <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n    Create\n  </button>\n\n  <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n    Update\n  </button>\n</span>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-e1a5786c", module.exports)
+  } else {
+    hotAPI.update("_v-e1a5786c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],34:[function(require,module,exports){
 
 
 
@@ -27561,7 +27731,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-79b32ab8", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../utils":35,"vue":22,"vue-hot-reload-api":20}],34:[function(require,module,exports){
+},{"../../utils":36,"vue":22,"vue-hot-reload-api":20}],35:[function(require,module,exports){
 module.exports = function () {
   //Import libaries
   var jQuery = require("jquery");
@@ -27583,6 +27753,7 @@ module.exports = function () {
   var App = require("./components/App.vue");
   var Week = require("./components/Week/Week.vue");
   var WeekList = require("./components/Week/WeekList.vue");
+  var WeekForm = require("./components/Week/WeekForm.vue");
   var Course = require("./components/Course/Course.vue");
   var CourseList = require("./components/Course/CourseList.vue");
   var CourseForm = require("./components/Course/CourseForm.vue");
@@ -27599,6 +27770,7 @@ module.exports = function () {
         "app": App,
         "week": Week,
         "weeklist": WeekList,
+        "weekform": WeekForm,
         "course": Course,
         "courselist": CourseList,
         "courseform": CourseForm,
@@ -27613,7 +27785,7 @@ module.exports = function () {
   });
 }
 
-},{"./EventBus":24,"./components/App.vue":25,"./components/Course/Course.vue":26,"./components/Course/CourseForm.vue":27,"./components/Course/CourseList.vue":28,"./components/Food/Food.vue":29,"./components/Food/FoodForm.vue":30,"./components/Food/FoodList.vue":31,"./components/Week/Week.vue":32,"./components/Week/WeekList.vue":33,"Vue":2,"bootstrap":4,"bootstrap-select":3,"jquery":19,"vue-resource":21}],35:[function(require,module,exports){
+},{"./EventBus":24,"./components/App.vue":25,"./components/Course/Course.vue":26,"./components/Course/CourseForm.vue":27,"./components/Course/CourseList.vue":28,"./components/Food/Food.vue":29,"./components/Food/FoodForm.vue":30,"./components/Food/FoodList.vue":31,"./components/Week/Week.vue":32,"./components/Week/WeekForm.vue":33,"./components/Week/WeekList.vue":34,"Vue":2,"bootstrap":4,"bootstrap-select":3,"jquery":19,"vue-resource":21}],36:[function(require,module,exports){
 module.exports = {
   poundStr: function(amt) {
     var pounds = Math.floor(amt / 100);

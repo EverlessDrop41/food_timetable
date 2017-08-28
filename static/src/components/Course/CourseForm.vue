@@ -48,7 +48,7 @@ module.exports = {
           this.foodSelection.push(f.id);
         }
       }, function (response) {
-        console.error("Error retreiving the food");
+        console.error("Error retreiving the course");
       });
     }
 
