@@ -27194,14 +27194,19 @@ module.exports = {
         this.vegan = response.body.vegan;
         this.dairyFree = response.body.dairyFree;
         this.glutenFree = response.body.glutenFree;
+        setTimeout(function () {
+          $("#foodCategoryInput").selectpicker('refresh');
+        }, 1);
       }, function (response) {
         console.error("Error retreiving the food");
       });
+    } else {
+      setTimeout(function () {
+        $("#foodCategoryInput").selectpicker('refresh');
+      }, 1);
     }
 
-    setTimeout(function () {
-      $("#foodCategoryInput").selectpicker();
-    }, 1);
+    
     
 
     return { name: "", price: 0, description: "", category: 0, 
