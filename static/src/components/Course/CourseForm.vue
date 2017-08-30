@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
       <label for="courseFoodInput">Food</label>
-      <select multiple class="form-control" id="courseFoodInput" v-model="foodSelection">
+      <select multiple data-live-search="true" class="form-control" id="courseFoodInput" v-model="foodSelection">
         <option v-for="food in availableFood" value="{{food.id}}">{{food.name}}</option>
       </select>
     </div>

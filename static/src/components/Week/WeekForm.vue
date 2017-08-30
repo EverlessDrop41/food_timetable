@@ -12,35 +12,35 @@
     </div>
     <div class="form-group">
       <label for="mondayCourseInput">Monday</label>
-      <select class="form-control course-select" id="mondayCourseInput" v-model="monday">
+      <select data-live-search="true" class="form-control course-select" id="mondayCourseInput" v-model="monday">
         <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="tuesdayCourseInput">Tuesday</label>
-      <select class="form-control course-select" id="tuesdayCourseInput" v-model="tuesday">
+      <select data-live-search="true" class="form-control course-select" id="tuesdayCourseInput" v-model="tuesday">
         <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="wednesdayCourseInput">Wednesday</label>
-      <select class="form-control course-select" id="wednesdayCourseInput" v-model="wednesday">
+      <select data-live-search="true" class="form-control course-select" id="wednesdayCourseInput" v-model="wednesday">
         <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="thursdayCourseInput">Thursday</label>
-      <select class="form-control course-select" id="thursdayCourseInput" v-model="thursday">
+      <select data-live-search="true" class="form-control course-select" id="thursdayCourseInput" v-model="thursday">
         <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="fridayCourseInput">Friday</label>
-      <select class="form-control course-select" id="fridayCourseInput" v-model="friday">
+      <select data-live-search="true" class="form-control course-select" id="fridayCourseInput" v-model="friday">
         <option value="none">None</option>
         <option v-for="course in availableCourses" value="{{course.id}}">{{course.name}}</option>
       </select>
