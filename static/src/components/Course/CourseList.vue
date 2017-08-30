@@ -8,7 +8,7 @@
         {{course.name}}
         <span class="pull-right">
           <span class="btn btn-xs btn-danger" v-on:click="deleteCourse(course.id, $event)">
-            Delete
+            <span class="glyphicon glyphicon-remove"></span> Delete
           </span>
         </span>
       </a>

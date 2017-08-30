@@ -8,7 +8,7 @@
         {{food.name}}
         <span class="pull-right">
           <span class="btn btn-xs btn-danger" v-on:click="deleteFood(food.id, $event)">
-            Delete
+            <span class="glyphicon glyphicon-remove"></span> Delete
           </span>
         </span>
       </a>
