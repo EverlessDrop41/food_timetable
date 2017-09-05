@@ -22,6 +22,18 @@
         <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li><a href="/public">Home</a></li>
+          <li class="dropdown">
+            <a id="overviewDropdown" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Overview
+              <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="overviewDropdown">
+              <li><a href="/public/week">Weeks</a></li>
+              <li><a href="/public/Course">Courses</a></li>
+              <li><a href="/public/Food">Food</a></li>
+            </ul>
+          </li>
           {% if is_admin %}
           <li><a href="/public/admin">Dashboard</a></li>
           {% endif %}

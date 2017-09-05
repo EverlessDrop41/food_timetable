@@ -27800,6 +27800,7 @@ module.exports = function () {
   var EventBus = require("./EventBus");
 
   $(document).ready(function () {
+    $('.dropdown-toggle').dropdown();
     new Vue({
       el: 'body',
       components: {
@@ -27818,6 +27819,7 @@ module.exports = function () {
         title: "Food Menu"
       }
     });
+    
   });
 }
 

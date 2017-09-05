@@ -6,14 +6,26 @@ router.get('/', function (req, res) {
 	res.render("landing.nunj", req.session.templateData);
 })
 
+router.get('/week', function (req, res) {
+	res.render("weekOverview.nunj", req.session.templateData);
+});
+
 router.get('/week/:id', function (req, res) {
 	req.session.templateData.weekId = req.params.id;
 	res.render("week.nunj", req.session.templateData);
 });
 
+router.get('/course', function (req, res) {
+	res.render("courseOverview.nunj", req.session.templateData);
+});
+
 router.get('/course/:id', function (req, res) {
 	req.session.templateData.courseId = req.params.id;
 	res.render("course.nunj", req.session.templateData);
+});
+
+router.get('/food', function (req, res) {
+	res.render("foodOverview.nunj", req.session.templateData);
 });
 
 router.get('/food/:id', function (req, res) {
