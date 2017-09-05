@@ -2,10 +2,14 @@
 
 {% block body %}
 <div class="row">
-    <foodlist active-id="{{foodId}}"></foodlist>
+    <div class="col-md-12"><foodlist active-id="{{foodId}}"></foodlist></div>
 </div>
 <div class="row">
+    {% if is_admin %}
     <div class="col-md-4"><food food-id="{{ foodId }}"></food></div>
     <div class="col-md-8"><foodform update="{{ foodId }}"></foodform></div>
+    {% else %}
+    <div class="col-md-12"><food food-id="{{ foodId }}"></div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@
       href="/public/week/{{week.id}}" class="list-group-item" 
       v-bind:class="{ active: activeId == week.id }">
         {{week.name}}
-        <span class="pull-right">
+        <span v-if="IS_ADMIN" class="pull-right">
           <span class="btn btn-xs btn-danger" v-on:click="deleteWeek(week.id, $event)">
             <span class="glyphicon glyphicon-remove"></span> Delete
           </span>
@@ -38,7 +38,7 @@ module.exports = {
       v.getWeek();
     });
 
-    return { weeks: null, loading: true }
+    return { weeks: null, loading: true, IS_ADMIN: IS_ADMIN }
   },
   methods: {
     monify: utils.poundStr,

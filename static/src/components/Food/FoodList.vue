@@ -6,7 +6,7 @@
       href="/public/food/{{food.id}}" class="list-group-item clearfix" 
       v-bind:class="{ active: activeId == food.id }">
         {{food.name}}
-        <span class="pull-right">
+        <span v-if="IS_ADMIN" class="pull-right">
           <span class="btn btn-xs btn-danger" v-on:click="deleteFood(food.id, $event)">
             <span class="glyphicon glyphicon-remove"></span> Delete
           </span>
@@ -37,7 +37,7 @@ module.exports = {
       v.updateFood();
     });
 
-    return { food: null, loading: true }
+    return { food: null, loading: true, IS_ADMIN: IS_ADMIN }
   },
   methods: {
     monify: utils.poundStr,
