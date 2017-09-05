@@ -7,7 +7,7 @@ var nunjucks = require("nunjucks");
 var cookieSession = require("cookie-session");
 
 models = require("./models");
-var is_prod = process.env.IS_PROD || false;
+
 
 //Add Logging
 app.use(morgan('common', {
@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
 var port = process.env.PORT || 5000;
 
 var init_db = require("./init_db");
-init_db(is_prod, function (successful) {
+init_db(function (successful) {
 	if (successful) {
 		app.listen(port, function () {
 			console.log('Food Timetable app listening on port ' + port + '!');
