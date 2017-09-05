@@ -24,6 +24,8 @@ function logSqlizeError(error) {
 
 module.exports = function (callback) {
 	console.log("Initializing Database");
+	console.log("Create Sample Data: " + (config.createSampleData ? "yes" : "no"));
+	console.log("Reset Database: " + (config.resetDb ? "yes" : "no"));
 	//Sync the db and if in dev generate sample data
 	models.sequelize.sync({ force: config.resetDb }).then(function(err) {
 	 	console.log('Connection has been established successfully.');
@@ -39,12 +41,7 @@ module.exports = function (callback) {
 					console.error(error);
 				}
 			}
-			console.log("crs: " + config.createSampleData);
-			console.log("Create Sample Data: " + (config.createSampleData ? "yes" : "no"));
-			console.log("reset: " + config.resetDb);
-			console.log("Reset Database: " + (config.resetDb ? "yes" : "no"));
-			console.log("Env reset: " + process.env.RESET_DB_ON_STARTUP + 
-				" Env create sample data: " + process.env.CREATE_SAMPLE_DATA_ON_STARTUP);
+			
 			if (config.createSampleData) {
 				//Make Food
 				models.Food.create({ name: "Pasta", price: 150 }).then(function (pasta) {
@@ -97,9 +94,6 @@ module.exports = function (callback) {
 			}
 
 		});
-
-		
-
 	}).catch(function (err) {
 	  console.log('Unable to connect to the database:', err);
 	  callback(false);
