@@ -27583,7 +27583,8 @@ module.exports = {
       });
     }
 
-    EventBus.$on("UpdateCourses", function () {
+    EventBus.$on("UpdateCourse", function () {
+      console.log("updating available courses");
       v.getAvailableCourses();
     });
 
