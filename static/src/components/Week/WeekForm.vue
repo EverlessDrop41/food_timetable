@@ -65,8 +65,6 @@ module.exports = {
   data: function () {
     const v =this;
 
-    this.getAvailableCourses();
-
     if (this.update != null && this.update != '') {
       this.$http.get('/api/week/' + this.update).then(function (response){
         this.name = response.body.name;
@@ -75,10 +73,13 @@ module.exports = {
         this.wednesday = response.body.WednesdayId;
         this.thursday = response.body.ThursdayId;
         this.friday = response.body.FridayId;
+        v.updatePicker();
       }, function (response) {
         console.error("Error retreiving the week");
       });
     }
+
+    this.getAvailableCourses();
 
     EventBus.$on("UpdateCourse", function () {
       console.log("updating available courses");
@@ -154,11 +155,7 @@ module.exports = {
       this.$http.get('/api/course/').then(function (response){
         if (response.body) {
           v.availableCourses = response.body.courses;
-          setTimeout(function () {
-            //Use timeout to allow for vue to update html
-            $(".course-select").selectpicker('refresh');
-          }, 1);
-          
+          v.updatePicker();
         }
       }, function (response) {
         console.error("Error retreiving the available food");
@@ -168,6 +165,12 @@ module.exports = {
       console.log("clear data");
       this.name = null;
       this.monday = null;
+    },
+    updatePicker: function () {
+      setTimeout(function () {
+        //Use timeout to allow for vue to update html
+        $(".course-select").selectpicker('refresh');
+      }, 1);
     }
   }
 }
