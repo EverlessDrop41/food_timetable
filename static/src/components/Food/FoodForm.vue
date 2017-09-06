@@ -193,7 +193,7 @@ module.exports = {
     clearData: function () {
       console.log("clear data");
       this.name = null;
-      this.price = null;
+      this.price = 0;
       this.description = null;
       this.category = 0;
       this.vegetarian = false;

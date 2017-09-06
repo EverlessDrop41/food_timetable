@@ -142,7 +142,7 @@ router.get('/:id', function (req, res) {
  *
  */
 router.post("/", auth.middleware.require_admin, function(req, res) {
-  if (req.body && req.body.name && req.body.price) {
+  if (req.body && req.body.name && req.body.price != null) {
     try {
       req.body.price = parseInt(req.body.price);
 
@@ -227,7 +227,7 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           food.description = req.body.description;
         }
 
-        if (req.body.price) {
+        if (req.body.price != null) {
           req.body.price = parseInt(req.body.price);
 
           if (isNaN(req.body.price)) {
