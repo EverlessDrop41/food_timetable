@@ -26977,7 +26977,7 @@ module.exports = {
       v.updateCourse();
     });
 
-    return { courses: null, loading: true, IS_ADMIN: IS_ADMIN }
+    return { courses: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
   },
   methods: {
     monify: utils.poundStr,
@@ -27374,7 +27374,7 @@ module.exports = {
       v.updateFood();
     });
 
-    return { food: null, loading: true, IS_ADMIN: IS_ADMIN }
+    return { food: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
   },
   methods: {
     monify: utils.poundStr,
@@ -27741,7 +27741,7 @@ module.exports = {
       v.getWeek();
     });
 
-    return { weeks: null, loading: true, IS_ADMIN: IS_ADMIN }
+    return { weeks: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
   },
   methods: {
     monify: utils.poundStr,

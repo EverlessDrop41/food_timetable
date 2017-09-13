@@ -40,7 +40,7 @@ module.exports = {
       v.updateFood();
     });
 
-    return { food: null, loading: true, IS_ADMIN: IS_ADMIN }
+    return { food: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
   },
   methods: {
     monify: utils.poundStr,

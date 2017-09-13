@@ -41,7 +41,7 @@ module.exports = {
       v.getWeek();
     });
 
-    return { weeks: null, loading: true, IS_ADMIN: IS_ADMIN }
+    return { weeks: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
   },
   methods: {
     monify: utils.poundStr,
