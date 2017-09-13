@@ -26729,6 +26729,82 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":22,"vue-hot-reload-api":20,"vueify/lib/insert-css":23}],26:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.foodListCell ul {\n  padding: 0px;\n  margin: 0px;\n  list-style-type: none;\n}\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -26768,22 +26844,58 @@ module.exports = {
         console.error("Error retreiving the course");
       });
     }
+  },
+  computed: {
+    mainFood: function () {
+      return this.course.Food.filter(function (food) {
+        return food.category === 0;
+      });
+    },
+    hrtgFood: function () {
+      return this.course.Food.filter(function (food) {
+        return food.category === 1;
+      });
+    },
+    pastaBarFood: function () {
+      return this.course.Food.filter(function (food) {
+        return food.category === 2;
+      });
+    },
+    dessertFood: function () {
+      return this.course.Food.filter(function (food) {
+        return food.category === 3;
+      });
+    },
+    drinks: function () {
+      return this.course.Food.filter(function (food) {
+        return food.category === 4;
+      });
+    },
+    otherFood: function () {
+      return this.course.Food.filter(function (food) {
+        return [0,1,2,3,4].indexOf(food.category) == -1;
+      });
+    }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<span v-if=\"course\">\n\t<h1>{{course.name}}</h1>\n\n\t<ul>\n\t\t<li v-for=\"f in course.Food\">\n\t\t\t<a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n\t\t</li>\n\t</ul>\n</span>\n<div v-else=\"\">Course not found </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span v-if=\"course\">\n\t\t<h1>{{course.name}}</h1>\n\n\t\t<table v-if=\"course\" class=\"table table-bordered\">\n      <thead>\n        <tr>\n          <th>Main</th> <th>Hot Ready To Go</th> <th>Pasta Bar</th> <th>Dessert</th> <th>Drink</th> <th>Other</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <!-- Main -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in mainFood\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n          <!-- HRTG -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in hrtgFood\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n          <!-- Pasta Bar -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in pastaBarFood\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n          <!-- Desserts -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in dessertFood\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n          <!-- Drinks -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in drinks\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n          <!-- Other -->\n          <td class=\"foodListCell\">\n            <ul>\n              <li v-for=\"f in otherFood\">\n                <a href=\"/public/food/{{f.id}}\">{{f.name}}</a> : {{ monify(f.price) }}\n              </li>\n            </ul>\n          </td>\n        </tr>\n      </tbody>\n\n    </table>\n\t</span>\n\t<div v-else=\"\">Course not found </div>\n\n      <!--\nnull, not in expected range, -1: Other\n0: Main\n1: Hot Ready To Go\n2: Pasta Bar\n3: Dessert\n4: Drink\n-->\n    \n\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.foodListCell ul {\n  padding: 0px;\n  margin: 0px;\n  list-style-type: none;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
   if (!module.hot.data) {
     hotAPI.createRecord("_v-6770e074", module.exports)
   } else {
     hotAPI.update("_v-6770e074", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],27:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20,"vueify/lib/insert-css":23}],27:[function(require,module,exports){
 
 
 

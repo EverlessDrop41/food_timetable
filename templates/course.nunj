@@ -6,8 +6,8 @@
 </div>
 <div class="row">
     {% if is_admin %}
-    <div class="col-md-4"><course course-id="{{ courseId }}"></course></div>
-    <div class="col-md-8"><courseform update="{{ courseId }}"></courseform></div>
+    <div class="col-md-6"><course course-id="{{ courseId }}"></course></div>
+    <div class="col-md-6"><courseform update="{{ courseId }}"></courseform></div>
     {% else %}
     <div class="col-md-12"><course course-id="{{ courseId }}"></div>
     {% endif %}
