@@ -3,12 +3,12 @@
 {% block body %}
     {% if is_admin %}
         <div class="row">
-            <div class="col-md-6"><weeklist></weeklist></div>
+            <div class="col-md-6"><weeklist search=true></weeklist></div>
             <div class="col-md-6"><weekform></weekform></div>
         </div>
     {% else %}
         <div class="row">
-            <div class="col-md-12"><weeklist></weeklist></div>
+            <div class="col-md-12"><weeklist search=true></weeklist></div>
         </div>
     {% endif %}
 {% endblock %}

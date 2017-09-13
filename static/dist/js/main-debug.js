@@ -26963,9 +26963,12 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
 utils = require('../../utils');
 module.exports = {
-  props: ["activeId"],
+  props: ["activeId", "search"],
   data: function () {
     const v = this;
     v.updateCourse();
@@ -27004,7 +27007,7 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Course List</h1>\n<div v-if=\"courses\">\n  <ul class=\"list-group\">\n    <a v-for=\"course in courses\" href=\"/public/course/{{course.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == course.id }\">\n      {{course.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteCourse(course.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No courses were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Course List</h1>\n<div v-if=\"search\" class=\"form-group\">\n  <input type=\"text\" class=\"form-control\" id=\"searchQuery\" placeholder=\"Search...\" v-model=\"searchQuery\">\n</div>\n<div v-if=\"courses\">\n  <ul class=\"list-group\">\n    <a v-for=\"course in courses | filterBy searchQuery in 'name'\" href=\"/public/course/{{course.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == course.id }\">\n      {{course.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteCourse(course.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No courses were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -27356,10 +27359,13 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
-  props: ["activeId"],
+  props: ["activeId", "search"],
   data: function () {
     v = this;
     v.updateFood();
@@ -27396,7 +27402,7 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food\" href=\"/public/food/{{food.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteFood(food.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"search\" class=\"form-group\">\n  <input type=\"text\" class=\"form-control\" id=\"searchQuery\" placeholder=\"Search...\" v-model=\"searchQuery\">\n</div>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food | filterBy searchQuery in 'name'\" href=\"/public/food/{{food.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteFood(food.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -27719,10 +27725,13 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
-  props: ['activeId'],
+  props: ['activeId', 'search'],
   data: function () {
     const v = this;
     
@@ -27760,7 +27769,7 @@ module.exports = {
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Week List</h1>\n<div v-if=\"weeks\">\n  <ul class=\"list-group\">\n    <a v-for=\"week in weeks\" href=\"/public/week/{{week.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == week.id }\">\n      {{week.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteWeek(week.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No weeks were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Week List</h1>\n<div v-if=\"search\" class=\"form-group\">\n  <input type=\"text\" class=\"form-control\" id=\"searchQuery\" placeholder=\"Search...\" v-model=\"searchQuery\">\n</div>\n<div v-if=\"weeks\">\n  <ul class=\"list-group\">\n    <a v-for=\"week in weeks | filterBy searchQuery in 'name'\" href=\"/public/week/{{week.id}}\" class=\"list-group-item\" v-bind:class=\"{ active: activeId == week.id }\">\n      {{week.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteWeek(week.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No weeks were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

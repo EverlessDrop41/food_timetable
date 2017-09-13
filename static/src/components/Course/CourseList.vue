@@ -1,8 +1,11 @@
 <template>
   <h1>Course List</h1>
+  <div v-if="search" class="form-group">
+    <input type="text" class="form-control" id="searchQuery" placeholder="Search..." v-model="searchQuery">
+  </div>
   <div v-if="courses">
     <ul class="list-group">
-      <a v-for="course in courses" 
+      <a v-for="course in courses | filterBy searchQuery in 'name'" 
       href="/public/course/{{course.id}}" class="list-group-item clearfix" 
       v-bind:class="{ active: activeId == course.id }">
         {{course.name}}
@@ -27,7 +30,7 @@
 <script>
 utils = require('../../utils');
 module.exports = {
-  props: ["activeId"],
+  props: ["activeId", "search"],
   data: function () {
     const v = this;
     v.updateCourse();

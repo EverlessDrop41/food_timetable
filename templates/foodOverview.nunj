@@ -3,12 +3,12 @@
 {% block body %}
     {% if is_admin %}
         <div class="row">
-            <div class="col-md-6"><foodlist></foodlist></div>
+            <div class="col-md-6"><foodlist search=true></foodlist></div>
             <div class="col-md-6"><foodform></foodform></div>
         </div>
     {% else %}
         <div class="row">
-            <div class="col-md-12"><foodlist></foodlist></div>
+            <div class="col-md-12"><foodlist search=true></foodlist></div>
         </div>
     {% endif %}
 {% endblock %}

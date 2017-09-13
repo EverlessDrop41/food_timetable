@@ -1,8 +1,11 @@
 <template>
   <h1>Food List</h1>
+  <div v-if="search" class="form-group">
+    <input type="text" class="form-control" id="searchQuery" placeholder="Search..." v-model="searchQuery">
+  </div>
   <div v-if="food">
     <ul class="list-group" >
-      <a v-for="food in food" 
+      <a v-for="food in food | filterBy searchQuery in 'name'" 
       href="/public/food/{{food.id}}" class="list-group-item clearfix" 
       v-bind:class="{ active: activeId == food.id }">
         {{food.name}}
@@ -28,7 +31,7 @@
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
-  props: ["activeId"],
+  props: ["activeId", "search"],
   data: function () {
     v = this;
     v.updateFood();

@@ -1,8 +1,11 @@
 <template>
   <h1>Week List</h1>
+  <div v-if="search" class="form-group">
+    <input type="text" class="form-control" id="searchQuery" placeholder="Search..." v-model="searchQuery">
+  </div>
   <div v-if="weeks">
     <ul class="list-group" >
-      <a v-for="week in weeks" 
+      <a v-for="week in weeks | filterBy searchQuery in 'name'" 
       href="/public/week/{{week.id}}" class="list-group-item" 
       v-bind:class="{ active: activeId == week.id }">
         {{week.name}}
@@ -28,7 +31,7 @@
 utils = require('../../utils');
 EventBus = require('../../EventBus');
 module.exports = {
-  props: ['activeId'],
+  props: ['activeId', 'search'],
   data: function () {
     const v = this;
     
