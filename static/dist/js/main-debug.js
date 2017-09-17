@@ -27444,6 +27444,26 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],31:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n.flist {\n    transition: all .3s ease;\n    height: auto;\n    overflow: hidden;\n}\n.flist.v-enter, .flist.v-leave {\n    height: 0;\n    padding: 0 10px;\n    opacity: 0;\n}\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27486,7 +27506,7 @@ module.exports = {
       v.updateFood();
     });
 
-    return { food: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null }
+    return { food: null, loading: true, IS_ADMIN: IS_ADMIN, searchQuery: null, showList: true }
   },
   methods: {
     monify: utils.poundStr,
@@ -27509,23 +27529,30 @@ module.exports = {
         console.error("Error deleting food");
         this.loading = false;
       });
+    },
+    showHide: function() {
+      showList = !showList;
     }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"search\" class=\"form-group\">\n  <input type=\"text\" class=\"form-control\" id=\"searchQuery\" placeholder=\"Search...\" v-model=\"searchQuery\">\n</div>\n<div v-if=\"food\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food | filterBy searchQuery in 'name'\" href=\"/public/food/{{food.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteFood(food.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-else=\"\">\n    No foods were found\n  </div>\n</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<h1>Food List</h1>\n<div v-if=\"search\" class=\"input-group\">\n  <input type=\"text\" class=\"form-control\" id=\"searchQuery\" placeholder=\"Search...\" v-model=\"searchQuery\">\n  <span class=\"input-group-btn\">\n    <button class=\"btn btn-default\" type=\"button\" v-on:click=\"showList = !showList\">\n      <span v-if=\"showList\">Hide</span><span v-else=\"\">Show</span>\n    </button>\n  </span>\n</div>\n<div v-if=\"food &amp;&amp; showList\" class=\"flist\" v-animate=\"\">\n  <ul class=\"list-group\">\n    <a v-for=\"food in food | filterBy searchQuery in 'name'\" href=\"/public/food/{{food.id}}\" class=\"list-group-item clearfix\" v-bind:class=\"{ active: activeId == food.id }\">\n      {{food.name}}\n      <span v-if=\"IS_ADMIN\" class=\"pull-right\">\n        <span class=\"btn btn-xs btn-danger\" v-on:click=\"deleteFood(food.id, $event)\">\n          <span class=\"glyphicon glyphicon-remove\"></span> Delete\n        </span>\n      </span>\n    </a>\n  </ul>\n</div>\n<span v-else=\"\">\n  <div v-if=\"loading\">\n    Loading...\n  </div>\n  <div v-if=\"!loading &amp;&amp; food == null\">\n    No foods were found\n  </div>\n</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n.flist {\n    transition: all .3s ease;\n    height: auto;\n    overflow: hidden;\n}\n.flist.v-enter, .flist.v-leave {\n    height: 0;\n    padding: 0 10px;\n    opacity: 0;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
   if (!module.hot.data) {
     hotAPI.createRecord("_v-58355ce4", module.exports)
   } else {
     hotAPI.update("_v-58355ce4", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20}],32:[function(require,module,exports){
+},{"../../EventBus":24,"../../utils":36,"vue":22,"vue-hot-reload-api":20,"vueify/lib/insert-css":23}],32:[function(require,module,exports){
 
 
 
