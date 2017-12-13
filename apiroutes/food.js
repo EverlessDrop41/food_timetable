@@ -153,6 +153,7 @@ router.post("/", auth.middleware.require_admin, function(req, res) {
       models.Food.create({
         name: req.body.name, 
         price: req.body.price,
+        stockPrice: req.body.stockPrice,
         description: req.body.description,
         category: req.body.category,
         vegetarian: req.body.vegetarian,
@@ -235,6 +236,16 @@ router.put('/:id', auth.middleware.require_admin, function (req, res) {
           }
 
           food.price = req.body.price;
+        }
+
+        if (req.body.stockPrice != null) {
+          req.body.stockPrice = parseInt(req.body.stockPrice);
+
+          if (isNaN(req.body.stockPrice)) {
+            res.status(400).send("Stock Price must be an integer");
+          }
+
+          food.stockPrice = req.body.stockPrice;
         }
 
         if (req.body.category != null) {

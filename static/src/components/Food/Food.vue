@@ -5,6 +5,7 @@
     </h1>
     <p>{{food.description}}</p>
     <p>Cost: {{monify(food.price)}}</p>
+    <p v-if="IS_ADMIN">Stock Price: {{monify(food.stockPrice)}}</p>
     
     <dl>
       <dt>Vegetarian</dt>
@@ -38,7 +39,7 @@ module.exports = {
       vu.updateData();
     });
 
-    return { food: null }
+    return { food: null, IS_ADMIN: IS_ADMIN }
   },
   methods: {
     monify: utils.poundStr,

@@ -21,6 +21,17 @@
       <div class="input-group">
         <span class="input-group-addon">{{ monify(price) }}</span>
         <input type="number" class="form-control" id="foodpriceInput" min="0" v-model="price"></input>
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" v-on:click="calulatePriceFromStockPrice()">Calculate from stock Price</button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group" v-bind:class="{ 'has-error':stockPriceError }">
+      <div class="alert alert-danger" v-if="stockPriceError">{{ stockPriceErrorMsg }}</div>
+      <label for="foodStockPriceInput">Stock Price</label>
+      <div class="input-group">
+        <span class="input-group-addon">{{ monify(stockPrice) }}</span>
+        <input type="number" class="form-control" id="foodStockPriceInput" min="0" v-model="stockPrice"></input>
       </div>
     </div>
     <div class="form-group">
@@ -74,6 +85,8 @@ null, not in expected range, -1: Other
 */
 utils = require('../../utils');
 EventBus = require('../../EventBus');
+swal = require('sweetalert2');
+
 module.exports = {
   props: ['update'],
   data: function () {
@@ -83,6 +96,7 @@ module.exports = {
         this.name = response.body.name;
         this.description = response.body.description;
         this.price = response.body.price;
+        this.stockPrice = response.body.stockPrice;
         this.category = response.body.category;
         this.vegetarian = response.body.vegetarian;
         this.vegan = response.body.vegan;
@@ -100,14 +114,27 @@ module.exports = {
       }, 1);
     }
 
-    
-    
-
-    return { name: "", price: 0, description: "", category: 0, 
+    return { name: "", price: 0, stockPrice: 0, description: "", category: 0, 
     vegetarian: false, vegan: false, dairyFree: false, glutenFree: false,
     nameError: false, nameErrorMsg: "", descriptionError: false, descriptionErrorMsg: "", priceError: false, priceErrorMsg: "" };
   },
   methods: {
+    calulatePriceFromStockPrice: function () {
+      var vueM = this;
+      swal({
+        title: "What is the profit margin?",
+        text: "As a perecentage",
+        input: "range",
+        inputValue: 22
+      }).then(function (result) {
+        if (result.value) {
+          perecentage = result.value/100;
+          console.log(perecentage);
+          console.log(vueM.stockPrice);
+          vueM.price = parseInt(parseInt(vueM.stockPrice) + parseFloat(vueM.stockPrice * perecentage))
+        }
+      });
+    },
     monify: utils.poundStr,
     validate: function (successCallback) {
       var invalidForm = false;
@@ -138,6 +165,16 @@ module.exports = {
         invalidForm = true;
       }
 
+      if (this.stockPrice >= 0) {
+        this.stockPrice = parseInt(this.stockPrice);
+        if (isNaN(this.stockPrice)) { this.stockPrice=0; }
+        this.stockPriceError = false
+      } else {
+        this.stockPriceError = true;
+        this.stockPriceErrorMsg = "Can't have a negative price";
+        invalidForm = true;
+      }
+
       this.category = parseInt(this.category);
       if ([0, 1, 2, 3, 4].indexOf(this.category) === -1) {
         this.category = -1;
@@ -151,6 +188,7 @@ module.exports = {
         const body = {
           name: v.name,
           price: v.price,
+          stockPrice: v.stockPrice,
           description: v.description,
           category: v.category,
           vegetarian: v.vegetarian,
@@ -174,6 +212,7 @@ module.exports = {
         const body = {
           name: v.name,
           price: v.price,
+          stockPrice: v.stockPrice,
           description: v.description,
           category: v.category,
           vegetarian: v.vegetarian,
@@ -194,6 +233,7 @@ module.exports = {
       console.log("clear data");
       this.name = null;
       this.price = 0;
+      this.stockPrice= 0;
       this.description = null;
       this.category = 0;
       this.vegetarian = false;

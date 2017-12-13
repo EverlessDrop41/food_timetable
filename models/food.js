@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       defaultValue: 100
     },
+    stockPrice: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     category: {
       type: DataTypes.INTEGER
     },
