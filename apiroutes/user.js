@@ -59,6 +59,25 @@ router.get('/', auth.middleware.require_admin, function (req, res) {
 });
 
 /**
+ * @api {get} /api/user/:id Get User
+ * @apiName GetUserById
+ * @apiDescription Get user by id, requires an authenticated user
+ * @apiGroup User
+ *
+ * @apiParam {String} Authorization BasicAuth credentials
+ * @apiParam {String} Id The Id of the user to get
+ */
+router.get('/:id', auth.middleware.require_admin, function (req, res) {
+  models.User.findById(req.params.id).then(function(user) {
+		if (user) {user.password = undefined;} //Remove password for security (despite being hashed)
+    res.send(user);
+  }).catch(function (err) {
+    console.error(err);
+    res.send("Internal Server Error")
+  });
+});
+
+/**
  * @api {post} /api/user/register Register User
  * @apiName RegisterUser
  * @apiDescription Create a new user, requires an authenticated user

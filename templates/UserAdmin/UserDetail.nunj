@@ -1,0 +1,7 @@
+{% extends "layout.nunj" %}
+
+{% block body %}
+<div class="row">
+  <User user-id={{ userId }}></User>
+</div>
+{% endblock %}

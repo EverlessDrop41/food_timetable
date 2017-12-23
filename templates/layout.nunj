@@ -35,6 +35,7 @@
             </ul>
           </li>
           {% if is_admin %}
+          <li><a href="/public/user">Users</a></li>
           <li><a href="/public/admin">Dashboard</a></li>
           {% endif %}
         </ul>

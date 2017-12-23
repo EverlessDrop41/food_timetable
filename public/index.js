@@ -16,6 +16,7 @@ router.all('*', auth.middleware.is_admin, function (req, res, next) {
 });
 
 router.use('/', require("./public"));
+router.use('/user', require("./user"));
 router.use('/admin', require("./admin"));
 
 module.exports = router;

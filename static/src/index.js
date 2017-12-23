@@ -26,6 +26,9 @@ module.exports = function () {
   var Food = require("./components/Food/Food.vue");
   var FoodList = require("./components/Food/FoodList.vue");
   var FoodForm = require("./components/Food/FoodForm.vue");
+  var User = require("./components/Users/User.vue");
+  var UserList = require("./components/Users/UserList.vue");
+  var UserForm = require("./components/Users/UserForm.vue");
 
   var EventBus = require("./EventBus");
 
@@ -43,7 +46,10 @@ module.exports = function () {
         "courseform": CourseForm,
         "food": Food,
         "foodlist": FoodList,
-        "foodform": FoodForm
+        "foodform": FoodForm,
+        "user": User,
+        "userlist": UserList,
+        "userform": UserForm
       },
       data: {
         title: "Food Menu"
