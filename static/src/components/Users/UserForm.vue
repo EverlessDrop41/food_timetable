@@ -10,6 +10,9 @@
       <label for="courseUserNameInput">Username</label>
       <input type="text" class="form-control" id="courseUserNameInput" maxlength="255" placeholder="e.g. Monday 1" require v-model="username">
     </div>
+    <div v-if="passwordsMatch" class="alert alert-danger">
+      Passwords don't match
+    </div>
     <div class="form-group">
       <label for="passwordInput">Password</label>
       <input type="password" class="form-control" id="passwordInput" maxlength="255" placeholder="Password" require v-model="password">
@@ -44,7 +47,7 @@ module.exports = {
       vu.updateData();
     });
 
-    return { user: null, IS_ADMIN: IS_ADMIN }
+    return { user: null, IS_ADMIN: IS_ADMIN, password: null, confirmPassword: null }
   },
   methods: {
     updateData: function () {
@@ -55,6 +58,14 @@ module.exports = {
         vu.user = null;
         console.error("Error retreiving the user");
       });
+    },
+    create: function() {
+      
+    }
+  },
+  computed: {
+    passwordsMatch: function() {
+      return this.password != this.confirmPassword;
     }
   }
 }

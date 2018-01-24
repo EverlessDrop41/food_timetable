@@ -29658,6 +29658,9 @@ if (module.hot) {(function () {  module.hot.accept()
 
 
 
+
+
+
 utils = require('../../utils');
 EventBus= require('../../EventBus');
 
@@ -29672,7 +29675,7 @@ module.exports = {
       vu.updateData();
     });
 
-    return { user: null, IS_ADMIN: IS_ADMIN }
+    return { user: null, IS_ADMIN: IS_ADMIN, password: null, confirmPassword: null }
   },
   methods: {
     updateData: function () {
@@ -29683,12 +29686,20 @@ module.exports = {
         vu.user = null;
         console.error("Error retreiving the user");
       });
+    },
+    create: function() {
+      
+    }
+  },
+  computed: {
+    passwordsMatch: function() {
+      return this.password != this.confirmPassword;
     }
   }
 }
 
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span>\n\t\t<h1>\n      [NOT FINISHED] User \n      <span v-if=\"update == null || update == ''\">Register</span> \n      <span v-else=\"\">Update</span>\n    </h1>\n    <div class=\"form-group\" v-bind:class=\"{ 'has-error':userNameError }\">\n      <div class=\"alert alert-danger\" v-if=\"userNameError\">{{ UserNameErrorMsg }}</div>\n      <label for=\"courseUserNameInput\">Username</label>\n      <input type=\"text\" class=\"form-control\" id=\"courseUserNameInput\" maxlength=\"255\" placeholder=\"e.g. Monday 1\" require=\"\" v-model=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"passwordInput\">Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"passwordInput\" maxlength=\"255\" placeholder=\"Password\" require=\"\" v-model=\"password\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"confirmPasswordInput\">Confirm Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"confirmPasswordInput\" maxlength=\"255\" placeholder=\"Confirm Password\" require=\"\" v-model=\"confirmPassword\">\n    </div>\n    <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n      Register\n    </button>\n\n    <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n      Update\n    </button>\n\t</span>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<span>\n\t\t<h1>\n      [NOT FINISHED] User \n      <span v-if=\"update == null || update == ''\">Register</span> \n      <span v-else=\"\">Update</span>\n    </h1>\n    <div class=\"form-group\" v-bind:class=\"{ 'has-error':userNameError }\">\n      <div class=\"alert alert-danger\" v-if=\"userNameError\">{{ UserNameErrorMsg }}</div>\n      <label for=\"courseUserNameInput\">Username</label>\n      <input type=\"text\" class=\"form-control\" id=\"courseUserNameInput\" maxlength=\"255\" placeholder=\"e.g. Monday 1\" require=\"\" v-model=\"username\">\n    </div>\n    <div v-if=\"passwordsMatch\" class=\"alert alert-danger\">\n      Passwords don't match\n    </div>\n    <div class=\"form-group\">\n      <label for=\"passwordInput\">Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"passwordInput\" maxlength=\"255\" placeholder=\"Password\" require=\"\" v-model=\"password\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"confirmPasswordInput\">Confirm Password</label>\n      <input type=\"password\" class=\"form-control\" id=\"confirmPasswordInput\" maxlength=\"255\" placeholder=\"Confirm Password\" require=\"\" v-model=\"confirmPassword\">\n    </div>\n    <button v-if=\"update == null || update == ''\" v-on:click=\"create()\" class=\"btn btn-default\">\n      Register\n    </button>\n\n    <button v-else=\"\" v-on:click=\"submitUpdate()\" class=\"btn btn-default\">\n      Update\n    </button>\n\t</span>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
